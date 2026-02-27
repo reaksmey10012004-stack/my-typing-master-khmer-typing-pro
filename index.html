@@ -1,0 +1,413 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Reaksmey - Light Bulb Edition</title>
+    
+    <meta property="og:title" content="Typing Reaksmey - តេស្តល្បឿនវាយអក្សរ" />
+    <meta property="og:description" content="ហាត់វាយអក្សរខ្មែរ និងអង់គ្លេស ដើម្បីបង្កើនល្បឿនម្រាមដៃរបស់អ្នក!" />
+    <meta property="og:image" content="https://uploads.onecompiler.io/44b5h5aqk/44b5hdk96/c826e896b8fcaa9f7bf02d9185f43224.png" />
+    <meta property="og:type" content="website" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --success-color: #2ecc71;
+            --error-color: #e74c3c;
+            --secondary-color: #6c757d;
+            --bg-color: #f0f2f5;
+            --container-bg: rgba(255, 255, 255, 0.98);
+            --text-color: #444;
+            --input-border: #ddd;
+            --quote-bg: #fff;
+            --stat-box-bg: #ffffff;
+            --shadow: 0 20px 50px rgba(0,0,0,0.2);
+            --led-color: #ff0055;
+            --facebook-color: #1877f2;
+        }
+
+        body.dark-mode {
+            --bg-color: #1a1a2e;
+            --container-bg: rgba(26, 30, 46, 0.95);
+            --text-color: #e0e0e0;
+            --input-border: #555;
+            --quote-bg: #333;
+            --stat-box-bg: #333;
+            --shadow: 0 20px 50px rgba(0,0,0,0.4);
+            --led-color: #00f2ff;
+        }
+
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            background: var(--bg-color) url('https://uploads.onecompiler.io/44b5h5aqk/44b5hdk96/unnamed%20(1).png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--text-color);
+            transition: background-color 0.4s ease, color 0.3s;
+        }
+
+        @keyframes danceAndColor {
+            0%, 100% { transform: translateY(0) rotate(-2deg); color: #ff0055; text-shadow: 0 0 10px #ff0055; }
+            25% { color: #00f2ff; text-shadow: 0 0 10px #00f2ff; }
+            50% { transform: translateY(-15px) rotate(2deg); color: #2ecc71; text-shadow: 0 0 20px #2ecc71; }
+            75% { color: #f1c40f; text-shadow: 0 0 10px #f1c40f; }
+        }
+
+        .bouncing-letter { display: inline-block; animation: danceAndColor 0.8s infinite ease-in-out; }
+        .bouncing-letter:nth-child(odd) { animation-delay: 0s; }
+        .bouncing-letter:nth-child(even) { animation-delay: 0.4s; }
+
+        .chat-title-wrapper { margin: 0 0 15px 0; text-align: left; font-size: 1.3rem; font-weight: bold; }
+
+        .lamp-control { position: fixed; top: 0; right: 100px; display: flex; flex-direction: column; align-items: center; z-index: 1000; }
+        .pull-chain { width: 4px; height: 80px; background: #444; position: relative; cursor: pointer; transition: height 0.1s; }
+        .pull-chain:active { height: 100px; }
+        .pull-chain::after { content: ''; position: absolute; bottom: -15px; left: -8px; width: 20px; height: 20px; background: #888; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+        #lamp-img { width: 80px; filter: drop-shadow(0 0 0px transparent); transition: 0.3s; cursor: pointer; }
+        body:not(.dark-mode) #lamp-img { filter: drop-shadow(0 0 20px #ffaa00); }
+
+        .led-sidebar { position: fixed; top: 0; width: 70px; height: 100%; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(5px); display: flex; flex-direction: column; overflow: hidden; border-left: 2px solid var(--primary-color); border-right: 2px solid var(--primary-color); z-index: 1; }
+        .left-led { left: 0; }
+        .right-led { right: 0; }
+        .led-content-wrapper { display: flex; flex-direction: column; align-items: center; animation: led-move 20s linear infinite; }
+        .character-box { display: flex; flex-direction: column; align-items: center; margin: 20px 0; }
+        .mouse-gif { width: 35px; margin-bottom: -10px; z-index: 2; }
+        .cat-gif { width: 55px; z-index: 1; }
+        .led-text { writing-mode: vertical-rl; text-orientation: mixed; font-size: 1.3rem; font-weight: bold; color: var(--led-color); text-shadow: 0 0 10px var(--led-color); white-space: nowrap; padding: 20px 0; }
+        @keyframes led-move { 0% { transform: translateY(100%); } 100% { transform: translateY(-100%); } }
+        .right-led .led-content-wrapper { animation-direction: reverse; }
+
+        .typing-container { background: var(--container-bg); backdrop-filter: blur(15px); padding: 35px; border-radius: 25px; box-shadow: var(--shadow); width: 85%; max-width: 850px; text-align: center; position: relative; z-index: 10; }
+        .header-wrapper { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .side-image { width: 60px; height: 60px; object-fit: contain; }
+        .app-title { font-size: 2.2rem; color: var(--primary-color); font-weight: bold; }
+
+        .lang-switcher { margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .lang-btn { padding: 8px 15px; border-radius: 15px; border: 1px solid var(--primary-color); background: none; color: var(--primary-color); cursor: pointer; }
+        .lang-btn.active { background: var(--primary-color); color: white; }
+
+        .stats-bar { display: flex; justify-content: space-between; margin-bottom: 15px; gap: 10px; }
+        .stat-box { background: var(--stat-box-bg); padding: 10px; border-radius: 12px; flex: 1; border: 1px solid var(--input-border); font-weight: bold; }
+
+        #quote-display { font-size: 1.6rem; line-height: 1.8; margin-bottom: 20px; text-align: left; background: var(--quote-bg); padding: 15px; border-radius: 15px; height: 110px; overflow: hidden; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 12px; border: 2px solid var(--input-border); position: relative; scroll-behavior: smooth; }
+        .word { padding: 0 4px; border-radius: 5px; display: inline-block; transition: color 0.2s; }
+        .word-current { background-color: rgba(74, 144, 226, 0.15); border-radius: 5px; }
+        .word-finished-correct { color: var(--success-color); }
+        .word-finished-error { color: var(--error-color); text-decoration: line-through; }
+        .char-correct { color: var(--primary-color); }
+        .char-incorrect { background: var(--error-color); color: white; border-radius: 2px; }
+
+        #input-field { width: 100%; height: 60px; padding: 10px; font-size: 1.5rem; border: 2px solid var(--input-border); border-radius: 15px; text-align: center; background: var(--quote-bg); color: var(--text-color); }
+
+        .chat-container { background: var(--container-bg); padding: 20px; border-radius: 25px; box-shadow: var(--shadow); width: 85%; max-width: 850px; z-index: 10; margin-top: 30px; margin-bottom: 30px; }
+        #chat-box { height: 180px; overflow-y: auto; border: 1px solid var(--input-border); border-radius: 15px; padding: 15px; margin-bottom: 10px; text-align: left; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3YzhnZnpvamI5bWt5Yzd3MnFleHowbGJ2NGhkaXNnZHpvZndyMXVlOSZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/FlGVxmFPIXg7NWOK4s/giphy.gif'); background-size: cover; background-position: center; color: white; }
+        .chat-entry { border-bottom: 1px solid rgba(255, 255, 255, 0.1); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .chat-input-area { display: flex; gap: 10px; align-items: center; }
+        #chat-user-input { width: 130px; padding: 10px; border-radius: 10px; border: 1px solid var(--input-border); }
+        #chat-msg-input { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--input-border); }
+        .btn-chat-send { background: var(--success-color); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        
+        #result-overlay { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--container-bg); border-radius: 25px; z-index: 100; flex-direction: column; justify-content: center; align-items: center; }
+        
+        /* ប៊ូតុង Share */
+        .btn-share { background: var(--facebook-color); color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .btn-share:hover { opacity: 0.9; transform: scale(1.05); }
+    </style>
+</head>
+<body class="dark-mode">
+
+<div class="lamp-control">
+    <div class="pull-chain" id="chain"></div>
+    <img id="lamp-img" src="https://uploads.onecompiler.io/44b5h5aqk/44darc7k8/XS0322-6-removebg-preview.png" alt="Lamp">
+    <audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-10.mp3"></audio>
+</div>
+
+<div class="led-sidebar left-led">
+    <div class="led-content-wrapper">
+        <div class="character-box"><img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3anI2ZnE0ZGdub2I1ZWl2aWRzeGxwdW5zenZzMmFyaGNvdXZmZG83ciZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/jyTk0vpfS0pyqkgpZu/giphy.gif" class="cat-gif"></div>
+        <div class="led-text">TYPING REAKSMEY - PRACTICE MAKES PERFECT</div>
+        <div class="character-box"><img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3anI2ZnE0ZGdub2I1ZWl2aWRzeGxwdW5zenZzMmFyaGNvdXZmZG83ciZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/KJChB2YgAuAS0yNner/giphy.gif" class="mouse-gif"></div>
+    </div>
+</div>
+
+<div class="led-sidebar right-led">
+    <div class="led-content-wrapper">
+        <div class="character-box"><img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3czNrNzhqODE2Y3gxcmZ6b3VkaHE5dndwbXA2NWNyNGY1NHN2OXBucCZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/oDhYiO2JLQBeseiK1A/giphy.gif" width="55"></div>
+        <div class="led-text">SPEED UP YOUR SKILLS - ហាត់វាយអក្សរ</div>
+        <div class="character-box"><img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3czNrNzhqODE2Y3gxcmZ6b3VkaHE5dndwbXA2NWNyNGY1NHN2OXBucCZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/hvLmq7R1Fn0KtWlhHb/giphy.gif" width="35"></div>
+    </div>
+</div>
+
+<div class="typing-container">
+    <div class="header-wrapper">
+        <img src="https://uploads.onecompiler.io/44b5h5aqk/44b5hdk96/c826e896b8fcaa9f7bf02d9185f43224.png" class="side-image">
+        <div class="app-title">Typing test ReAkSmey</div>
+        <img src="https://uploads.onecompiler.io/44b5h5aqk/44b5hdk96/c826e896b8fcaa9f7bf02d9185f43224.png" class="side-image">
+    </div>
+
+    <div class="lang-switcher">
+        <button id="btn-kh" class="lang-btn active" onclick="switchLang('kh')">Khmer Latin</button>
+        <button id="btn-en" class="lang-btn" onclick="switchLang('en')">English</button>
+        <button id="btn-id" class="lang-btn" onclick="switchLang('id')">Indonesia</button>
+        <button id="btn-ខ្មែរ" class="lang-btn" onclick="switchLang('ខ្មែរ')">ខ្មែរ</button>
+    </div>
+
+    <div class="stats-bar">
+        <div class="stat-box">⏰ពេល: <span id="timer">60</span>s</div>
+        <div class="stat-box">🚀WPM: <span id="wpm">0</span></div>
+        <div class="stat-box">❌កំហុស: <span id="errors">0</span></div>
+    </div>
+
+    <div id="speed-status"><span>ត្រៀមខ្លួនរួចរាល់!</span></div>
+    <div id="quote-display"></div>
+    <input type="text" id="input-field" placeholder="ចាប់ផ្ដើមវាយនៅទីនេះ..." autofocus autocomplete="off">
+    
+    <div style="margin-top: 15px;">
+        <button class="btn-reset" style="background: var(--secondary-color); padding: 10px 20px; border-radius: 20px; color: white; border: none; cursor: pointer;" onclick="resetGame()">ចាប់ផ្ដើមឡើងវិញ</button>
+    </div>
+
+    <div id="result-overlay">
+        <h2 style="font-size: 2rem;">🎈លទ្ធផលរបស់អ្នក✨</h2>
+        <p style="font-size: 1.2rem;">ល្បឿនមធ្យម: <span id="res-wpm" style="font-weight:bold; color:var(--primary-color);">0</span> WPM</p>
+        <p>កំហុស: <span id="res-errors-final" style="color:var(--error-color);">0</span> | ភាពត្រឹមត្រូវ: <span id="res-acc">0</span>%</p>
+        <button class="btn-reset" style="padding: 10px 20px; background: var(--primary-color); color: white; border-radius: 20px; border: none; cursor: pointer;" onclick="resetGame()">សាកល្បងម្ដងទៀត</button>
+        
+        <button class="btn-share" onclick="shareToFacebook()">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            ស៊ែរទៅ Facebook
+        </button>
+    </div>
+</div>
+
+<div class="chat-container">
+    <div class="chat-title-wrapper">
+        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
+    </div>
+    <div id="chat-box"></div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12">
+        <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
+        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+        <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
+        <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
+    </div>
+    <div style="text-align: left; margin-top: 10px;">
+        <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
+        <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
+    </div>
+</div> 
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+    // Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDPVgXnpDpNQ3VEd8s_ZLJzSes_TLGJdfA",
+        authDomain: "reaksmey-65dcb.firebaseapp.com",
+        databaseURL: "https://reaksmey-65dcb-default-rtdb.firebaseio.com",
+        projectId: "reaksmey-65dcb",
+        storageBucket: "reaksmey-65dcb.firebasestorage.app",
+        messagingSenderId: "490711300158",
+        appId: "1:490711300158:web:5a338becc8a57d7045b96f"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    const chatRef = database.ref('global_messages');
+    const MY_ADMIN_PASS = "reaksmey10012004@";
+
+    // Light Control
+    const chain = document.getElementById('chain');
+    const lampImg = document.getElementById('lamp-img');
+    const sound = document.getElementById('clickSound');
+
+    function toggleLight() {
+        document.body.classList.toggle('dark-mode');
+        sound.currentTime = 0; 
+        sound.play();
+    }
+    chain.addEventListener('click', toggleLight);
+    lampImg.addEventListener('click', toggleLight);
+
+    // Typing Logic
+    const dataKh = ["kal", "phearun", "nv", "vannak", "slanh", "kmeang", "jol", "jit", "der", "lg", "srat", "kor", "run", "tv", "vinh", "mor", "min", "derl", "jes", "klach", "nak", "na", "ngaii", "muy", "mean", "ke", "som", "lanh", "nh", "ter", "ort", "prom", "pi", "lob", "leler", "pek", "ban", "chea", "dg", "puk", "ng", "sit", "chkut", "name", "voan", "koy", "ouy", "sak", "bek", "jeang", "na", "ber", "vea", "tok", "nis", "klean", "bay", "has", "cher", "kbal", "nas", "lok", "hery", "thonh", "hot", "anh", "dob", "bek", "pler", "lan", "motor", "kev", "kabob", "nom", "nham", "bay", "mhob", "klean", "ey", "hmm", "puk", "hg", "rean", "kru", "lork", "kru", "nak", "ming", "pu", "kmeang", "has", "pler", "juk", "tnam", "poipet", "kmeang", "angkor", "wat", "vital", "cambodia", "khmer", "klang", "jit", "khg", "masel", "minh", "khg", "kbea", "chgay", "chganh", "cheat", "kdmv", "srul", "klang", "hea", "therk", "tmenh", "cher", "met", "av", "kor", "lyly", "chana", "noun", "neang", "ter", "neak", "jg", "niyeay", "ampi", "khang","ler", "banthem", "banteb", "mdg", "tt", "khjal", "tangos", "ster", "ter", "nv", "cheamuy", "krr", "chea", "nis", "sat", "avy", "muy", "tt", "na", "muy", "nv", "mean", "jomvinh", "doch", "derl", "sur", "nv", "chgay", "tlob", "trov", "doysa", "tleab", "pimon", "jam", "pderm", "kompong", "seavpav", "kmeang", "brozz", "krusa", "tix", "toch", "bun", "ahha", "somrab", "rksee", "ttul", "kbal", "jom", "thonh", "rhas", "kur", "niyeay", "pitherksamot", "klas", "avy", "pelklas", "knom", "tver", "beb", "oy", "peak", "vea", "veang", "kom", "tha", "oy", "nh", "min", "jes", "singkhmer", "morpi", "dak", "beab", "nis", "therb", "mean", "peak", "sorsea", "merl", "tv", "loy", "doch", "ke", "pheak", "jren", "peak", "yg", "sorsea", "klai", "klai", "doch", "chnes", "hx", "terb", "knom", "tver", "beb", "nis", "salarean", "mean", "kru", "nv", "tes", "mean", "nakmak", "bang", "paon", "trov", "jes", "slanh", "kne", "songsa", "sneaha", "kambit", "motor", "lanjis", "nakklas", "puk", "khea", "niyeay", "derm", "ke", "chea", "pi", "seas", "kmeang", "poipet", "ter", "mdg", "muy", "ngaii", "muy", "ngaii", "min", "kit", "khom", "phrong", "niyeay", "derm", "khom", "tv", "tham", "ten", "vaii", "khom", "tha", "koch", "baycha", "micheat", "breangkala", "av", "ach", "plerng", "punler"];
+    const dataEn = ["the", "great", "world", "both", "run", "by", "near", "most", "so", "people", "picture", "once", "large", "between", "most", "light", "write", "are", "go", "picture", "me", "country", "little", "keep", "read", "call", "never", "open", "that", "story", "good", "until", "write", "air", "kind", "there", "change", "far", "over", "any", "may", "three", "children", "said", "put", "is", "us", "that", "animal", "let", "was", "America", "change", "other", "always", "every", "animal", "find", "old", "picture", "made", "work", "school", "grow", "us", "ask", "life", "find", "spell", "never", "went", "she", "food", "really", "run", "almost", "own", "she", "left", "by", "question", "home", "or", "help", "second", "quickly", "just", "turn", "these", "state", "who", "so", "water", "even", "large", "eye", "below", "be", "face", "hear", "went", "at", "when", "number", "important", "sound", "who", "kecil", "into", "enough", "tell", "only", "country", "really", "turn", "white", "home", "they", "your", "because", "such", "not", "form", "how", "they", "left", "cut", "part", "sentence", "be", "between", "dream"];
+    const dataId = ["saya", "pulang", "biasa", "itu", "telah", "sambil", "punya", "hari", "yang", "anda", "dengan", "makin", "pada", "diri", "sini", "khusus", "jalan", "bahwa", "baru", "melakukan", "harus", "mencari", "bagian", "memang", "kamu", "anda", "datang", "kali", "uang", "ingin", "tanpa", "kemudian", "saat", "sesuai", "memang", "cepat", "jadi", "luar", "ke", "sering", "masuk", "dengan", "ada", "sangat", "banyak", "kepala", "sementara", "tentang", "ketika", "jadi", "tempat", "yaitu", "menjadi", "setelah", "menurut", "hati", "bagian", "tetapi", "tanpa", "uang", "sini", "memiliki", "sekalipun", "merupakan", "kalau", "juga", "maupun", "mana", "ku", "naik", "juta", "pulang", "tiba", "tetapi", "dapat", "kini", "baik", "naik", "ke", "mengatakan", "mudah", "mudah", "sekali", "hal", "pernah", "sedang", "tak", "paling", "serta", "melalui", "kami", "baik", "memberi", "malam", "lain", "dari", "mengatakan", "dia", "juga", "kepala", "hal", "untuk", "jauh", "punya", "untuk", "anak", "kembali", "semua", "akibat", "sini", "tentang", "tengah", "selalu", "tetapi", "hari", "maka", "di", "membuat", "sambil", "pusat", "kamu", "namun", "bukan", "bisa", "malam", "tempat", "tapi", "sering", "memang", "kalau", "kecil", "luar", "siap", "mencari", "sebelum", "pernah", "terus", "besar", "sejak", "akan", "jelas", "yaitu", "sekitar", "mereka", "mampu", "mata", "telah", "sini", "tetapi", "sebab", "diri", "mau", "jangan", "sehingga", "seluruh", "ingin", "aku", "sering", "juga", "ada", "kamu", "uang", "kembali", "punya", "langsung", "seluruh", "naik", "bahwa", "suatu", "kecil", "dia"];
+    const dataKhmer = ["សួស្តី", "កម្ពុជា", "សន្តិភាព", "រស្មី", "វាយអត្ថបទ", "រៀន", "ចំណេះដឹង", "បច្ចេកវិទ្យា", "អនាគត", "ជោគជ័យ", "ស្រលាញ់", "សាលារៀន", "គ្រូ", "សិស្ស", "មិត្តភក្តិ", "សប្បាយ", "រីករាយ", "ម្ហូប", "អង្គរវត្ត", "ខ្មែរ", "វប្បធម៌", "អរិយធម៌", "ប្រវត្តិសាស្ត្រ", "ការងារ", "ព្យាយាម", "អត់ធ្មត់", "គោលដៅ", "សុបិន", "កម្លាំង", "ចិត្ត", "ជឿជាក់", "អរគុណ", "សុំទោស", "សូមជម្រាបសួរ", "មេឃ", "ដី", "ទឹក", "ភ្លើង", "ខ្យល់", "ដើមឈើ", "ផ្កា", "សត្វ", "ភ្នំ", "សមុទ្រ", "កោះ", "ទន្លេ", "ផ្លូវ", "ផ្ទះ", "គ្រួសារ", "បងប្អូន", "ឪពុក", "ម្តាយ", "កូន", "ចៅ", "លោកតា", "លោកយាយ", "ក្នុង", "ជាតិ", "នេះ", "គ្មាន", "ចង់", "បាន", "អ្វី", "ឡើយ", "ត្រឹម", "ចិត្ត", "ស្នេហ៍", "អូន", "មក", "បង", "ទោះ", "មិន", "ល្អ", "គ្រប់", "យ៉ាង", "តែជាសំណាងបង","មានអូន", "ក្នុងបេះដូង", "គ្រប់គ្រាន់ហើយ"];
+
+    let timeLeft = 60, timerInterval = null, isStarted = false, currentWordIndex = 0;
+    let correctChars = 0, totalKeystrokes = 0, wrongWords = 0, wordsArray = [], currentLang = 'kh';
+
+    const quoteDisplay = document.getElementById('quote-display');
+    const inputField = document.getElementById('input-field');
+    const timerElement = document.getElementById('timer');
+    const wpmElement = document.getElementById('wpm');
+    const errorElement = document.getElementById('errors');
+
+    function switchLang(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('btn-' + lang).classList.add('active');
+        resetGame();
+    }
+
+    function prepareWords() {
+        let sourceData = currentLang === 'en' ? dataEn : currentLang === 'id' ? dataId : currentLang === 'ខ្មែរ' ? dataKhmer : dataKh;
+        wordsArray = [...sourceData].sort(() => Math.random() - 0.5).slice(0, 150);
+        quoteDisplay.innerHTML = '';
+        wordsArray.forEach((word, wIdx) => {
+            const span = document.createElement('span');
+            span.className = 'word' + (wIdx === 0 ? ' word-current' : '');
+            span.innerHTML = word.split('').map(c => `<span>${c}</span>`).join('');
+            quoteDisplay.appendChild(span);
+        });
+        quoteDisplay.scrollTop = 0;
+    }
+
+    inputField.addEventListener('input', () => {
+        if (!isStarted) startTimer();
+        isStarted = true;
+        totalKeystrokes++;
+        const typedValue = inputField.value;
+        const allWords = quoteDisplay.querySelectorAll('.word');
+        const currentWordSpan = allWords[currentWordIndex];
+        if (!currentWordSpan) return;
+        const charSpans = currentWordSpan.querySelectorAll('span');
+        
+        charSpans.forEach((span, i) => {
+            if (typedValue[i] == null) span.className = '';
+            else if (typedValue[i] === span.innerText) span.className = 'char-correct';
+            else span.className = 'char-incorrect';
+        });
+    });
+
+    inputField.addEventListener('keydown', (e) => {
+        if (e.code === 'Space') {
+            e.preventDefault();
+            const typedValue = inputField.value.trim();
+            if (!typedValue) return;
+            const allWords = quoteDisplay.querySelectorAll('.word');
+            const currentSpan = allWords[currentWordIndex];
+
+            if (typedValue === wordsArray[currentWordIndex]) {
+                currentSpan.classList.add('word-finished-correct');
+                correctChars += wordsArray[currentWordIndex].length + 1;
+            } else {
+                currentSpan.classList.add('word-finished-error');
+                wrongWords++;
+                errorElement.innerText = wrongWords;
+            }
+            
+            currentSpan.classList.remove('word-current');
+            currentWordIndex++;
+            if (allWords[currentWordIndex]) {
+                allWords[currentWordIndex].classList.add('word-current');
+                if (allWords[currentWordIndex].offsetTop > quoteDisplay.scrollTop + 50) quoteDisplay.scrollTop += 35;
+            }
+            inputField.value = '';
+            updateWPM();
+        }
+    });
+
+    function startTimer() {
+        if (timerInterval) return;
+        timerInterval = setInterval(() => {
+            if (timeLeft > 0) { timeLeft--; timerElement.innerText = timeLeft; updateWPM(); }
+            else { showResults(); }
+        }, 1000);
+    }
+
+    function updateWPM() {
+        const timePassed = (60 - timeLeft) / 60;
+        const wpm = timePassed > 0 ? Math.round((correctChars / 5) / timePassed) : 0;
+        wpmElement.innerText = wpm;
+    }
+
+    function showResults() {
+        clearInterval(timerInterval);
+        inputField.disabled = true;
+        document.getElementById('result-overlay').style.display = 'flex';
+        document.getElementById('res-wpm').innerText = wpmElement.innerText;
+        document.getElementById('res-errors-final').innerText = wrongWords;
+        const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
+        document.getElementById('res-acc').innerText = acc;
+    }
+
+    function resetGame() {
+        clearInterval(timerInterval); timerInterval = null;
+        timeLeft = 60; isStarted = false; currentWordIndex = 0; correctChars = 0; wrongWords = 0; totalKeystrokes = 0;
+        timerElement.innerText = 60; wpmElement.innerText = 0; errorElement.innerText = 0;
+        inputField.disabled = false; inputField.value = '';
+        document.getElementById('result-overlay').style.display = 'none';
+        prepareWords();
+        inputField.focus();
+    }
+
+    // Facebook Share Function
+    function shareToFacebook() {
+        const wpm = document.getElementById('res-wpm').innerText;
+        const acc = document.getElementById('res-acc').innerText;
+        const shareText = `🚀 ខ្ញុំទើបតែទទួលបានល្បឿន ${wpm} WPM និងភាពត្រឹមត្រូវ ${acc}% លើ Typing Reaksmey! តើអ្នកអាចវាយលឿនជាងខ្ញុំទេ?`;
+        const shareUrl = window.location.href;
+        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+        window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
+    }
+
+    // Chat Logic
+    function sendChatMessage() {
+        const userInput = document.getElementById('chat-user-input');
+        const msgInput = document.getElementById('chat-msg-input');
+        if (!msgInput.value.trim()) return;
+        chatRef.push({
+            name: userInput.value.trim() || "អ្នកលេង",
+            text: msgInput.value.trim(),
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+        msgInput.value = "";
+    }
+
+    chatRef.limitToLast(15).on('value', (snap) => {
+        const box = document.getElementById('chat-box');
+        box.innerHTML = "";
+        snap.forEach((child) => {
+            const d = child.val();
+            box.innerHTML += `<div class="chat-entry"><span><b>${d.name}:</b> ${d.text || ''}</span></div>`;
+        });
+        box.scrollTop = box.scrollHeight;
+    });
+
+    prepareWords();
+</script>
+</body>
+</html>
