@@ -221,15 +221,31 @@
     </div>
 
     <div id="result-overlay">
-        <h2 style="font-size: 2rem;">🎈លទ្ធផលរបស់អ្នក✨</h2>
-        <p style="font-size: 1.2rem;">ល្បឿនមធ្យម: <span id="res-wpm" style="font-weight:bold; color:var(--primary-color);">0</span> WPM</p>
-        <p>កំហុស: <span id="res-errors-final" style="color:var(--error-color);">0</span> | ភាពត្រឹមត្រូវ: <span id="res-acc">0</span>%</p>
-        <button class="btn-reset" style="padding: 10px 20px; background: var(--primary-color); color: white; border-radius: 20px; border: none; cursor: pointer;" onclick="resetGame()">សាកល្បងម្ដងទៀត</button>
+        <div style="background: var(--stat-box-bg); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid var(--primary-color); width: 80%;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 20px;">🏆 លទ្ធផលរបស់អ្នក 🏆</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+                    <p style="margin: 0; font-size: 0.9rem;">ល្បឿនមធ្យម</p>
+                    <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary-color);"><span id="res-wpm">0</span> <small style="font-size: 1rem;">WPM</small></div>
+             </div>
+                <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+                    <p style="margin: 0; font-size: 0.9rem;">ភាពត្រឹមត្រូវ</p>
+                <div style="font-size: 1.8rem; font-weight: bold; color: var(--success-color);"><span id="res-acc">0</span>%</div>
+                 </div>
+                <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+                    <p style="margin: 0; font-size: 0.9rem;">ពាក្យខុស</p>
+                    <div style="font-size: 1.8rem; font-weight: bold; color: var(--error-color);"><span id="res-errors-final">0</span></div>
+                    </div>
+                <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+                    <p style="margin: 0; font-size: 0.9rem;">កម្រិតរបស់អ្នក</p>
+                    <div id="res-rank" style="font-size: 1.4rem; font-weight: bold; color: #f1c40f;">មធ្យម</div>
+                    </div>
+                </div>
+            <button class="btn-reset" style="padding: 12px 25px; background: var(--primary-color); color: white; border-radius: 50px; border: none; cursor: pointer; font-weight: bold;" onclick="resetGame()">🔄 សាកល្បងម្ដងទៀត</button>
+            <button class="btn-share" onclick="shareToFacebook()">🔵 Share</button>
+            </div>
+        </div>
         
-        <button class="btn-share" onclick="shareToFacebook()">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            ស៊ែរទៅ Facebook
-        </button>
     </div>
 </div>
 
@@ -430,6 +446,7 @@
 </script>
 </body>
 </html>
+
 
 
 
