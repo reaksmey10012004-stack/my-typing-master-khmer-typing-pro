@@ -98,6 +98,54 @@
             overflow-x: hidden;
             color: var(--text-color);
             transition: background-color 0.4s ease, color 0.3s;
+      }         
+          .monetization-wrapper {
+              width: 85%;
+              max-width: 850px;
+              margin: 20px 0 50px 0;
+              z-index: 10;
+            }
+        .support-card {
+            background: var(--container-bg);
+            backdrop-filter: blur(15px);
+             padding: 25px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 1px solid var(--input-border);
+           } 
+            .aba-qr-img {
+                 width: 180px;
+                height: 180px;height: 180px;
+                margin: 15px auto;
+                border-radius: 15px;
+                border: 5px solid white;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+              } 
+        .ads-space {
+            background: rgba(0,0,0,0.1);
+            border: 1px dashed var(--secondary-color);
+            padding: 20px;
+            margin-bottom: 20px;
+             border-radius: 15px;
+            color: var(--text-color);
+            text-align: center;
+             } 
+    
+
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            background: var(--bg-color) url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2t5ZTJ6YWl4bHdpcWtlb2c0dzlncnAwMzd2eHF5d2RyNGk1OGw0YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b0mGO0C6SPEn7jmfrI/giphy.gif') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            color: var(--text-color);
+            transition: background-color 0.4s ease, color 0.3s;
         }
 
         @keyframes danceAndColor {
@@ -283,7 +331,28 @@
         <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
     </div>
 </div> 
+    
+<div class="monetization-wrapper">
+    <div class="ads-space">
+        <p>កន្លែងសម្រាប់ដាក់ពាណិជ្ជកម្ម (Ads Placeholder)</
+          </div>  
+    <div class="support-card">
+        <h3 style="color: var(--primary-color);">☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍</h3>
+        <p>ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ អ្នកអាចឧបត្ថម្ភកាហ្វេខ្ញុំម្នាក់មួយកែវបាន</p><
+                                                                         
+        <img src="https://via.placeholder.com/180?text=ABA+QR+CODE" alt="ABA QR" class="aba-qr-img">
 
+       <div style="font-weight: bold;">
+         <p style="margin: 5px 0;">ឈ្មោះ:KEVCHAN REAKSMEY</p>
+         <p style="margin: 5px 0; color: #00f2ff;">លេខគណនី: 000 111 222</p>
+     </div> 
+</div>      
+    
+    <div style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #888;">
+       <p>អ្នកចូលទស្សនាសរុប: <img src="https://hitwebcounter.com/counter/counter.php?page=reaksmey_typing&style=0006&nbdigits=5&type=page&initCount=0" border="0" /></p> 
+    </div>
+   </div> 
+    
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
@@ -462,6 +531,7 @@
 </script>
 </body>
 </html>
+
 
 
 
