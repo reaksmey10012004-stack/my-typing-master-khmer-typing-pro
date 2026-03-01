@@ -58,7 +58,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* រក្សាស្តាយដើមរបស់អ្នកទាំងអស់ */
         :root {
             --primary-color: #4a90e2;
             --success-color: #2ecc71;
@@ -88,7 +87,7 @@
 
         body {
             font-family: 'Kantumruy Pro', sans-serif;
-            background: var(--bg-color) url('https://uploads.onecompiler.io/44b5h5aqk/44b5hdk96/unnamed%20(1).png') no-repeat center center fixed;
+            background: var(--bg-color) url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2t5ZTJ6YWl4bHdpcWtlb2c0dzlncnAwMzd2eHF5d2RyNGk1OGw0YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b0mGO0C6SPEn7jmfrI/giphy.gif') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             flex-direction: column;
@@ -163,23 +162,25 @@
         #chat-msg-input { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--input-border); }
         .btn-chat-send { background: var(--success-color); color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
         
+        
         #result-overlay { 
             display: none; 
-            position: absolute;
+            position: absolute; 
             top: 0; 
             left: 0; 
             width: 100%; 
-            height: 100%;
+            height: 100%; 
+           
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2t5ZTJ6YWl4bHdpcWtlb2c0dzlncnAwMzd2eHF5d2RyNGk1OGw0YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b0mGO0C6SPEn7jmfrI/giphy.gif');
             background-size: cover;
             background-position: center;
             border-radius: 25px; 
             z-index: 100; 
-             flex-direction: column;
-             justify-content: center; 
+            flex-direction: column; 
+            justify-content: center; 
             align-items: center; 
-     }                      
-        /* ប៊ូតុង Share */
+        }
+
         .btn-share { background: var(--facebook-color); color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
         .btn-share:hover { opacity: 0.9; transform: scale(1.05); }
     </style>
@@ -237,22 +238,22 @@
     </div>
 
     <div id="result-overlay">
-        <div style="background: var(--stat-box-bg); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid var(--primary-color); width: 80%;">
-            <h2 style="font-size: 2.2rem; margin-bottom: 20px;">🏆 លទ្ធផលរបស់អ្នក 🏆</h2>
+        <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); width: 80%; color: white;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 20px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">🏆 លទ្ធផលរបស់អ្នក 🏆</h2>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-                <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+                <div style="padding: 15px; background: rgba(255,255,255,0.9); border-radius: 12px; color: #333;">
                 <p style="margin: 0; font-size: 0.9rem;">ល្បឿនមធ្យម</p>
              <div style="font-size: 1.8rem; font-weight: bold; color: var(--primary-color);"><span id="res-wpm">0</span> <small style="font-size: 1rem;">WPM</small></div>
              </div>
-             <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+             <div style="padding: 15px; background: rgba(255,255,255,0.9); border-radius: 12px; color: #333;">
                  <p style="margin: 0; font-size: 0.9rem;">ភាពត្រឹមត្រូវ</p>
                 <div style="font-size: 1.8rem; font-weight: bold; color: var(--success-color);"><span id="res-acc">0</span>%</div>
              </div>
-                <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+                <div style="padding: 15px; background: rgba(255,255,255,0.9); border-radius: 12px; color: #333;">
                  <p style="margin: 0; font-size: 0.9rem;">ពាក្យខុស</p>
                  <div style="font-size: 1.8rem; font-weight: bold; color: var(--error-color);"><span id="res-errors-final">0</span></div>
                     </div>
-                <div style="padding: 15px; background: #f8f9fa; border-radius: 12px; color: #333;">
+                <div style="padding: 15px; background: rgba(255,255,255,0.9); border-radius: 12px; color: #333;">
                     <p style="margin: 0; font-size: 0.9rem;">កម្រិតរបស់អ្នក</p>
                     <div id="res-rank" style="font-size: 1.4rem; font-weight: bold; color: #f1c40f;">មធ្យម</div>
                     </div>
@@ -261,6 +262,7 @@
             <button class="btn-reset" style="padding: 12px 25px; background: var(--primary-color); color: white; border-radius: 50px; border: none; cursor: pointer; font-weight: bold;" onclick="resetGame()">🔄 សាកល្បងម្ដងទៀត</button>
             <button class="btn-share" onclick="shareToFacebook()">🔵 Share</button>
             </div>        
+        </div>
     </div>
 </div>
 
@@ -286,7 +288,6 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
 <script>
-    // Firebase Config និង Logic របស់អ្នកទុកដដែល...
     const firebaseConfig = {
         apiKey: "AIzaSyDPVgXnpDpNQ3VEd8s_ZLJzSes_TLGJdfA",
         authDomain: "reaksmey-65dcb.firebaseapp.com",
