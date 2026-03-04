@@ -191,7 +191,7 @@
         .stats-bar { display: flex; justify-content: space-between; margin-bottom: 15px; gap: 10px; }
         .stat-box { background: var(--stat-box-bg); padding: 10px; border-radius: 12px; flex: 1; border: 1px solid var(--input-border); font-weight: bold; }
 
-        #quote-display { font-size: 1.6rem; line-height: 1.8; margin-bottom: 20px; text-align: left; background: var(--quote-bg); padding: 15px; border-radius: 15px; height: 110px; overflow: hidden; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 12px; border: 2px solid var(--input-border); position: relative; scroll-behavior: smooth; }
+        #quote-display { font-size: 1.6rem; line-height: 1.8; margin-bottom: 20px; text-align: left; background: var(--quote-bg); padding: 15px; border-radius: 15px; height: 80px; overflow: hidden; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 12px; border: 2px solid var(--input-border); position: relative; scroll-behavior: smooth; }
         .word { padding: 0 4px; border-radius: 5px; display: inline-block; transition: color 0.2s; }
         .word-current { background-color: rgba(74, 144, 226, 0.15); border-radius: 5px; }
         .word-finished-correct { color: var(--success-color); }
@@ -454,7 +454,13 @@
             currentWordIndex++;
             if (allWords[currentWordIndex]) {
                 allWords[currentWordIndex].classList.add('word-current');
-                if (allWords[currentWordIndex].offsetTop > quoteDisplay.scrollTop + 50) quoteDisplay.scrollTop += 35;
+                const container = document.getElementById('quote-display');
+                const currentWord = allWords[currentWordIndex];
+                container.scrollTo({
+                  top: currentWord.offsetTop - 10, //
+                  behavior: 'smooth'
+                });
+         
             }
             inputField.value = '';
             updateWPM();
@@ -537,6 +543,7 @@
 </script>
 </body>
 </html>
+
 
 
 
