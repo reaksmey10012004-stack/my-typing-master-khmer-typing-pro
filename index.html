@@ -473,7 +473,7 @@
         const timePassed = (60 - timeLeft) / 60;
         const wpm = timePassed > 0 ? Math.round((correctChars / 5) / timePassed) : 0;
         wpmElement.innerText = wpm;
-    }
+    
     const speedStatus = document.getElementById('speed-status'); 
     if (isStarted) {
         if (wpm <= 30) speedStatus.innerHTML = `<img src="" width="30"> <span>ល្បឿនកូនក្មេង (យឺតណាស់!)</span>`;
@@ -537,6 +537,7 @@
 </script>
 </body>
 </html>
+
 
 
 
