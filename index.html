@@ -36,7 +36,6 @@
 
     <meta property="og:title" content="Typing Khmer Pro - តេស្តល្បឿនវាយអក្សរ" />
     <meta property="og:description" content="ហាត់វាយអក្សរខ្មែរ និងអង់គ្លេស ដើម្បីបង្កើនល្បឿនម្រាមដៃរបស់អ្នក!" />
-    
     <meta property="og:type" content="website" />
 
     <script type="application/ld+json">
@@ -199,7 +198,7 @@
         .char-correct { color: var(--primary-color); }
         .char-incorrect { background: var(--error-color); color: white; border-radius: 2px; }
 
-        #input-field { width: 100%; height: 60px; padding: 10px; font-size: 1.5rem; border: 2px solid var(--input-border); border-radius: 15px; text-align: center; background: rgba(#77f7f7); color: #77f7f7W(--text-color); }
+        #input-field { width: 100%; height: 60px; padding: 10px; font-size: 1.5rem; border: 2px solid var(--input-border); border-radius: 15px; text-align: center; background: var(--quote-bg); color: var(--text-color); }
 
         .chat-container { background: var(--container-bg); padding: 20px; border-radius: 25px; box-shadow: var(--shadow); width: 85%; max-width: 850px; z-index: 10; margin-top: 30px; margin-bottom: 30px; }
         #chat-box { height: 180px; overflow-y: auto; border: 1px solid var(--input-border); border-radius: 15px; padding: 15px; margin-bottom: 10px; text-align: left; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://uploads.onecompiler.io/44b5h5aqk/44b5hdk96/Screenshot_14.png'); background-size: cover; background-position: center; color: white; }
@@ -230,6 +229,38 @@
 
         .btn-share { background: var(--facebook-color); color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
         .btn-share:hover { opacity: 0.9; transform: scale(1.05); }
+        
+        .lang-switcher-container {
+          margin-bottom: 25px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: rgba(255, 255, 255, 0.1);
+          padding: 10px 20px;
+          border-radius: 50px;
+          border: 1px solid var(--primary-color);
+        }
+        
+        #lang-select {
+          padding: 8px 15px;
+          border-radius: 20px;
+          background: var(--primary-color);
+          color: white;
+          border: none;
+          font-family: 'Kantumruy Pro', sans-serif;
+          cursor: pointer;outline: none;
+          font-size: 1rem;
+          transition: 0.3s;
+        }
+        
+        #lang-select:hover {
+          transform: scale(1.05);background: #357abd;
+        }
+        
+        #lang-select option {
+          background: var(--container-bg);
+          color: var(--text-color);
+        }
     </style>
 </head>
 <body class="dark-mode">
@@ -258,16 +289,17 @@
 
 <div class="typing-container">
     <div class="header-wrapper">
-       
-        <h1 class="app-title">Typing Khmer Pro</h1>
-    
+        <h1 class="app-title">𓂀 𝕋𝕐ℙ𝕀ℕ𝔾 𝕂ℍ𝕄𝔼ℝ ℙℝ𝕆 𓂀</h1>
     </div>
 
-    <div class="lang-switcher">
-        <button id="btn-kh" class="lang-btn active" onclick="switchLang('kh')">Khmer Latin</button>
-        <button id="btn-en" class="lang-btn" onclick="switchLang('en')">English</button>
-        <button id="btn-id" class="lang-btn" onclick="switchLang('id')">Indonesia</button>
-        <button id="btn-ខ្មែរ" class="lang-btn" onclick="switchLang('ខ្មែរ')">ខ្មែរ</button>
+    <div class="lang-switcher-container">
+        <span style="margin-right: 10px; font-weight: bold; color: var(--primary-color);">ជ្រើសរើសភាសា៖</span>
+       <select id="lang-select" onchange="switchLang(this.value)">
+       <option value="kh">Khmer Latin</option>
+        <option value="en">English</option>
+        <option value="id">Indonesia</option>
+        <option value="ខ្មែរ">ខ្មែរ</option>
+        </select>
     </div>
 
     <div class="stats-bar">
@@ -314,26 +346,42 @@
 </div>
 
 <div class="chat-container">
-    
-<div class="chat-container">
-  <div class="chat-title-wrapper">
-    <span class="bouncing-letter">🏆</span> <span class="bouncing-letter">កំ</span><span class="bouncing-letter">ពូ</span><span class="bouncing-letter">ល</span><span class="bouncing-letter">អ្នក</span><span class="bouncing-letter">វាយ</span><span class="bouncing-letter">អក្សរ</span> (80+ WPM)
+    <div class="chat-title-wrapper">
+        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
     </div>
-    <div id="leaderboard-box" style="height: 250px; overflow-y: auto; border: 1px solid var(--input-border); border-radius: 15px; padding: 15px; background: rgba(255,255,255,0.5);">
-      <table style="width: 100%; border-collapse: collapse;">
+    <div id="chat-box"></div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12">
+        <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
+        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+        <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
+        <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
+    </div>
+    <div style="text-align: left; margin-top: 10px;">
+        <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
+        <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
+    </div>
+</div> 
+
+<div class="chat-container" style="margin-top: 20px;">
+  <div class="chat-title-wrapper" style="text-align: center;">
+    <span class="bouncing-letter">🏆</span> <span class="bouncing-letter">តា</span><span class="bouncing-letter">រាង</span><span class="bouncing-letter">ខ្លាំង</span><span class="bouncing-letter">ពូ</span><span class="bouncing-letter">កែ</span>
+    </div>
+    <div style="overflow-x: auto;">
+      <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1); color: var(--text-color); border-radius: 15px;">
         <thead>
-          <tr style="border-bottom: 2px solid var(--primary-color);">
-            <th style="padding: 10px; text-align: left;">Rank</th>
-            <th style="text-align: left;">Name</th>
-            <th style="text-align: center;">Speed</th>
-            <th style="text-align: right;">Time</th> </tr>
+          <tr style="background: var(--primary-color); color: white;">
+            <th style="padding: 12px;">លេខ</th>
+            <th style="padding: 12px; text-align: left;">ឈ្មោះអ្នកលេង</th>
+            <th style="padding: 12px;">WPM</th>
+            <th style="padding: 12px;">កាលបរិច្ឆេទ</th>
+            </tr>
             </thead>
-            <tbody id="leaderboard-body"></tbody>
+            <tbody id="leaderboard-body" style="text-align: center;">
               </tbody>
               </table>
-              </div>
-              </div>
-
+          </div>
+      </div>
     
 <div class="monetization-wrapper">
     <div class="ads-space">
@@ -402,8 +450,8 @@
 
     function switchLang(lang) {
         currentLang = lang;
-        document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('btn-' + lang).classList.add('active');
+        const select = document.getElementById('lang-select');
+        if (select) select.value = lang;
         resetGame();
     }
 
@@ -419,6 +467,34 @@
         });
         quoteDisplay.scrollTop = 0;
     }
+    
+    function showResults() {
+      clearInterval(timerInterval);
+      inputField.disabled = true;
+      
+      const finalWPM = parseInt(wpmElement.innerText);
+      const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
+      
+      document.getElementById('result-overlay').style.display = 'flex';
+      document.getElementById('result-overlay').style.display = 'flex';
+      document.getElementById('res-wpm').innerText = finalWPM;
+      document.getElementById('res-errors-final').innerText = wrongWords;
+      document.getElementById('res-acc').innerText = acc;
+      
+      if (finalWPM > 5) { 
+      setTimeout(() => {
+        let playerName = prompt("អបអរសាទរ! សូមបញ្ចូលឈ្មោះរបស់អ្នកដើម្បីដាក់ក្នុងតារាងពិន្ទុ:", "អ្នកលេង");
+        if (playerName) {
+          database.ref('leaderboard').push({
+            name: playerName,
+            wpm: finalWPM,
+            date: new Date().toLocaleDateString()
+          });
+        }
+      }, 1500);
+      }
+    }
+      
 
     inputField.addEventListener('input', () => {
         if (!isStarted) startTimer();
@@ -472,7 +548,6 @@
     });
 
     function startTimer() {
-        if (timerInterval) return;
         timerInterval = setInterval(() => {
             if (timeLeft > 0) { timeLeft--; timerElement.innerText = timeLeft; updateWPM(); }
             else { showResults(); }
@@ -501,39 +576,12 @@
         const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
         document.getElementById('res-acc').innerText = acc;
     }
-    
-    function showResults() {
-      clearInterval(timerInterval);
-      inputField.disabled = true;
-      const finalWpm = parseInt(wpmElement.innerText);
-      const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
-      
-      document.getElementById('result-overlay').style.display = 'flex';
-      document.getElementById('res-wpm').innerText = finalWpm;
-      document.getElementById('res-errors-final').innerText = wrongWords;
-      document.getElementById('res-acc').innerText = acc;
-      
-      if (finalWpm >= 80) {
-      let userName = prompt("អស្ចារ្យ! ល្បឿនអ្នកលើសពី 80WPM! សូមបញ្ចូលឈ្មោះរបស់អ្នក៖");
-      if (userName) {
-        const now = new Date();
-        const timeString = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
-        
-        database.ref('leaderboard').push({
-          name: userName,
-          wpm: finalWpm,
-          time: timeString,
-          timestamp: firebase.database.ServerValue.TIMESTAMP
-        });
-      }
-      }
-    }
 
     function resetGame() {
-        clearInterval(timerInterval); timerInterval = null;
-        timeLeft = 60; isStarted = false; currentWordIndex = 0; correctChars = 0; wrongWords = 0; totalKeystrokes = 0;
+       clearInterval(timerInterval);
+       timeLeft = 60; isStarted = false; currentWordIndex = 0; correctChars = 0; wrongWords = 0; totalKeystrokes = 0;
         timerElement.innerText = 60; wpmElement.innerText = 0; errorElement.innerText = 0;
-        inputField.disabled = false; inputField.value = '';
+        inputField.disabled = false; 
         document.getElementById('result-overlay').style.display = 'none';
         prepareWords();
         inputField.focus();
@@ -575,28 +623,28 @@
     database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (snapshot) => {
       const leaderboardBody = document.getElementById('leaderboard-body');
       leaderboardBody.innerHTML = '';
-      let players = [];
+      let scores = [];
       
-      snapshot.forEach((childSnapshot) => {
-        players.push(childSnapshot.val());
-      });
+      snapshot.forEach((child) => { scores.push(child.val()); });
       
-      players.sort((a, b) => b.wpm - a.wpm);
-      
-      players.forEach((player, index) => {
+      scores.reverse().forEach((data, index) => {
         const row = `
-        <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
         <td style="padding: 10px;">${index + 1}</td>
-        <td>${player.name}</td>
-        <td style="text-align: right; font-weight: bold; color: var(--primary-color);">${player.wpm} WPM</td>
-        </tr>`;
+        <td style="padding: 10px; text-align: left; font-weight: bold; color: #00f2ff;">${data.name}</td>
+        <td style="padding: 10px; color: #2ecc71; font-weight: bold;">${data.wpm}</td>
+        <td style="padding: 10px; font-size: 0.8rem; color: #888;">${data.date}</td>
+        </tr>
+        `;
         leaderboardBody.innerHTML += row;
       });
     });
         
+    
 </script>
 </body>
 </html>
+
 
 
 
