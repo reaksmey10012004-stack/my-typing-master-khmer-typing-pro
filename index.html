@@ -146,6 +146,16 @@
             overflow-x: hidden;
             color: var(--text-color);
             transition: background-color 0.4s ease, color 0.3s;
+            
+            .app-title {
+              font-size: 2.5rem;
+              color: #4a90e2; 
+              font-weight: bold;
+              text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); 
+              background: rgba(255, 255, 255, 0.5); 
+              padding: 10px 20px;
+              border-radius: 15px;
+              display: inline-block;
         }
 
         @keyframes danceAndColor {
@@ -200,7 +210,7 @@
         .char-correct { color: var(--primary-color); }
         .char-incorrect { background: var(--error-color); color: white; border-radius: 2px; }
 
-        #input-field { width: 100%; height: 60px; padding: 10px; font-size: 1.5rem; border: 2px solid var(--input-border); border-radius: 15px; text-align: center; background: var(--quote-bg); color: var(--text-color); }
+        #input-field { width: 100%; height: 60px; padding: 10px; font-size: 1.5rem; border: 2px solid var(--input-border); border-radius: 15px; text-align: center; background: rgba(#77f7f7); color: #77f7f7W(--text-color); }
 
         .chat-container { background: var(--container-bg); padding: 20px; border-radius: 25px; box-shadow: var(--shadow); width: 85%; max-width: 850px; z-index: 10; margin-top: 30px; margin-bottom: 30px; }
         #chat-box { height: 180px; overflow-y: auto; border: 1px solid var(--input-border); border-radius: 15px; padding: 15px; margin-bottom: 10px; text-align: left; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://uploads.onecompiler.io/44b5h5aqk/44b5hdk96/Screenshot_14.png'); background-size: cover; background-position: center; color: white; }
@@ -295,8 +305,8 @@
     <div class="auth-content">
         <span class="close-btn" onclick="closeModal('loginModal')">&times;</span>
         <div class="auth-tabs">
-            <button class="tab-btn active" onclick="showAuth('login')">Login</button>
-            <button class="tab-btn" onclick="showAuth('register')">Create Account</button>
+            <button id="tab-login" class="tab-btn active" onclick="showAuth('login')">Login</button>
+            <button id="tab-register" class="tab-btn" onclick="showAuth('register')">Create Account</button>
         </div>
 
         <div id="loginForm" class="auth-form">
@@ -307,9 +317,9 @@
             </div>
             <hr style="margin: 20px 0;">
             <h2 style="color: #e67e22;">Email Login</h2>
-            <input type="email" placeholder="Email" class="auth-input">
-            <input type="password" placeholder="Password" class="auth-input">
-            <button class="btn-submit-login" onclick="loginWithEmail()" style="background: #5bc0de; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">Login</button>
+            <input type="email" id="email-login" placeholder="Email" class="auth-input">
+            <input type="password" id="pass-login" placeholder="Password" class="auth-input">
+            <button onclick="loginWithEmail()" style="background: var(--primary-color); color:white; width:100%; padding:12px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:10px;">Login</button>
             <p><a href="#" style="color: #4a90e2; font-size: 0.8rem;">Forgot your Password?</a></p>
         </div>
 
@@ -318,9 +328,9 @@
             <input type="text" placeholder="Username" class="auth-input">
             <input type="password" placeholder="Password" class="auth-input">
             <input type="password" placeholder="Confirm Password" class="auth-input">
-            <input type="email" placeholder="Email" class="auth-input">
-            <input type="email" placeholder="Confirm Email" class="auth-input">
-            <button class="btn-submit-register" onclick="registerWithEmail()" style="background: #5cb85c; color:white; width:100%; padding:10px; border:none; border-radius:5px; cursor:pointer; margin-top:10px;">Create your account</button>
+            <input type="email" id="email-reg" placeholder="Email" class="auth-input">
+            <input type="password" id="pass-reg" placeholder="Password" class="auth-input">
+            <button onclick="registerWithEmail()" style="background: var(--success-color); color:white; width:100%; padding:12px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; margin-top:10px;">Sign Up</button>
         </div>
     </div>
 </div>
@@ -350,9 +360,10 @@
 <div class="typing-container">
     <div class="header-wrapper">
         <h1 class="app-title">𓂀 𝕋𝕐ℙ𝕀ℕ𝔾 𝕂ℍ𝕄𝔼ℝ ℙℝ𝕆 𓂀</h1>
+        <button id="login-btn-top" onclick="handleAuthAction()" style="margin-left: 10px; padding: 7px 15px; border-radius: 20px; background: white; color: black; border: 1px solid #ccc; cursor: pointer; font-weight: bold; font-family: 'Kantumruy Pro';">LOGIN</button>
     </div>
 
-    <div class="lang-switcher-container">
+        <div class="lang-switcher-container">
         <span style="margin-right: 10px; font-weight: bold; color: var(--primary-color);">ជ្រើសរើសភាសា៖</span>
        <select id="lang-select" onchange="switchLang(this.value)">
        <option value="kh">Khmer Latin</option>
@@ -368,15 +379,23 @@
         <div class="stat-box">🚀WPM: <span id="wpm">0</span></div>
         <div class="stat-box">❌កំហុស: <span id="errors">0</span></div>
     </div>
+    
+     <div id="user-display-area" style="text-align: right; margin-bottom: 5px; font-weight: bold; color: var(--primary-color); min-height: 20px;">
+    <span id="welcome-name" style="font-size: 0.9rem; padding: 5px 10px; background: rgba(74, 144, 226, 0.1); border-radius: 10px;"></span>
+</div>
+<div id="user-display-area" style="text-align: right; margin-bottom: 5px; font-weight: bold; color: var(--primary-color); min-height: 20px;">
+    <span id="welcome-name"></span>
+</div>
 
     <div id="speed-status"><span>ត្រៀមខ្លួនរួចរាល់!</span></div>
     <div id="quote-display"></div>
     <input type="text" id="input-field" placeholder="ចាប់ផ្ដើមវាយនៅទីនេះ..." autofocus autocomplete="off">
-    <input type="text" id="robot-check" style="display:none;" tabindex="-1" autocomplete="off">
     
     <div style="margin-top: 15px;">
         <button class="btn-reset" style="background: var(--secondary-color); padding: 10px 20px; border-radius: 20px; color: white; border: none; cursor: pointer;" onclick="resetGame()">ចាប់ផ្ដើមឡើងវិញ</button>
     </div>
+    
+    
 
     <div id="result-overlay">
         <div style="background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.2); width: 80%; color: white;">
@@ -407,26 +426,46 @@
     </div>
 </div>
 
-<div class="chat-container" style="margin-top: 20px;">
-  <div class="chat-title-wrapper" style="text-align: center;">
-    <span class="bouncing-letter">🏆</span> <span class="bouncing-letter">តា</span><span class="bouncing-letter">រាង</span><span class="bouncing-letter">ខ្លាំង</span><span class="bouncing-letter">ពូ</span><span class="bouncing-letter">កែ</span>
+<div class="chat-container">
+    <div class="chat-title-wrapper">
+        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
     </div>
-    <div style="overflow-x: auto;">
-      <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.1); color: var(--text-color); border-radius: 15px;">
+    <div id="chat-box"></div>
+    <div class="chat-input-area">
+        <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12">
+        <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
+        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+        <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
+        <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
+    </div>
+    <div style="text-align: left; margin-top: 10px;">
+        <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
+        <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
+        <button class="btn-chat-send" style="background: var(--error-color); margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
+    </div>
+</div> 
+
+<div class="chat-container">
+  <div class="chat-title-wrapper">
+    <span class="bouncing-letter">🏆</span> <span class="bouncing-letter">កំ</span><span class="bouncing-letter">ពូ</span><span class="bouncing-letter">ល</span><span class="bouncing-letter">អ្នក</span><span class="bouncing-letter">វាយ</span><span class="bouncing-letter">អក្សរ</span> (80+ WPM)
+    </div>
+    <div id="leaderboard-box" style="height: 250px; overflow-y: auto; border: 1px solid var(--input-border); border-radius: 15px; padding: 15px; background: rgba(255,255,255,0.5);">
+      <table style="width: 100%; border-collapse: collapse;">
         <thead>
-          <tr style="background: var(--primary-color); color: white;">
-            <th style="padding: 12px;">លេខ</th>
-            <th style="padding: 12px; text-align: left;">ឈ្មោះអ្នកលេង</th>
-            <th style="padding: 12px;">WPM</th>
-            <th style="padding: 12px;">កាលបរិច្ឆេទ</th>
-            </tr>
+          <tr style="border-bottom: 2px solid var(--primary-color);">
+            <th style="padding: 10px; text-align: left;">Rank</th>
+            <th style="text-align: left;">Name</th>
+            <th style="text-align: center;">Speed</th>
+            <th style="text-align: right;">Time</th> </tr>
             </thead>
-            <tbody id="leaderboard-body" style="text-align: center;">
+            <tbody id="leaderboard-body"></tbody>
               </tbody>
               </table>
-          </div>
-      </div>
-      <div id="fb-root"></div>
+              </div>
+              </div>
+
+    
+    <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 <script>
 
@@ -471,14 +510,43 @@ function loginWithFacebook() {
 
 function openModal(id) { document.getElementById(id).style.display = 'block'; }
 function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function showAuth(type) {
 function showAuth(type) {
     if(type === 'login') {
-        document.getElementById('loginForm').style.display = 'block';
-        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = (type === 'login') ? 'block' : 'none';
+        document.getElementById('registerForm').style.display = (type === 'register') ? 'block' : 'none';
+        document.getElementById('tab-login').classList.toggle('active', type === 'login');
+        document.getElementById('tab-register').classList.toggle('active', type === 'register');
     } else {
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'block';
     }
+    
+    function loginWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then(() => closeModal('loginModal')).catch(e => alert(e.message));
+    }
+
+    function loginWithEmail() {
+        const email = document.getElementById('email-login').value;
+        const pass = document.getElementById('pass-login').value;
+        auth.signInWithEmailAndPassword(email, pass).then(() => closeModal('loginModal')).catch(e => alert(e.message));
+    }
+
+    function registerWithEmail() {
+        const email = document.getElementById('email-reg').value;
+        const pass = document.getElementById('pass-reg').value;
+        auth.createUserWithEmailAndPassword(email, pass).then(() => { alert("ចុះឈ្មោះជោគជ័យ!"); showAuth('login'); }).catch(e => alert(e.message));
+    }
+
+    auth.onAuthStateChanged(user => {
+        const btn = document.getElementById('login-btn-top');
+        if (user) {
+            btn.innerText = (user.displayName || user.email.split('@')[0]).toUpperCase();
+            btn.style.background = "#2ecc71"; btn.style.color = "white";
+        } else {
+            btn.innerText = "LOGIN"; btn.style.background = "white"; btn.style.color = "black";
+        }
 }
     });
   };
@@ -511,54 +579,122 @@ function showAuth(type) {
 
 <script>
     const firebaseConfig = {
-        apiKey: "AIzaSyDPVgXnpDpNQ3VEd8s_ZLJzSes_TLGJdfA",
-        authDomain: "reaksmey-65dcb.firebaseapp.com",
-        databaseURL: "https://reaksmey-65dcb-default-rtdb.firebaseio.com",
-        projectId: "reaksmey-65dcb",
-        storageBucket: "reaksmey-65dcb.firebasestorage.app",
-        messagingSenderId: "490711300158",
-        appId: "1:490711300158:web:5a338becc8a57d7045b96f"
+        apiKey: "AIzaSyBHE1_d1mecPD9ZOMXsNmiCVD5k0w3BJU8",
+        authDomain: "tmeyjes-d85fe.firebaseapp.com",
+        databaseURL: "https://tmeyjes-d85fe-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "tmeyjes-d85fe",
+        storageBucket: "tmeyjes-d85fe.appspot.com",
+        messagingSenderId: "812192382614",
+        appId: "1:812192382614:web:4676d302ad0f593035ccb7"
     };
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
+    const auth = firebase.auth();
     const chatRef = database.ref('global_messages');
     const MY_ADMIN_PASS = "reaksmey10012004@";
     
-function saveToLeaderboard(wpm) {
-    let botTrap = document.getElementById('robot-check').value;
-    if (botTrap !== "") {
-      console.log("Bot Detected!");
-      return
+    function clearAllChat() {
+      const adminPass = document.getElementById('admin-code').value;
+      if (adminPass === MY_ADMIN_PASS) {
+        if (confirm("តើអ្នកពិតជាចង់លុបសារទាំងអស់មែនទេ?")) {
+          chatRef.remove()
+          .then(() => {
+            alert("លុបជោគជ័យ!");
+            document.getElementById('admin-code').value = ""; 
+          })
+          .catch((err) => { alert("កំហុស: " + err.message); });
+        }
+      } else {
+        alert("លេខសម្ងាត់ Admin មិនត្រឹមត្រូវទេ!");
+      }
     }
-      
-      if (wpm > 150) {
-    alert("ល្បឿនរបស់អ្នកលឿនខុសធម្មតា! ប្រព័ន្ធសង្ស័យថាអ្នកប្រើ Bot។");
-    return;
-  }
+    function sendChatMessage() {
+      const user = document.getElementById('chat-user-input').value || "Anonymous";
+      const msg = document.getElementById('chat-msg-input').value;
+      if (msg.trim() !== "") {
+        chatRef.push({ username: user, text: msg, type: "text", time: Date.now() });
+        document.getElementById('chat-msg-input').value = "";
+      }
+    }
+    
+    function sendChatImage(input) {
+      const user = document.getElementById('chat-user-input').value || "Anonymous";
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          chatRef.push({ username: user, image: e.target.result, type: "image", time: Date.now() });
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+    
+    chatRef.on('value', (snapshot) => {
+      const chatBox = document.getElementById('chat-box');
+      const data = snapshot.val();
+      if (data) {
+        Object.keys(data).forEach(key => {
+          const msg = data[key];
+          const div = document.createElement('div');
+          div.className = 'chat-entry';
+          if (msg.type === "image") {
+            div.innerHTML = `<span><strong>${msg.username}:</strong> <br><img src="${msg.image}" style="max-width:150px; border-radius:10px; margin-top:5px;"></span>`;
+          } else {
+            div.innerHTML = `<span><strong>${msg.username}:</strong> ${msg.text}</span>`;
+          }
+          chatBox.appendChild(div);
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    });
+    
+    function saveToLeaderboard(wpm) {
+    if (wpm < 20) return;
+
     let playerName = document.getElementById('chat-user-input').value || "អ្នកលេងអនាមិក";
+    
+    const now = Date.now();
+    const expiryTime = now + (24 * 60 * 60 * 1000); 
+
     const record = {
         name: playerName,
         wpm: wpm,
-        date: new Date().toLocaleDateString('km-KH')
+        timestamp: now,
+        expiry: expiryTime, 
+        date: new Date().toLocaleTimeString('km-KH') + " " + new Date().toLocaleDateString('km-KH')
     };
+
     database.ref('leaderboard').push(record);
 }
 
-database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (snapshot) => {
+database.ref('leaderboard').on('value', (snapshot) => {
     const leaderboardBody = document.getElementById('leaderboard-body');
     leaderboardBody.innerHTML = "";
     let records = [];
-    snapshot.forEach((child) => { records.push(child.val()); });
-    records.reverse().forEach((data, index) => {
+    const now = Date.now();
+
+    snapshot.forEach((child) => {
+        const data = child.val();
+        
+        if (data.expiry && data.expiry < now) {
+            database.ref('leaderboard').child(child.key).remove();
+        } else {
+            records.push(data);
+        }
+    });
+
+    records.sort((a, b) => b.wpm - a.wpm);
+
+    records.forEach((data, index) => {
         leaderboardBody.innerHTML += `
-            <tr>
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                 <td style="padding:10px;">${index + 1}</td>
                 <td style="padding:10px; text-align:left;">${data.name}</td>
-                <td style="padding:10px; font-weight:bold; color:#2ecc71;">${data.wpm}</td>
-                <td style="padding:10px; font-size:0.8rem;">${data.date}</td>
+                <td style="padding:10px; font-weight:bold; color:#00f2ff;">${data.wpm}</td>
+                <td style="padding:10px; font-size:0.7rem; color: #888;">${data.date}</td>
             </tr>`;
     });
 });
+
 
     const chain = document.getElementById('chain');
     const lampImg = document.getElementById('lamp-img');
@@ -589,7 +725,7 @@ database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (sna
     function switchLang(lang) {
         currentLang = lang;
         const select = document.getElementById('lang-select');
-        if (select) select.value = lang;
+                if (select) select.value = lang;
         resetGame();
     }
 
@@ -606,7 +742,7 @@ database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (sna
         quoteDisplay.scrollTop = 0;
     }
     
-    function showResults() {
+        function showResults() {
       clearInterval(timerInterval);
       inputField.disabled = true;
       
@@ -632,7 +768,6 @@ database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (sna
       }, 1500);
       }
     }
-      
 
     inputField.addEventListener('input', () => {
         if (!isStarted) startTimer();
@@ -692,7 +827,7 @@ database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (sna
         }, 1000);
     }
 
-    function updateWPM() {
+     function updateWPM() {
         const timePassed = (60 - timeLeft) / 60;
         const wpm = timePassed > 0 ? Math.round((correctChars / 5) / timePassed) : 0;
         wpmElement.innerText = wpm;
@@ -717,12 +852,39 @@ database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (sna
           saveToLeaderboard(wpm);
         }
     }
+    
+    function showResults() {
+      clearInterval(timerInterval);
+      inputField.disabled = true;
+      const finalWpm = parseInt(wpmElement.innerText);
+      const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
+      
+      document.getElementById('result-overlay').style.display = 'flex';
+      document.getElementById('res-wpm').innerText = finalWpm;
+      document.getElementById('res-errors-final').innerText = wrongWords;
+      document.getElementById('res-acc').innerText = acc;
+      
+      if (finalWpm >= 30) {
+      let userName = prompt("អស្ចារ្យ! ល្បឿនអ្នកលើសពី 80WPM! សូមបញ្ចូលឈ្មោះរបស់អ្នក៖");
+      if (userName) {
+        const now = new Date();
+        const timeString = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
+        
+        database.ref('leaderboard').push({
+          name: userName,
+          wpm: finalWpm,
+          time: timeString,
+          timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+      }
+      }
+    }
 
     function resetGame() {
-       clearInterval(timerInterval);
-       timeLeft = 60; isStarted = false; currentWordIndex = 0; correctChars = 0; wrongWords = 0; totalKeystrokes = 0;
+        clearInterval(timerInterval); timerInterval = null;
+        timeLeft = 60; isStarted = false; currentWordIndex = 0; correctChars = 0; wrongWords = 0; totalKeystrokes = 0;
         timerElement.innerText = 60; wpmElement.innerText = 0; errorElement.innerText = 0;
-        inputField.disabled = false; 
+        inputField.disabled = false; inputField.value = '';
         document.getElementById('result-overlay').style.display = 'none';
         prepareWords();
         inputField.focus();
@@ -764,54 +926,90 @@ database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (sna
     database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (snapshot) => {
       const leaderboardBody = document.getElementById('leaderboard-body');
       leaderboardBody.innerHTML = '';
-      let scores = [];
+      let players = [];
       
-      snapshot.forEach((child) => { scores.push(child.val()); });
+      snapshot.forEach((childSnapshot) => {
+        players.push(childSnapshot.val());
+      });
       
-      scores.reverse().forEach((data, index) => {
+      players.sort((a, b) => b.wpm - a.wpm);
+      
+      players.forEach((player, index) => {
         const row = `
-        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+        <tr style="border-bottom: 1px solid rgba(0,0,0,0.1);">
         <td style="padding: 10px;">${index + 1}</td>
-        <td style="padding: 10px; text-align: left; font-weight: bold; color: #00f2ff;">${data.name}</td>
-        <td style="padding: 10px; color: #2ecc71; font-weight: bold;">${data.wpm}</td>
-        <td style="padding: 10px; font-size: 0.8rem; color: #888;">${data.date}</td>
-        </tr>
-        `;
+        <td>${player.name}</td>
+        <td style="text-align: right; font-weight: bold; color: var(--primary-color);">${player.wpm} WPM</td>
+        </tr>`;
         leaderboardBody.innerHTML += row;
       });
     });
+    
+        function openModal(id) { document.getElementById(id).style.display = 'block'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function showAuth(type) {
+        document.getElementById('loginForm').style.display = (type === 'login') ? 'block' : 'none';
+        document.getElementById('registerForm').style.display = (type === 'register') ? 'block' : 'none';
+        document.getElementById('tab-login').classList.toggle('active', type === 'login');
+        document.getElementById('tab-register').classList.toggle('active', type === 'register');
+    }
+
+    function loginWithGoogle() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then(() => closeModal('loginModal')).catch(e => alert(e.message));
+    }
+
+    function loginWithEmail() {
+        const email = document.getElementById('email-login').value;
+        const pass = document.getElementById('pass-login').value;
+        auth.signInWithEmailAndPassword(email, pass).then(() => closeModal('loginModal')).catch(e => alert(e.message));
+    }
+
+    function registerWithEmail() {
+        const email = document.getElementById('email-reg').value;
+        const pass = document.getElementById('pass-reg').value;
+        auth.createUserWithEmailAndPassword(email, pass).then(() => { alert("ចុះឈ្មោះជោគជ័យ!"); showAuth('login'); }).catch(e => alert(e.message));
+    }
+
+ auth.onAuthStateChanged(user => {
+            const btn = document.getElementById('login-btn-top');
+            const welcome = document.getElementById('welcome-name');
+            if (user) {
+                const name = user.displayName || user.email.split('@')[0];
+                btn.innerText = name.toUpperCase();
+                btn.style.background = "#2ecc71";
+                welcome.innerText = "សួស្តី, " + name;
+            } else {
+                btn.innerText = "LOGIN";
+                btn.style.background = "white";
+                welcome.innerText = "";
+            }
+        });
+
+        // Chat Logic
+        function sendChatMessage() {
+            const user = document.getElementById('chat-user-input').value || "Anonymous";
+            const msg = document.getElementById('chat-msg-input').value;
+            if (msg.trim()) {
+                chatRef.push({ username: user, text: msg, time: Date.now() });
+                document.getElementById('chat-msg-input').value = "";
+            }
+        }
+
+        chatRef.limitToLast(20).on('child_added', snapshot => {
+            const data = snapshot.val();
+            const div = document.createElement('div');
+            div.innerHTML = `<b>${data.username}:</b> ${data.text}`;
+            document.getElementById('chat-box').appendChild(div);
+            document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+        });
         
-    function openModal(id) {
-    document.getElementById(id).style.display = "block";
-}
-function closeModal(id) {
-    document.getElementById(id).style.display = "none";
-}
-function showAuth(type) {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const tabs = document.querySelectorAll('.tab-btn');
-    if (type === 'login') {
-        loginForm.style.display = 'block';
-        registerForm.style.display = 'none';
-        tabs[0].classList.add('active');
-        tabs[1].classList.remove('active');
-    } else {
-        loginForm.style.display = 'none';
-        registerForm.style.display = 'block';
-        tabs[0].classList.remove('active');
-        tabs[1].classList.add('active');
-    }
-}
-window.addEventListener('click', function(event) {
-    const modal = document.getElementById('loginModal');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-});
 </script>
 </body>
 </html>
+
+
+
 
 
 
