@@ -18,6 +18,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 
 <html lang="km">
@@ -246,30 +248,15 @@
 
 
         body {
-
-            font-family: 'Kantumruy Pro', sans-serif;
-
-            background: var(--bg-color) url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2t5ZTJ6YWl4bHdpcWtlb2c0dzlncnAwMzd2eHF5d2RyNGk1OGw0YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b0mGO0C6SPEn7jmfrI/giphy.gif') no-repeat center center fixed;
-
-            background-size: cover;
-
-            display: flex;
-
-            flex-direction: column;
-
-            justify-content: center;
-
-            align-items: center;
-
-            min-height: 100vh;
-
-            margin: 0;
-
-            overflow-x: hidden;
-
-            color: var(--text-color);
-
-            transition: background-color 0.4s ease, color 0.3s;
+margin: 0;
+    padding-left: 240px; 
+    font-family: 'Kantumruy Pro', sans-serif;
+    background: var(--bg-color) url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2t5ZTJ6YWl4bHdpcWtlb2c0dzlncnAwMzd2eHF5d2RyNGk1OGw0YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b0mGO0C6SPEn7jmfrI/giphy.gif') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--text-color);
+}
 
             
 
@@ -339,7 +326,9 @@
 
         .led-sidebar { position: fixed; top: 0; width: 70px; height: 100%; background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(5px); display: flex; flex-direction: column; overflow: hidden; border-left: 2px solid var(--primary-color); border-right: 2px solid var(--primary-color); z-index: 1; }
 
-        .left-led { left: 0; }
+.left-led {
+    left: 240px; 
+}
 
         .right-led { right: 0; }
 
@@ -437,7 +426,7 @@
 
            
 
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb2t5ZTJ6YWl4bHdpcWtlb2c0dzlncnAwMzd2eHF5d2RyNGk1OGw0YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/b0mGO0C6SPEn7jmfrI/giphy.gif');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('');
 
             background-size: cover;
 
@@ -466,12 +455,6 @@
         .lang-switcher-container {
 
           margin-bottom: 25px;
-
-          display: flex;
-
-          justify-content: center;
-
-          align-items: center;
 
           background: rgba(255, 255, 255, 0.1);
 
@@ -573,100 +556,86 @@
 
 .close-btn { position: absolute; right: 15px; top: 5px; font-size: 25px; cursor: pointer; color: #333; }
 
-body {
-    margin: 0;
-    padding: 0;
-    padding-left: 240px; 
-    background-color: #1a1a2e; 
-    transition: padding 0.3s ease;
-}
-
 
 .side-menu {
     position: fixed;
     left: 0;
     top: 0;
     width: 240px;
-    height: 100vh;
-    background: #12181b; 
+    height: 100vh; 
+    background: #12181b;
     color: white;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     z-index: 4000;
     border-right: 1px solid #2c3e50;
 }
 
-.menu-header { 
-    padding: 30px 20px; 
-    text-align: center; 
-}
 
-.pro-typer { 
-    color: #f1c40f; 
-    font-size: 1.5rem; 
-    font-weight: bold; 
-    margin: 0; 
-}
+.menu-header { padding: 30px 20px; text-align: center; }
 
+.pro-typer { color: #f1c40f; font-size: 1.5rem; font-weight: bold; margin: 0; }
 
-.menu-links { 
-    flex-grow: 1; 
-    margin-top: 20px; 
-    display: flex;
-    flex-direction: column; 
-}
+.menu-links { flex-grow: 1; margin-top: 20px; }
 
 .menu-item {
+
     display: flex;
+
     align-items: center;
+
     padding: 15px 25px;
+
     color: #bdc3c7;
+
     text-decoration: none;
+
     transition: 0.3s;
-    border-left: 4px solid transparent;
+
 }
 
 .menu-item:hover, .menu-item.active {
+
     background: rgba(241, 196, 15, 0.1);
+
     color: #f1c40f;
+
     border-left: 4px solid #f1c40f;
+
 }
 
-.menu-item .icon {
-    margin-right: 15px;
-    font-size: 1.2rem;
-}
-
-.menu-footer { 
-    padding: 20px; 
-    border-top: 1px solid #2c3e50; 
-    text-align: center;
-}
+.menu-footer { padding: 20px; border-top: 1px solid #2c3e50; }
 
 .login-btn-side {
+
     width: 100%;
+
     padding: 12px;
+
     background: #f1c40f;
+
     border: none;
+
     border-radius: 8px;
+
     font-weight: bold;
+
     cursor: pointer;
+
 }
 
+
+body { padding-left: 240px !important; }
+
+
+
 @media (max-width: 1024px) {
-    .side-menu {
-        width: 80px; 
-    }
-    .side-menu .pro-typer, 
-    .side-menu .menu-item span:not(.icon), 
-    .side-menu .menu-footer p {
-        display: none; 
-    }
-    body {
-        padding-left: 80px; 
-    }
+
+    .side-menu { display: none; }
+
+    body { padding-left: 0 !important; }
+
 }
-            
 #race-track-container {
         background: #1a1a1a;
         border: 4px solid #333;
@@ -745,6 +714,312 @@ body {
     .menu-container button, .menu-container select {
         padding: 10px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;
     }
+    
+    
+    scroll-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    margin: 100px auto;
+}
+
+
+.typing-container, .chat-container {
+    position: relative;
+    background: #fdfaf1 !important; 
+    background-image: linear-gradient(
+        to right, 
+        rgba(0,0,0,0.1) 0%, 
+        transparent 10%, 
+        transparent 90%, 
+        rgba(0,0,0,0.1) 100%
+    ) !important;
+    padding: 40px 60px !important;
+    border-top: 4px solid #d4a373;
+    border-bottom: 4px solid #d4a373; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    z-index: 1;
+    min-height: 200px;
+}
+
+
+.left-wood, .right-wood {
+    position: absolute;
+    top: -15px;
+    bottom: -15px;
+    width: 35px;
+    background: linear-gradient(to right, #3e2723, #8b6b43, #5d4037, #3e2723);
+    border-radius: 5px;
+    z-index: 10;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+}
+
+.left-wood { left: -18px; }
+.right-wood { right: -18px; }
+
+
+.left-wood::before, .left-wood::after, 
+.right-wood::before, .right-wood::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px; 
+    height: 15px;
+    background: radial-gradient(circle, #d4a373, #8b6b43, #3e2723);
+    border: 2px solid #2b1d1a;
+    border-radius: 50% 50% 5px 5px; 
+}
+
+
+.left-wood::before, .right-wood::before { top: -10px; } 
+.left-wood::after, .right-wood::after { 
+    bottom: -10px; 
+    border-radius: 5px 5px 50% 50%; 
+}
+
+
+.left-wood::before, .right-wood::before {
+    box-shadow: 0 -8px 0 -2px #3e2723, 0 -12px 0 -4px #8b6b43;
+}
+.left-wood::after, .right-wood::after {
+    box-shadow: 0 8px 0 -2px #3e2723, 0 12px 0 -4px #8b6b43;
+}
+
+
+.typing-container::before {
+    content: "";
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 1px solid rgba(139, 107, 67, 0.2);
+    pointer-events: none;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    background: #3e2723;
+    color: #fdf5e6;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 2px solid #d4a373; 
+    font-size: 0.9rem;
+    flex: 1;
+    margin: 0 5px;
+    text-align: center;
+    box-shadow: 0 4px 0 #2b1d1a;
+}
+
+.stat-box.middle {
+    background: #5d4037;
+}
+
+
+.input-wrapper {
+    margin: 20px 0;
+}
+
+.custom-input {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.2rem;
+    border: 3px solid #d4a373; 
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #3e2723;
+    outline: none;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.custom-input:focus {
+    border-color: #8b6b43;
+    background: #ffffff;
+    box-shadow: inset 0 2px 10px rgba(0,0,0,0.1), 0 0 15px rgba(212, 163, 115, 0.4);
+}
+
+
+.retry-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 30px;
+    background: linear-gradient(to bottom, #8b6b43, #3e2723);
+    color: white;
+    border: 2px solid #d4a373;
+    border-radius: 25px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #2b1d1a, 0 8px 15px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+}
+
+.retry-btn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #2b1d1a, 0 4px 10px rgba(0,0,0,0.2);
+    filter: brightness(1.1);
+}
+
+.retry-btn:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+.sidebar {
+    background: linear-gradient(to bottom, #2b1d1a, #3e2723) !important;
+    border-right: 3px solid #bf953f;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+}
+
+
+.pro-typer-logo, .sidebar-header h1 {
+    font-family: 'Koul', sans-serif; 
+    background: linear-gradient(145deg, #bf953f, #fcf6ba, #b38728, #fbf5b7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 24px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 20px 0;
+}
+
+
+.nav-link {
+    color: #fcf6ba !important; 
+    border-radius: 0 !important;
+    transition: 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.nav-link.active, .nav-link:hover {
+    background: rgba(191, 149, 63, 0.2) !important;
+    border-left: 4px solid #fcf6ba;
+    color: #fff !important;
+}
+.khmer-scroll-wrapper {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    max-width: 900px;
+    margin: 40px auto;
+}
+
+
+.gold-pillar {
+    width: 35px;
+    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728);
+    border: 1.5px solid #6d411a;
+    position: relative;
+    z-index: 10;
+    border-radius: 5px;
+}
+
+
+.gold-pillar::before, .gold-pillar::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 15px;
+    background: radial-gradient(circle, #fcf6ba, #bf953f, #3e2723);
+    border: 2px solid #2b1d1a;
+    border-radius: 6px;
+}
+
+.gold-pillar.left { margin-right: -10px; }
+.gold-pillar.right { margin-left: -10px; }
+.gold-pillar::before { top: -10px; }
+.gold-pillar::after { bottom: -10px; }
+
+
+.main-game-box {
+    background: #fdfaf1 url('https://uploads.onecompiler.io/44b5h5aqk/44hdykbjj/Screenshot_5.png') !important;
+    padding: 40px;
+    width: 100%;
+    z-index: 5;
+    border-top: 3px solid #bf953f;
+    border-bottom: 25px solid #2b1d1a; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+
+.khmer-top-bar {
+    display: flex;
+    justify-content: space-between; */
+    align-items: center;
+    background: linear-gradient(to bottom, #4a2b0f, #8b6b43, #4a2b0f); 
+    padding: 12px 40px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 50px; 
+    border: 2px solid #f1c40f; 
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4), inset 0 2px 5px rgba(255,255,255,0.2);
+    position: relative;
+}
+
+
+.khmer-top-bar::before, .khmer-top-bar::after {
+    content: "❃"; /
+    color: #f1c40f;
+    font-size: 24px;
+    position: absolute;
+}
+.khmer-top-bar::before { left: 15px; }
+.khmer-top-bar::after { right: 15px; }
+
+
+.lang-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label-text {
+    color: #f1c40f;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.khmer-select {
+    padding: 6px 15px;
+    border-radius: 15px;
+    border: 1px solid #f1c40f;
+    background: #fdfaf1;
+    font-family: 'Kantumruy Pro', sans-serif;
+    cursor: pointer;
+    outline: none;
+}
+
+
+.login-gold-btn {
+    background: linear-gradient(#f1c40f, #b8860b);
+    color: #3e2723;
+    padding: 8px 30px;
+    border-radius: 20px;
+    border: 1px solid #3e2723;
+    font-weight: bold;
+    font-family: 'Kantumruy Pro';
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 4px 0 #7a5a0d;
+}
+
+.login-gold-btn:hover {
+    transform: scale(1.05);
+    background: linear-gradient(#fff, #f1c40f);
+    box-shadow: 0 6px 12px rgba(241, 196, 15, 0.4);
+}
+
     </style>
 
 </head>
@@ -753,35 +1028,47 @@ body {
 
   
 
-<div class="side-menu">
+  <div class="side-menu">
+
     <div class="menu-header">
-        <h2 class="pro-typer">PRO-TYPER</h2>
-        <div class="stars">✨ ✨</div>
+    <div class="pro-typer-logo">PRO-TYPER</div>
     </div>
 
-    <nav class="menu-links">
-        <a href="#" class="menu-item active" onclick="showPage('typing')">
-            <span class="icon">⌨️</span> 
-            <span>Typing Test</span>
-        </a>
+<div class="khmer-scroll-wrapper">
+    <div class="gold-pillar left"></div>
+    <div class="main-game-box">
+        </div>
+    <div class="gold-pillar right"></div>
+</div>
 
-        <a href="#" class="menu-item" onclick="showPage('race')">
-            <span class="icon">🏎️</span> 
-            <span>Multiplayer Race</span>
-        </a>
+    
 
-        <a href="#" class="menu-item">
-            <span class="icon">🏆</span> 
-            <span>Leaderboard</span>
-        </a>
-    </nav>
+<nav class="menu-links">
+    <a href="#" class="menu-item active" onclick="showPage('typing')">
+        <span class="icon">⌨️</span> Typing Test
+    </a>
+
+    <a href="#" class="menu-item" onclick="showPage('race')">
+        <span class="icon">🏎️</span> Multiplayer Race
+    </a>
+
+    <a href="#" class="menu-item" onclick="showPage('race')">
+        <span class="icon">🏆</span> Leaderboard
+    </a>
+</nav>
+
+
 
     <div class="menu-footer">
+
         <p>Guest Player</p>
+
         <button class="login-btn-side" onclick="openModal('loginModal')">Login</button>
+
     </div>
+
 </div>
-  
+
   
 
   <div id="loginModal" class="auth-modal">
@@ -949,31 +1236,30 @@ body {
 
 </div>
 </div>
+
 <div id="typing-page" class="typing-container">
-    <div class="header-wrapper">
+  <div class="scroll-pillar pillar-left"></div>
+  <div class="scroll-pillar pillar-right"></div>
+    <div class="right-wood>
     </div>
 
 
 
         <div class="lang-switcher-container">
-
-        <span style="margin-right: 10px; font-weight: bold; color: var(--primary-color);">ជ្រើសរើសភាសា៖</span>
-
-       <select id="lang-select" onchange="switchLang(this.value)">
-
-       <option value="kh">Khmer Latin</option>
-
-        <option value="en">English</option>
-
-        <option value="id">Indonesia</option>
-
-        <option value="ខ្មែរ">ខ្មែរ</option>
-
+        
+<div class="khmer-top-bar">
+    <div class="lang-group">
+        <span class="label-text">ជ្រើសរើសភាសា៖</span>
+        <select id="lang-select" onchange="switchLang(this.value)" class="khmer-select">
+            <option value="kh">Khmer Latin</option>
+            <option value="en">English</option>
+            <option value="id">Indonesia</option>
+            <option value="ខ្មែរ">ខ្មែរ</option>
         </select>
-
-        <button onclick="openModal('loginModal')" style="margin-left: 10px; padding: 7px 15px; border-radius: 20px; background: white; color: black; border: 1px solid #ccc; cursor: pointer; font-weight: bold; font-family: 'Kantumruy Pro';">LOGIN</button>
-
     </div>
+
+    <button onclick="openModal('loginModal')" class="login-gold-btn">LOGIN</button>
+</div>
 
 
 
@@ -1084,6 +1370,8 @@ body {
 
 
 <div class="chat-container">
+<div class="scroll-pillar pillar-left"></div>
+    <div class="scroll-pillar pillar-right"></div>
 
     <div class="chat-title-wrapper">
 
@@ -1122,6 +1410,8 @@ body {
 
 
 <div class="chat-container">
+<div class="scroll-pillar pillar-left"></div>
+    <div class="scroll-pillar pillar-right"></div>
 
   <div class="chat-title-wrapper">
 
@@ -1333,6 +1623,7 @@ function showAuth(type) {
 
 <div class="monetization-wrapper">
 
+
     <div class="ads-space">
 
         <p>"មានផ្សាយពាណិជ្ជកម្មនៅទីនេះ | ទាក់ទង៖ [លេខទូរសព្ទ/0964326273 Telegram]"</
@@ -1340,6 +1631,8 @@ function showAuth(type) {
           </div>  
 
     <div class="support-card">
+    <div class="scroll-pillar pillar-left"></div>
+    <div class="scroll-pillar pillar-right"></div>
 
         <h3 style="color: var(--primary-color);">☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍</h3>
 
@@ -1859,33 +2152,55 @@ function endRace(){
     alert("⏱️ អស់ពេល! ពិន្ទុអ្នក: " + score);
 
 }
+
+const texts = {
+    kh: [
+        "កម្ពុជាមាតុភូមិខ្ញុំ ជាដែនដីអច្ឆរិយៈដែលមានប្រាសាទអង្គរវត្ត។",
+        "ការរៀនសរសេរកូដ គឺជាការបើកទ្វារទៅកាន់ពិភពលោកថ្មីមួយ។",
+        "សុខភាពគឺជាទ្រព្យសម្បត្តិដ៏មានតម្លៃបំផុតរបស់មនុស្សគ្រប់រូប។",
+        "បច្ចេកវិទ្យាវិវឌ្ឍទៅមុខយ៉ាងរហ័ស ដូច្នេះយើងត្រូវតែរៀនសូត្រជានិច្ច។"
+    ],
+    en: [
+        "The quick brown fox jumps over the lazy dog.",
+        "Practice makes perfect when it comes to typing speed.",
+        "Success is not final failure is not fatal.",
+        "Coding is the language of the future start learning today."
+    ],
+    id: [
+        "Kecil maka siap selama menjadi masuk ke saat tentang.",
+        "Belajar mengetik dengan cepat membutuhkan latihan setiap hari.",
+        "Kesehatan adalah harta yang paling berharga bagi kita semua.",
+        "Teknologi berkembang sangat pesat di era digital ini."
+    ]
+};
+
 let playerName = localStorage.getItem('race_username');
 const myId = "user_" + Math.floor(Math.random() * 1000000);
-
-
-const urlParams = new URLSearchParams(window.location.search);
-const roomId = urlParams.get('room') || 'global';
-const raceRef = firebase.database().ref('/' + roomId);
-
 let selectedCar = localStorage.getItem('race_car') || "🏎️";
 let currentText = "";
 let isPlaying = false;
 let gameTimer;
 let countdownActive = false;
+let raceRef;
 
-const texts = {
-    kh: "កម្ពុជាមាតុភូមិខ្ញុំ ជាដែនដីអច្ឆរិយៈដែលមានប្រាសាទអង្គរវត្តជាដួងព្រលឹងជាតិខ្មែរគ្រប់រូប។",
-    en: "The quick brown fox jumps over the lazy dog to win the race of typing masters.",
-    id: "Indonesia adalah negara kepulauan terbesar di dunia yang memiliki keanekaragaman budaya."
-};
-
+// ចាប់ផ្តើមដំបូង
 window.onload = function() {
     changeLanguage();
 };
 
 function changeLanguage() {
     const lang = document.getElementById('lang-select').value;
-    currentText = texts[lang];
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // បង្កើត RoomID តាមភាសា ដើម្បីកុំឱ្យលាយឡំគ្នា (ឧទាហរណ៍: global_kh)
+    const roomId = urlParams.get('room') || 'global_' + lang;
+    if (raceRef) raceRef.off(); 
+    raceRef = firebase.database().ref('/' + roomId);
+
+    // រើសពាក្យថ្មីដោយចៃដន្យ
+    const langTexts = texts[lang];
+    currentText = langTexts[Math.floor(Math.random() * langTexts.length)];
+    
     renderTextDisplay(""); 
 }
 
@@ -1893,7 +2208,6 @@ function selectCar(car) {
     selectedCar = car;
     localStorage.setItem('race_car', car);
     document.getElementById('car-modal').style.display = 'none';
-    alert("ឡានត្រូវបានផ្លាស់ប្តូរទៅជា: " + car);
 }
 
 function joinRace() {
@@ -1901,9 +2215,9 @@ function joinRace() {
         playerName = prompt("សូមបញ្ចូលឈ្មោះរបស់អ្នក:") || "Player_" + Math.floor(Math.random()*100);
         localStorage.setItem('race_username', playerName);
     }
-
     document.getElementById('btn-join').style.display = 'none';
     
+    // Reset ទិន្នន័យរបស់ខ្ញុំក្នុង Firebase
     raceRef.child('players').child(myId).set({
         name: playerName,
         car: selectedCar,
@@ -1914,6 +2228,7 @@ function joinRace() {
     raceRef.child('players').child(myId).onDisconnect().remove();
     listenToRace();
 }
+
 function listenToRace() {
     raceRef.on('value', (snapshot) => {
         const data = snapshot.val() || {};
@@ -1923,11 +2238,10 @@ function listenToRace() {
         document.getElementById('p-count').innerText = pIds.length;
         renderLanes(players);
 
-
-        if (pIds.length >= 2 && !data.gameStatus) {
+        // ចាប់ផ្តើម AUTO បើមាន ២ នាក់ឡើងទៅ
+        if (pIds.length >= 2 && !data.gameStatus && !countdownActive) {
             startCountdown(); 
         }
-
 
         if (data.gameStatus === 'playing' && !isPlaying) {
             runGame(); 
@@ -1936,9 +2250,12 @@ function listenToRace() {
         if (data.gameStatus === 'starting' && !countdownActive) {
             startCountdown();
         }
+
+        if (data.gameStatus === 'finished' && isPlaying) {
+             endGame("🏁 មានអ្នកដល់ទីហើយ!");
+        }
     });
 }
-
 
 function renderLanes(players) {
     const area = document.getElementById('race-area');
@@ -1963,75 +2280,69 @@ function renderTextDisplay(inputVal) {
     let html = "";
     for (let i = 0; i < currentText.length; i++) {
         if (i < inputVal.length) {
-            if (inputVal[i] === currentText[i]) {
-                html += `<span class="char-correct">${currentText[i]}</span>`;
-            } else {
-                html += `<span class="char-wrong">${currentText[i]}</span>`;
-            }
+            html += (inputVal[i] === currentText[i]) 
+                ? `<span class="char-correct">${currentText[i]}</span>` 
+                : `<span class="char-wrong">${currentText[i]}</span>`;
         } else {
             html += `<span class="char-none">${currentText[i]}</span>`;
         }
     }
     textElement.innerHTML = html;
 }
+
 function startCountdown() {
     if (countdownActive) return; 
     countdownActive = true;
-    
-
     raceRef.child('gameStatus').set('starting');
     
-    let count = 7;
+    let count = 5;
     let cd = setInterval(() => {
         document.getElementById('msg-box').innerText = `🚦 ត្រៀមខ្លួន: ${count}`;
         count--;
-        
         if (count < 0) {
             clearInterval(cd);
             document.getElementById('msg-box').innerText = "🚀 GO!";
-
             raceRef.child('gameStatus').set('playing');
         }
     }, 1000);
 }
+
 function runGame() {
     isPlaying = true;
     const input = document.getElementById('race-input');
     input.disabled = false;
+    input.value = "";
     input.focus();
 
     let timeLeft = 60; 
-
     if (gameTimer) clearInterval(gameTimer);
 
     gameTimer = setInterval(() => {
         timeLeft--;
         document.getElementById('timer-display').innerText = `⏰ 00:${timeLeft < 10 ? '0'+timeLeft : timeLeft}`;
-        
         if (timeLeft <= 0) {
             clearInterval(gameTimer);
             endGame("⌛ អស់ម៉ោង!");
         }
     }, 1000);
 }
+
 document.getElementById('race-input').addEventListener('input', function() {
     if (!isPlaying) return;
     const val = this.value;
     renderTextDisplay(val);
 
-
     if (currentText.startsWith(val)) {
         const progress = (val.length / currentText.length) * 85;
-        const wpm = Math.round((val.length / 5) / ((60 - getRemainingTime()) / 60)) || 0;
+        const timeSpent = (60 - getRemainingTime()) / 60;
+        const wpm = Math.round((val.length / 5) / (timeSpent || 0.01)) || 0;
         
         raceRef.child('players').child(myId).update({ progress, wpm });
 
         if (val === currentText) {
             raceRef.child('gameStatus').set('finished');
-            endGame("🏁 ជោគជ័យ! អ្នកបានឈ្នះ!");
+            endGame("🏁 ជោគជ័យ! អ្នកឈ្នះ!");
         }
-    } else {
-
     }
 });
 
@@ -2049,10 +2360,27 @@ function endGame(msg) {
     document.getElementById('btn-exit').style.display = 'inline-block';
 }
 
+function restartGame() {
+    // លុបស្ថានភាពចាស់ចេញពី Firebase
+    raceRef.child('gameStatus').remove();
+    raceRef.child('players').child(myId).update({ progress: 0, wpm: 0 });
+
+    // រើសពាក្យថ្មី និង Reset UI
+    changeLanguage();
+    document.getElementById('btn-restart').style.display = 'none';
+    document.getElementById('btn-exit').style.display = 'none';
+    document.getElementById('msg-box').innerText = "";
+    document.getElementById('timer-display').innerText = "⏰ រង់ចាំ...";
+    document.getElementById('race-input').value = "";
+    
+    countdownActive = false;
+    isPlaying = false;
+}
+
 function createPrivateRace() {
     const rId = "room_" + Math.floor(Math.random() * 10000);
     const link = window.location.origin + window.location.pathname + "?room=" + rId;
-    prompt("ចម្លងលីងផ្ញើទៅមិត្តភក្តិដើម្បីលេងបន្ទប់ឯកជន:", link);
+    prompt("ចម្លងលីងផ្ញើទៅមិត្តភក្តិ:", link);
     window.location.href = link;
 }
 
@@ -2064,7 +2392,6 @@ function exitToGlobal() {
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-</html>
 
 
 
