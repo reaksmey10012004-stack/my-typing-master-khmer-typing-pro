@@ -1078,6 +1078,65 @@ body { padding-left: 240px !important; }
 }
         
 
+.donation-card {
+  position: relative;
+  width: 100%;
+  max-width: 500px; 
+  background: #242933; 
+  border-radius: 20px;
+  padding: 2px; 
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+
+
+.donation-card::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background-image: conic-gradient(
+    transparent, 
+    #00ccff, 
+    #d4af37, 
+    transparent 30%
+  );
+  animation: rotate-led 4s linear infinite;
+  z-index: -2;
+}
+
+*/
+.donation-card::after {
+  content: '';
+  position: absolute;
+  inset: 4px; 
+  background: #242933; 
+  border-radius: 16px;
+  z-index: -1;
+}
+
+
+@keyframes rotate-led {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.card-content {
+  padding: 20px;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+
     </style>
 
 </head>
@@ -1653,6 +1712,8 @@ function showAuth(type) {
     <div class="support-card">
     <div class="scroll-pillar pillar-left"></div>
     <div class="scroll-pillar pillar-right"></div>
+            <div class="donation-card">
+  <div class="card-content">
 
         <h3 style="color: var(--primary-color);">☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍</h3>
 
