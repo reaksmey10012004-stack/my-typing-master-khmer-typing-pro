@@ -37,6 +37,24 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 
 <html lang="km">
@@ -1226,7 +1244,7 @@ body { padding-left: 240px !important; }
 }
 
 .about-container {
-    background: #fdfaf1; /* ពណ៌ក្រដាសចាស់ៗ */
+    background: #fdfaf1; 
     border: 2px solid #8b4513;
     border-radius: 12px;
     padding: 20px;
@@ -1246,7 +1264,7 @@ body { padding-left: 240px !important; }
 
 .about-content {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* ចែកជា ២ ជួរ (ឆ្វេងព័ត៌មាន ស្តាំប្រអប់សារ) */
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
     text-align: left;
 }
@@ -1283,7 +1301,7 @@ body { padding-left: 240px !important; }
     background: #d4af37;
 }
 
-/* សម្រាប់ទូរស័ព្ទ ឱ្យវាធ្លាក់មកនៅជួរដេកវិញ */
+
 @media (max-width: 600px) {
     .about-content {
         grid-template-columns: 1fr;
@@ -1306,7 +1324,7 @@ body { padding-left: 240px !important; }
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: #0088cc; /* ពណ៌ Telegram */
+    background: #0088cc; 
     color: white;
     padding: 10px 20px;
     border-radius: 30px;
@@ -1386,6 +1404,72 @@ body { padding-left: 240px !important; }
 .typing-area {
     border: 3px solid #ffd700 !important;
     background-image: url('https://www.transparenttextures.com/patterns/gold-dust.png');
+}
+#chat-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #f1c40f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 10001;
+    font-size: 24px;
+    transition: transform 0.3s;
+}
+
+#chat-toggle-btn:hover { transform: scale(1.1); }
+
+
+#admin-reply-popup {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 300px;
+    background: #2c3e50;
+    color: white;
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    z-index: 10000;
+    display: none; 
+    overflow: hidden;
+    border: 1px solid #f1c40f;
+}
+
+#admin-reply-popup.active { display: block; animation: fadeInUp 0.3s ease; }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-header {
+    background: #f1c40f;
+    color: #000;
+    padding: 10px 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-body { padding: 15px; max-height: 200px; overflow-y: auto; }
+
+
+.badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15px;
+    height: 15px;
+    background: red;
+    border-radius: 50%;
+    display: none;
 }
     </style>
 
@@ -1867,7 +1951,33 @@ body { padding-left: 240px !important; }
             </div>
         </div>
     </div>
+</div><div id="chat-toggle-btn" onclick="toggleChat()" style="cursor: pointer; position: fixed; bottom: 20px; right: 20px; z-index: 10001; background: #2c1e12; border: 2px solid #ffd700; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 0 10px rgba(255,215,0,0.5);">
+    <div class="badge" id="chat-badge" style="display: none; background: red; width: 14px; height: 14px; border-radius: 50%; position: absolute; top: -2px; right: -2px; border: 2px solid white;"></div>
+    📩
 </div>
+
+<div id="admin-reply-popup" style="display: none; position: fixed; bottom: 85px; right: 20px; width: 300px; background: #1a120a; border: 2px solid #ffd700; border-radius: 12px; box-shadow: 0 5px 30px rgba(0,0,0,0.8); z-index: 10000; overflow: hidden; pointer-events: auto !important;">
+    
+    <div style="background: #2c1e12; padding: 12px; border-bottom: 2px solid #ffd700; display: flex; justify-content: space-between; align-items: center; color: #ffd700; font-weight: bold;">
+        <span><i class="fas fa-user-shield"></i> Admin Support</span>
+        <span style="cursor:pointer; font-size: 26px; line-height: 0.8;" onclick="toggleChat()">&times;</span>
+    </div>
+
+    <div id="admin-reply-content" style="padding: 15px; max-height: 250px; min-height: 80px; overflow-y: auto; color: white; background: #1a120a; pointer-events: auto !important; font-family: 'Kantumruy Pro', sans-serif;">
+        <div style="color: #666; text-align: center; margin-top: 20px;">សូមរង់ចាំការឆ្លើយតប...</div>
+    </div>
+</div>
+
+<style>
+   
+    #admin-reply-popup, #admin-reply-content, #chat-toggle-btn {
+        pointer-events: auto !important;
+        user-select: text !important;
+    }
+  
+    #admin-reply-content::-webkit-scrollbar { width: 5px; }
+    #admin-reply-content::-webkit-scrollbar-thumb { background: #ffd700; border-radius: 10px; }
+</style>
 
 
     <div id="fb-root"></div>
@@ -1875,50 +1985,7 @@ body { padding-left: 240px !important; }
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <script>
-  import { db } from "./firebase-config.js";
-import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-firestore.js";
-
-const btnSubmit = document.getElementById('btn-submit-feedback');
-
-if (btnSubmit) {
-    btnSubmit.addEventListener('click', async () => {
-        const nameInput = document.getElementById('sender-name');
-        const messageInput = document.getElementById('sender-message');
-        
-        const name = nameInput.value.trim();
-        const message = messageInput.value.trim();
-
-        if (name === "" || message === "") {
-            alert("សូមបំពេញឈ្មោះ និងសាររបស់អ្នក!");
-            return;
-        }
-
-        try {
-            btnSubmit.disabled = true;
-            btnSubmit.innerHTML = "កំពុងផ្ញើ...";
-
-
-            await addDoc(collection(db, "feedbacks"), {
-                username: name,
-                content: message,
-                timestamp: serverTimestamp()
-            });
-
-            alert("ផ្ញើសារជោគជ័យ! អរគុណសម្រាប់ការផ្ដល់មតិ។");
-            
-
-            nameInput.value = "";
-            messageInput.value = "";
-
-        } catch (error) {
-            console.error("Firebase Error: ", error);
-            alert("មានបញ្ហាក្នុងការផ្ញើ! សូមពិនិត្យមើល Console (F12)។");
-        } finally {
-            btnSubmit.disabled = false;
-            btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> ផ្ញើទៅកាន់ Firebase';
-        }
-    });
-}
+  
   
 
 
@@ -2102,6 +2169,7 @@ function showAuth(type) {
         messagingSenderId: "812192382614",
         appId: "1:812192382614:web:4676d302ad0f593035ccb7"
     };
+    
     firebase.initializeApp(firebaseConfig);
     const database = firebase.database();
     const auth = firebase.auth();
@@ -2222,43 +2290,100 @@ database.ref('leaderboard').on('value', (snapshot) => {
     }
     chain.addEventListener('click', toggleLight);
     lampImg.addEventListener('click', toggleLight);
-    
     const db = firebase.firestore();
+let myChatId = localStorage.getItem('chat_user_id');
+if (!myChatId) {
+    myChatId = 'user_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('chat_user_id', myChatId);
+}
 
 
-document.getElementById('btn-submit-feedback').addEventListener('click', function() {
-    const name = document.getElementById('sender-name').value;
-    const message = document.getElementById('sender-message').value;
+const btnSubmit = document.getElementById('btn-submit-feedback');
+if (btnSubmit) {
+    btnSubmit.addEventListener('click', function() {
+        const nameInput = document.getElementById('sender-name');
+        const messageInput = document.getElementById('sender-message');
+        const name = nameInput.value.trim();
+        const message = messageInput.value.trim();
 
-    if (name.trim() === "" || message.trim() === "") {
-        alert("សូមបំពេញឈ្មោះ និងសាររបស់អ្នក!");
-        return;
-    }
+        if (name === "" || message === "") {
+            alert("សូមបំពេញឈ្មោះ និងសាររបស់អ្នក!");
+            return;
+        }
 
-    const btn = this;
-    btn.disabled = true;
-    btn.innerHTML = "កំពុងផ្ញើ...";
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = "កំពុងផ្ញើ...";
 
-
-    db.collection("feedbacks").add({
-        username: name,
-        content: message,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    })
-    .then(() => {
-        alert("សាររបស់អ្នកត្រូវបានផ្ញើជោគជ័យ!");
-        document.getElementById('sender-name').value = "";
-        document.getElementById('sender-message').value = "";
-    })
-    .catch((error) => {
-        console.error("Error: ", error);
-        alert("ផ្ញើមិនចេញទេ! សូមឆែកមើល Rules ក្នុង Firebase របស់អ្នក។");
-    })
-    .finally(() => {
-        btn.disabled = false;
-        btn.innerHTML = "ផ្ញើទៅកាន់ Firebase";
+        db.collection("feedbacks").add({
+            username: name,
+            content: message,
+            sender_id: myChatId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        })
+        .then(() => {
+            alert("ផ្ញើជោគជ័យ!");
+            nameInput.value = ""; messageInput.value = "";
+        })
+        .finally(() => {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> ផ្ញើទៅកាន់ Firebase';
+        });
     });
-});
+}
+
+
+function toggleChat() {
+    const popup = document.getElementById('admin-reply-popup');
+    const badge = document.getElementById('chat-badge');
+    
+    if (popup.style.display === "none" || popup.style.display === "") {
+        popup.style.display = "block";
+        badge.style.display = 'none';
+    } else {
+        popup.style.display = "none";
+    }
+}
+
+function listenForAdminReplies() {
+    db.collection("feedbacks")
+      .orderBy("timestamp", "asc")
+      .onSnapshot((snapshot) => {
+          const contentArea = document.getElementById('admin-reply-content');
+          const badge = document.getElementById('chat-badge');
+          const popup = document.getElementById('admin-reply-popup');
+
+          if (!contentArea) return;
+
+          let hasMessage = false;
+          let newHtml = "";
+
+          snapshot.forEach((doc) => {
+              const data = doc.data();
+              if (data.reply_to === myChatId) {
+                  hasMessage = true;
+                  newHtml += `
+                      <div style="background: rgba(255,215,0,0.1); padding:10px; border-radius:8px; margin-bottom:12px; border-left:4px solid #ffd700; color: white;">
+                          <strong style="color:#ffd700; font-size: 13px;">Admin Support:</strong> 
+                          <div style="margin-top:5px; font-size: 14px; line-height: 1.5; word-wrap: break-word;">${data.content}</div>
+                          <small style="color:#666; font-size:10px; display:block; text-align:right; margin-top:5px;">
+                              ${data.timestamp ? data.timestamp.toDate().toLocaleString('km-KH') : 'ទើបមុននេះ'}
+                          </small>
+                      </div>
+                  `;
+              }
+          });
+
+          if (hasMessage) {
+              contentArea.innerHTML = newHtml;
+              contentArea.scrollTop = contentArea.scrollHeight;
+              if (popup.style.display === "none") {
+                  badge.style.display = 'block';
+              }
+          }
+      });
+}
+
+listenForAdminReplies();
 
     const dataKh = ["kal", "phearun", "nv", "vannak", "slanh", "kmeang", "jol", "jit", "der", "lg", "srat", "kor", "run", "tv", "vinh", "mor", "min", "derl", "jes", "klach", "nak", "na", "ngaii", "muy", "mean", "ke", "som", "lanh", "nh", "ter", "ort", "prom", "pi", "lob", "leler", "pek", "ban", "chea", "dg", "puk", "ng", "sit", "chkut", "name", "voan", "koy", "ouy", "sak", "bek", "jeang", "na", "ber", "vea", "tok", "nis", "klean", "bay", "has", "cher", "kbal", "nas", "lok", "hery", "thonh", "hot", "anh", "dob", "bek", "pler", "lan", "motor", "kev", "kabob", "nom", "nham", "bay", "mhob", "klean", "ey", "hmm", "puk", "hg", "rean", "kru", "lork", "kru", "nak", "ming", "pu", "kmeang", "has", "pler", "juk", "tnam", "poipet", "kmeang", "angkor", "wat", "vital", "cambodia", "khmer", "klang", "jit", "khg", "masel", "minh", "khg", "kbea", "chgay", "chganh", "cheat", "kdmv", "srul", "klang", "hea", "therk", "tmenh", "cher", "met", "av", "kor", "lyly", "chana", "noun", "neang", "ter", "neak", "jg", "niyeay", "ampi", "khang","ler", "banthem", "banteb", "mdg", "tt", "khjal", "tangos", "ster", "ter", "nv", "cheamuy", "krr", "chea", "nis", "sat", "avy", "muy", "tt", "na", "muy", "nv", "mean", "jomvinh", "doch", "derl", "sur", "nv", "chgay", "tlob", "trov", "doysa", "tleab", "pimon", "jam", "pderm", "kompong", "seavpav", "kmeang", "brozz", "krusa", "tix", "toch", "bun", "ahha", "somrab", "rksee", "ttul", "kbal", "jom", "thonh", "rhas", "kur", "niyeay", "pitherksamot", "klas", "avy", "pelklas", "knom", "tver", "beb", "oy", "peak", "vea", "veang", "kom", "tha", "oy", "nh", "min", "jes", "singkhmer", "morpi", "dak", "beab", "nis", "therb", "mean", "peak", "sorsea", "merl", "tv", "loy", "doch", "ke", "pheak", "jren", "peak", "yg", "sorsea", "klai", "klai", "doch", "chnes", "hx", "terb", "knom", "tver", "beb", "nis", "salarean", "mean", "kru", "nv", "tes", "mean", "nakmak", "bang", "paon", "trov", "jes", "slanh", "kne", "songsa", "sneaha", "kambit", "motor", "lanjis", "nakklas", "puk", "khea", "niyeay", "derm", "ke", "chea", "pi", "seas", "kmeang", "poipet", "ter", "mdg", "muy", "ngaii", "muy", "ngaii", "min", "kit", "khom", "phrong", "niyeay", "derm", "khom", "tv", "tham", "ten", "vaii", "khom", "tha", "koch", "baycha", "micheat", "breangkala", "av", "ach", "plerng", "punler"];
     const dataEn = ["the", "great", "world", "both", "run", "by", "near", "most", "so", "people", "picture", "once", "large", "between", "most", "light", "write", "are", "go", "picture", "me", "country", "little", "keep", "read", "call", "never", "open", "that", "story", "good", "until", "write", "air", "kind", "there", "change", "far", "over", "any", "may", "three", "children", "said", "put", "is", "us", "that", "animal", "let", "was", "America", "change", "other", "always", "every", "animal", "find", "old", "picture", "made", "work", "school", "grow", "us", "ask", "life", "find", "spell", "never", "went", "she", "food", "really", "run", "almost", "own", "she", "left", "by", "question", "home", "or", "help", "second", "quickly", "just", "turn", "these", "state", "who", "so", "water", "even", "large", "eye", "below", "be", "face", "hear", "went", "at", "when", "number", "important", "sound", "who", "kecil", "into", "enough", "tell", "only", "country", "really", "turn", "white", "home", "they", "your", "because", "such", "not", "form", "how", "they", "left", "cut", "part", "sentence", "be", "between", "dream"];
@@ -3192,12 +3317,124 @@ function startNewYearEffect() {
         }, 6000);
     }, 400);
 }
+function toggleChat() {
+    const popup = document.getElementById('admin-reply-popup');
+    const badge = document.getElementById('chat-badge');
+    
+    if (popup.style.display === "none" || popup.style.display === "") {
+        popup.style.display = "block"; 
+        badge.style.display = 'none'; 
+    } else {
+        popup.style.display = "none"; 
+    }
+}
 
+
+function listenForAdminReplies() {
+
+    db.collection("feedbacks")
+      .orderBy("timestamp", "asc")
+      .onSnapshot((snapshot) => {
+          const contentArea = document.getElementById('admin-reply-content');
+          const badge = document.getElementById('chat-badge');
+          const popup = document.getElementById('admin-reply-popup');
+
+          if (!contentArea) return;
+
+          let hasMessage = false;
+          let newHtml = "";
+
+          snapshot.forEach((doc) => {
+              const data = doc.data();
+
+              if (data.reply_to === myChatId) {
+                  hasMessage = true;
+                  newHtml += `
+                      <div style="background: rgba(255,215,0,0.1); padding:10px; border-radius:8px; margin-bottom:12px; border-left:4px solid #ffd700; color: white; animation: fadeIn 0.5s;">
+                          <strong style="color:#ffd700; font-size: 13px;">Admin Support:</strong> 
+                          <div style="margin-top:5px; font-size: 14px; line-height: 1.5; word-wrap: break-word;">${data.content}</div>
+                          <small style="color:#666; font-size:10px; display:block; text-align:right; margin-top:5px;">
+                              ${data.timestamp ? data.timestamp.toDate().toLocaleString('km-KH') : 'ទើបមុននេះ'}
+                          </small>
+                      </div>
+                  `;
+              }
+          });
+
+          if (hasMessage) {
+              contentArea.innerHTML = newHtml; 
+              contentArea.scrollTop = contentArea.scrollHeight; 
+
+
+              if (popup.style.display === "none") {
+                  badge.style.display = 'block';
+              }
+          }
+      });
+}
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
