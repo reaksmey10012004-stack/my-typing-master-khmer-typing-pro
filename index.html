@@ -19,7 +19,6 @@
 
 
 
-
 <!DOCTYPE html>
 
 <html lang="km">
@@ -95,7 +94,6 @@
     }
   ]
 }
-
     </script>
 
 
@@ -220,7 +218,7 @@
 
                  width: 180px;
 
-                height: 180px;height: 180px;
+                height: 180px;
 
                 margin: 15px auto;
 
@@ -395,7 +393,7 @@ margin: 0;
 
 
 
-        #input-field { width: 100%; height: 60px; padding: 10px; font-size: 1.5rem; border: 2px solid var(--input-border); border-radius: 15px; text-align: center; background: rgba(#77f7f7); color: #77f7f7W(--text-color); }
+        #input-field { width: 100%; height: 60px; padding: 10px; font-size: 1.5rem; border: 2px solid var(--input-border); border-radius: 15px; text-align: center; background: rgba(#77f7f7); color: var(--text-color); }
 
 
 
@@ -1023,7 +1021,7 @@ body { padding-left: 240px !important; }
 
 .khmer-top-bar {
     display: flex;
-    justify-content: space-between; */
+    justify-content: space-between;
     align-items: center;
     background: linear-gradient(to bottom, #4a2b0f, #8b6b43, #4a2b0f); 
     padding: 12px 40px;
@@ -1038,7 +1036,7 @@ body { padding-left: 240px !important; }
 
 
 .khmer-top-bar::before, .khmer-top-bar::after {
-    content: "❃"; /
+    content: "❃"; 
     color: #f1c40f;
     font-size: 24px;
     position: absolute;
@@ -1176,8 +1174,6 @@ body { padding-left: 240px !important; }
   animation: rotate-led 4s linear infinite;
   z-index: -2;
 }
-
-*/
 .donation-card::after {
   content: '';
   position: absolute;
@@ -1204,6 +1200,7 @@ body { padding-left: 240px !important; }
   text-align: center;
   width: 100%;
 }
+
 
 
     </style>
@@ -1368,16 +1365,16 @@ body { padding-left: 240px !important; }
 </div>
 
 <div id="race-page" class="typing-container" style="display: none; max-width: 900px; margin: auto; padding: 20px;">
-    <h2 style="text-align: center; color: #f39c12; text-transform: uppercase;">🏎️ High-Speed Typing Race</h2>
+    <h2 id="race-title"style="text-align: center; color: #f39c12; text-transform: uppercase;">🏎️ High-Speed Typing Race</h2>
 
     <div class="menu-container" style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
-        <button onclick="document.getElementById('car-modal').style.display='flex'" style="background: #3498db; color: white;">🚗 ផ្លាស់ប្តូរឡាន</button>
+        <button id="change-car-btn"onclick="document.getElementById('car-modal').style.display='flex'" style="background: #3498db; color: white;">🚗 ផ្លាស់ប្តូរឡាន</button>
         <select id="lang-select" onchange="changeLanguage()">
             <option value="kh">Cambodia 🇰🇭</option>
             <option value="en">English 🇺🇸</option>
             <option value="id">Indonesia 🇮🇩</option>
         </select>
-        <button onclick="createPrivateRace()" style="background:#8e44ad; color:white;">🔗 បង្កើតបន្ទប់ឯកជន</button>
+        <button id="create-room-btn"onclick="createPrivateRace()" style="background:#8e44ad; color:white;">🔗 បង្កើតបន្ទប់ឯកជន</button>
     </div>
 
     <div style="background: #2c3e50; padding: 15px; border-radius: 10px; display: flex; justify-content: space-around; color: white; margin-bottom: 15px; border: 1px solid #444;">
@@ -1426,7 +1423,7 @@ body { padding-left: 240px !important; }
 <div id="typing-page" class="typing-container">
   <div class="scroll-pillar pillar-left"></div>
   <div class="scroll-pillar pillar-right"></div>
-    <div class="right-wood>
+    <div class="right-wood">
     </div>
 
 
@@ -1435,28 +1432,24 @@ body { padding-left: 240px !important; }
         
 <div class="khmer-top-bar">
     <div class="lang-group">
-        <span class="label-text">ជ្រើសរើសភាសា៖</span>
-        <select id="lang-select" onchange="switchLang(this.value)" class="khmer-select">
-            <option value="kh">Khmer Latin</option>
-            <option value="en">English</option>
-            <option value="id">Indonesia</option>
-            <option value="ខ្មែរ">ខ្មែរ</option>
-        </select>
+    <span id="lang-label">ជ្រើសរើសភាសា៖</span>
+    <select id="lang-select" onchange="switchLang(this.value)" class="khmer-select">
+        <option value="kh">Khmer Latin</option>
+        <option value="en">English</option>
+        <option value="id">Indonesia</option>
+        <option value="km">ខ្មែរ</option> </select>
     </div>
 
-    <button onclick="openModal('loginModal')" class="login-gold-btn">LOGIN</button>
+    <button id="login-btn" onclick="openModal('loginModal')" class="login-gold-btn">LOGIN</button>
 </div>
 
 
 
     <div class="stats-bar">
 
-        <div class="stat-box">⏰ពេល: <span id="timer">60</span>s</div>
-
-        <div class="stat-box">🚀WPM: <span id="wpm">0</span></div>
-
-        <div class="stat-box">❌កំហុស: <span id="errors">0</span></div>
-
+        <div class="stat-box"><span class="stat-label">⏰ពេល:</span> <span id="timer">60</span>s</div>
+    <div class="stat-box"><span class="stat-label">🚀WPM:</span> <span id="wpm">0</span></div>
+    <div class="stat-box"><span class="stat-label">❌កំហុស:</span> <span id="errors">0</span></div>
     </div>
     
     
@@ -1469,16 +1462,6 @@ body { padding-left: 240px !important; }
 
 </div>
 
-<div id="user-display-area" style="text-align: right; margin-bottom: 5px; font-weight: bold; color: var(--primary-color); min-height: 20px;">
-
-    <span id="welcome-name"></span>
-
-</div>
-
-
-
-    <div id="speed-status"><span>ត្រៀមខ្លួនរួចរាល់!</span></div>
-
     <div id="quote-display"></div>
 
     <input type="text" id="input-field" placeholder="ចាប់ផ្ដើមវាយនៅទីនេះ..." autofocus autocomplete="off">
@@ -1486,16 +1469,8 @@ body { padding-left: 240px !important; }
     
 
     <div style="margin-top: 15px;">
-
-        <button class="btn-reset" style="background: var(--secondary-color); padding: 10px 20px; border-radius: 20px; color: white; border: none; cursor: pointer;" onclick="resetGame()">ចាប់ផ្ដើមឡើងវិញ</button>
-
-    </div>
-
-    
-
-    
-
-
+    <button id="reset-btn" class="btn-reset" style="background: var(--secondary-color); padding: 10px 20px; border-radius: 20px; color: white; border: none; cursor: pointer;" onclick="resetGame()">ចាប់ផ្ដើមឡើងវិញ</button>
+</div>
 
     <div id="result-overlay">
 
@@ -1553,47 +1528,71 @@ body { padding-left: 240px !important; }
 
 </div>
 
-
-
-
-
 <div class="chat-container">
 <div class="scroll-pillar pillar-left"></div>
     <div class="scroll-pillar pillar-right"></div>
 
-  <div class="chat-title-wrapper">
+    <div class="chat-title-wrapper">
 
-    <span class="bouncing-letter">🏆</span> <span class="bouncing-letter">កំ</span><span class="bouncing-letter">ពូ</span><span class="bouncing-letter">ល</span><span class="bouncing-letter">អ្នក</span><span class="bouncing-letter">វាយ</span><span class="bouncing-letter">អក្សរ</span> (80+ WPM)
+        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
 
     </div>
 
+    <div id="chat-box"></div>
+
+    <div class="chat-input-area">
+
+        <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12">
+
+        <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
+
+        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+
+        <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
+
+        <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
+
+    </div>
+
+    <div style="text-align: left; margin-top: 10px;">
+
+        <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
+
+        <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
+
+        <button class="btn-chat-send" style="background: var(--error-color); margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
+
+    </div>
+
+</div>
+
+
+
+<div class="chat-container">
+    <div class="scroll-pillar pillar-left"></div>
+    <div class="scroll-pillar pillar-right"></div>
+
+    <div class="chat-title-wrapper">
+        <div id="lb-title">
+            <span class="bouncing-letter">🏆</span> 
+            <span class="bouncing-letter">កំ</span><span class="bouncing-letter">ពូ</span><span class="bouncing-letter">ល</span><span class="bouncing-letter">អ្នក</span><span class="bouncing-letter">វាយ</span><span class="bouncing-letter">អក្សរ</span> (80+ WPM)
+        </div>
+    </div>
+
     <div id="leaderboard-box" style="height: 250px; overflow-y: auto; border: 1px solid var(--input-border); border-radius: 15px; padding: 15px; background: rgba(255,255,255,0.5);">
-
-      <table style="width: 100%; border-collapse: collapse;">
-
-        <thead>
-
-          <tr style="border-bottom: 2px solid var(--primary-color);">
-
-            <th style="padding: 10px; text-align: left;">Rank</th>
-
-            <th style="text-align: left;">Name</th>
-
-            <th style="text-align: center;">Speed</th>
-
-            <th style="text-align: right;">Time</th> </tr>
-
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--primary-color);">
+                    <th id="th-rank" style="padding: 10px; text-align: left;">Rank</th>
+                    <th id="th-name" style="text-align: left;">Name</th>
+                    <th id="th-speed" style="text-align: center;">Speed</th>
+                    <th id="th-time" style="text-align: right;">Time</th> 
+                </tr>
             </thead>
-
             <tbody id="leaderboard-body"></tbody>
-
-              </tbody>
-
-              </table>
-
-              </div>
-
-              </div>
+        </table>
+    </div>
+</div>
               
             
 
@@ -1765,40 +1764,31 @@ function showAuth(type) {
 
     });
 
-  };
-
 </script>
-
 <div class="monetization-wrapper">
-
-
     <div class="ads-space">
-
-        <p>"មានផ្សាយពាណិជ្ជកម្មនៅទីនេះ | ទាក់ទង៖ [លេខទូរសព្ទ/0964326273 Telegram]"</
-
-          </div>  
+        <p id="ads-text">"មានផ្សាយពាណិជ្ជកម្មនៅទីនេះ | ទាក់ទង៖ 0964326273 Telegram"</p>
+    </div>  
 
     <div class="support-card">
-    <div class="scroll-pillar pillar-left"></div>
-    <div class="scroll-pillar pillar-right"></div>
-    <div class="donation-card">
-  <div class="card-content">
+        <div class="scroll-pillar pillar-left"></div>
+        <div class="scroll-pillar pillar-right"></div>
+        <div class="donation-card">
+            <div class="card-content">
+                <h3 id="st-title" style="color: var(--primary-color);">☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍</h3>
+                
+                <p id="st-desc">ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ អ្នកអាចឧបត្ថម្ភកាហ្វេខ្ញុំម្នាក់មួយកែវបាន</p>
 
-        <h3 style="color: var(--primary-color);">☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍</h3>
+                <div style="font-weight: bold;">
+                    <p id="dev-name" style="margin: 5px 0;">ឈ្មោះ: KEO CHANREAKSMEY</p>
+                    <p id="acc-num" style="margin: 5px 0; color: #00f2ff;">លេខគណនី: 006 010 618</p>
+                </div> 
 
-        <p>ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ អ្នកអាចឧបត្ថម្ភកាហ្វេខ្ញុំម្នាក់មួយកែវបាន</p><
-
-       <div style="font-weight: bold;">
-
-         <p style="margin: 5px 0;">ឈ្មោះ:KEO CHANREAKSMEY</p>
-
-        <p style="margin: 5px 0; color: #00f2ff;">លេខគណនី: 006 010 618 </p>
- 
-     </div> 
-     <div class="aba-btn-container">
-    <button class="open-qr-btn" onclick="showQR()">
-        <i class="fa-solid fa-qrcode"></i> ចុចលើកន្លែងនេះដើម្បីបង្ហាញ QR BANK ABA
-    </button>
+                <div class="aba-btn-container">
+                    <button class="open-qr-btn" onclick="showQR()">
+                        <i class="fa-solid fa-qrcode"></i> 
+                        <span id="qr-text">ចុចលើកន្លែងនេះដើម្បីបង្ហាញ QR BANK ABA</span>
+                    </button>
 </div>
 
 <div id="abaModal" class="qr-overlay" onclick="hideQR()">
@@ -1960,26 +1950,293 @@ database.ref('leaderboard').on('value', (snapshot) => {
     const timerElement = document.getElementById('timer');
     const wpmElement = document.getElementById('wpm');
     const errorElement = document.getElementById('errors');
+    
+    
+function switchLang(lang) {
+    currentLang = lang;
+    const langSelect = document.getElementById('lang-select');
+    localStorage.setItem('selectedLang', lang);
+    const select = document.getElementById('lang-select');
+    if (select) select.value = lang;
+    if (langSelect) {
+    langSelect.value = lang;
+    }
+    const dictionary = {
+        kh: { 
+            metaTitle: "Typing Khmer Pro - តេស្តល្បឿនវាយអក្សរ",
+            metaDesc: "ហាត់វាយអក្សរខ្មែរ និងអង់គ្លេស ដើម្បីបង្កើនល្បឿនម្រាមដៃរបស់អ្នកជាមួយ Typing Khmer Pro។",
+            ready: "ត្រៀមខ្លួនរួចរាល់!",
+            p: "ចាប់ផ្ដើមវាយនៅទីនេះ...",
+            r: "ចាប់ផ្ដើមឡើងវិញ",
+            t: "⏰ពេល:", w: "🚀WPM:", e: "❌កំហុស:",
+            label: "ជ្រើសរើសភាសា៖",
+            loginBtn: "LOGIN",
 
-    function switchLang(lang) {
-        currentLang = lang;
-        const select = document.getElementById('lang-select');
-                if (select) select.value = lang;
-        resetGame();
+            lbTitle: "🏆 កំពូលអ្នកវាយអក្សរ (80+ WPM)",
+            rank: "Rank", name: "Name", speed: "Speed", time: "Time",
+
+            stTitle: "☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍",
+            stDesc: "ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ អ្នកអាចឧបត្ថម្ភកាហ្វេខ្ញុំម្នាក់មួយកែវបាន",
+            qrText: "ចុចលើកន្លែងនេះដើម្បីបង្ហាញ QR BANK ABA",
+            devName: "ឈ្មោះ: KEO CHANREAKSMEY",
+            accNum: "លេខគណនី: 006 010 618",
+            ads: "មានផ្សាយពាណិជ្ជកម្មនៅទីនេះ | ទាក់ទង៖ 0964326273 Telegram",
+
+            resTitle: "🏆 លទ្ធផលរបស់អ្នក 🏆",
+            resSpd: "ល្បឿនមធ្យម",
+            resAcc: "ភាពត្រឹមត្រូវ",
+            resWrng: "ពាក្យខុស",
+            resRank: "កម្រិតរបស់អ្នក",
+            resRetry: "🔄 សាកល្បងម្ដងទៀត",
+            resShare: "🔵 Share",
+            promptMsg: "អស្ចារ្យ! ល្បឿនអ្នកលើសពី 80WPM! សូមបញ្ចូលឈ្មោះរបស់អ្នក៖",
+            raceTitle: "🏎️ High-Speed Typing Race",
+            changeCar: "🚗 ផ្លាស់ប្តូរឡាន",
+            createRoom: "🔗 បង្កើតបន្ទប់ឯកជន",
+            players: "👥 អ្នកលេង:",
+            waiting: "⏰ រង់ចាំអ្នកលេង...",
+            selectCar: "ជ្រើសរើសឡានរបស់អ្នក",
+            close: "បិទ",
+            copyLink: "ចម្លងលីងផ្ញើទៅមិត្តភក្តិ:",
+            guest: "Guest Player",
+            oneClick: "1-Click-Login",
+            fbLogin: "Facebook Login",
+            googLogin: "Google Login",
+            emailTitle: "Email Login",
+            forgot: "Forgot Password?",
+            signUp: "Sign Up",
+            createAcc: "Create Account"
+        },
+        km: { 
+            metaTitle: "Typing Khmer Pro - តេស្តល្បឿនវាយអក្សរខ្មែរអនឡាញ",
+            metaDesc: "ហាត់វាយអក្សរខ្មែរ និងអង់គ្លេស ដើម្បីបង្កើនល្បឿនម្រាមដៃរបស់អ្នកជាមួយ Typing Khmer Pro។ តេស្តល្បឿន WPM ដោយឥតគិតថ្លៃ!",
+            ready: "ត្រៀមខ្លួនរួចរាល់!",
+            p: "វាយអក្សរខ្មែរនៅទីនេះ...",
+            r: "លេងម្ដងទៀត",
+            t: "⏰រយៈពេល:", w: "🚀ល្បឿន:", e: "❌កំហុស:",
+            label: "ជ្រើសរើសភាសា៖",
+            loginBtn: "ចូលប្រើ",
+            lbTitle: "🏆 កំពូលអ្នកវាយអក្សរ (80+ WPM)",
+            rank: "លេខរៀង", name: "ឈ្មោះ", speed: "ល្បឿន", time: "ម៉ោង",
+            stTitle: "☕ ជួយឧបត្ថម្ភអ្នកបង្កើត",
+            stDesc: "បើអ្នកពេញចិត្តកម្មវិធីនេះ អ្នកអាចជួយឧបត្ថម្ភកាហ្វេខ្ញុំបាន",
+            qrText: "ចុចទីនេះដើម្បីបង្ហាញ QR បាញ់លុយ",
+            devName: "ឈ្មោះ: KEO CHANREAKSMEY",
+            accNum: "លេខគណនី: 006 010 618",
+            ads: "ផ្សាយពាណិជ្ជកម្ម | ទាក់ទង៖ 0964326273 Telegram",
+            resTitle: "🏆 លទ្ធផលរបស់អ្នក 🏆",
+            resSpd: "ល្បឿនមធ្យម",
+            resAcc: "ភាពត្រឹមត្រូវ",
+            resWrng: "ពាក្យខុស",
+            resRank: "កម្រិតរបស់អ្នក",
+            resRetry: "🔄 សាកល្បងម្ដងទៀត",
+            resShare: "🔵 ចែករំលែក",
+            promptMsg: "អស្ចារ្យ! ល្បឿនអ្នកលើសពី 80WPM! សូមបញ្ចូលឈ្មោះរបស់អ្នក៖",
+            raceTitle: "🏎️ ការប្រណាំងវាយអត្ថបទល្បឿនលឿន",
+            changeCar: "🚗 ផ្លាស់ប្តូរឡាន",
+            createRoom: "🔗 បង្កើតបន្ទប់ឯកជន",
+            players: "👥 អ្នកលេង:",
+            waiting: "⏰ រង់ចាំអ្នកលេង...",
+            selectCar: "ជ្រើសរើសឡានរបស់អ្នក",
+            close: "បិទ",
+            copyLink: "ចម្លងលីងផ្ញើទៅមិត្តភក្តិ:",
+            guest: "អ្នកលេងមិនទាន់ចុះឈ្មោះ",
+            oneClick: "ចូលប្រើភ្លាមៗ",
+            fbLogin: "ចូលតាម Facebook",
+            googLogin: "ចូលតាម Google",
+            emailTitle: "ចូលតាមអ៊ីមែល",
+            forgot: "ភ្លេចលេខសម្ងាត់?",
+            signUp: "ចុះឈ្មោះ",
+            createAcc: "បង្កើតគណនី"
+        },
+        en: { 
+            metaTitle: "Typing Khmer Pro - Online Typing Speed Test",
+            metaDesc: "Practice Khmer and English typing to improve your finger speed with Typing Khmer Pro. Free WPM Test!",
+            ready: "Ready to Start!",
+            p: "Start typing here...",
+            r: "Restart",
+            t: "⏰Time:", w: "🚀WPM:", e: "❌Errors:",
+            label: "Select Language:",
+            loginBtn: "LOGIN",
+            lbTitle: "🏆 Leaderboard (80+ WPM)",
+            rank: "Rank", name: "Name", speed: "Speed", time: "Time",
+            stTitle: "☕ Support Developer",
+            stDesc: "If you like this app, you can support me by buying a coffee",
+            qrText: "Click here to show QR BANK ABA",
+            devName: "Name: KEO CHANREAKSMEY",
+            accNum: "Account: 006 010 618",
+            ads: "Ads Space | Contact: 0964326273 Telegram",
+            resTitle: "🏆 YOUR RESULT 🏆",
+            resSpd: "Average Speed",
+            resAcc: "Accuracy",
+            resWrng: "Wrong Words",
+            resRank: "Your Rank",
+            resRetry: "🔄 Try Again",
+            resShare: "🔵 Share",
+            promptMsg: "Amazing! Your speed is over 80WPM! Enter your name:",
+            raceTitle: "🏎️ High-Speed Typing Race",
+            changeCar: "🚗 Change Car",
+            createRoom: "🔗 Create Private Room",
+            players: "👥 Players:",
+            waiting: "⏰ Waiting for players...",
+            selectCar: "Select Your Car",
+            close: "Close",
+            copyLink: "Copy link to share:",
+            guest: "Guest Player",
+            oneClick: "1-Click-Login",
+            fbLogin: "Facebook Login",
+            googLogin: "Google Login",
+            emailTitle: "Email Login",
+            forgot: "Forgot Password?",
+            signUp: "Sign Up",
+            createAcc: "Create Account"
+        },
+        id: { 
+            metaTitle: "Typing Khmer Pro - Tes Kecepatan Mengetik",
+            metaDesc: "Berlatih mengetik Khmer dan Inggris untuk meningkatkan kecepatan jari Anda dengan Typing Khmer Pro. Tes WPM Gratis!",
+            ready: "Siap Dimulai!",
+            p: "Mulai ketik di sini...",
+            r: "Mulai Ulang",
+            t: "⏰Waktu:", w: "🚀WPM:", e: "❌Salah:",
+            label: "Pilih Bahasa:",
+            loginBtn: "MASUK",
+            lbTitle: "🏆 Papan Peringkat (80+ WPM)",
+            rank: "Peringkat", name: "Nama", speed: "Kecepatan", time: "Waktu",
+            stTitle: "☕ Dukung Pengembang",
+            stDesc: "Dukung pengembang dengan membeli kopi jika Anda suka aplikasi ini.",
+            qrText: "Klik untuk QR BANK ABA",
+            devName: "Nama: KEO CHANREAKSMEY",
+            accNum: "No. Rekening: 006 010 618",
+            ads: "Iklan | Hubungi: 0964326273 Telegram",
+            resTitle: "🏆 HASIL ANDA 🏆",
+            resSpd: "Kecepatan Rata-rata",
+            resAcc: "Akurasi",
+            resWrng: "Kata Salah",
+            resRank: "Peringkat Anda",
+            resRetry: "🔄 Coba Lagi",
+            resShare: "🔵 Bagikan",
+            promptMsg: "Luar biasa! Kecepatan di atas 80WPM! Masukkan nama Anda:",
+            raceTitle: "🏎️ Balapan Mengetik Cepat",
+            changeCar: "🚗 Ganti Mobil",
+            createRoom: "🔗 Buat Ruang Pribadi",
+            players: "👥 Pemain:",
+            waiting: "⏰ Menunggu pemain...",
+            selectCar: "Pilih Mobil Anda",
+            close: "Tutup",
+            copyLink: "Salin tautan untuk berbagi:",
+            guest: "Pemain Tamu",
+            oneClick: "Masuk 1-Klik",
+            fbLogin: "Masuk Facebook",
+            googLogin: "Masuk Google",
+            emailTitle: "Masuk Email",
+            forgot: "Lupa Kata Sandi?",
+            signUp: "Daftar",
+            createAcc: "Buat Akun"
+        }
+    };
+
+    const d = dictionary[lang] || dictionary['kh'];
+
+    const updateText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = text;
+    };
+
+   
+    document.title = d.metaTitle;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute("content", d.metaDesc);
+
+  
+    updateText("ready-text", d.ready);
+    if(document.getElementById("input-field")) document.getElementById("input-field").placeholder = d.p;
+    updateText("reset-btn", d.r);
+    updateText("lang-label", d.label);
+    updateText("login-gold-btn", d.loginBtn);
+
+ 
+    const labels = document.querySelectorAll('.stat-label');
+    if(labels.length >= 3) {
+        labels[0].innerText = d.t; labels[1].innerText = d.w; labels[2].innerText = d.e;
     }
 
-    function prepareWords() {
-        let sourceData = currentLang === 'en' ? dataEn : currentLang === 'id' ? dataId : currentLang === 'ខ្មែរ' ? dataKhmer : dataKh;
-        wordsArray = [...sourceData].sort(() => Math.random() - 0.5).slice(0, 150);
-        quoteDisplay.innerHTML = '';
-        wordsArray.forEach((word, wIdx) => {
-            const span = document.createElement('span');
-            span.className = 'word' + (wIdx === 0 ? ' word-current' : '');
-            span.innerHTML = word.split('').map(c => `<span>${c}</span>`).join('');
-            quoteDisplay.appendChild(span);
-        });
-        quoteDisplay.scrollTop = 0;
+   
+    updateText("lb-title", d.lbTitle);
+    updateText("th-rank", d.rank);
+    updateText("th-name", d.name);
+    updateText("th-speed", d.speed);
+    updateText("th-time", d.time);
+
+  
+    updateText("st-title", d.stTitle);
+    updateText("st-desc", d.stDesc);
+    updateText("qr-text", d.qrText);
+    updateText("dev-name", d.devName);
+    updateText("acc-num", d.accNum);
+    updateText("ads-text", d.ads);
+
+ 
+    updateText("res-title", d.resTitle);
+    updateText("label-speed", d.resSpd);
+    updateText("label-acc", d.resAcc);
+    updateText("label-wrong", d.resWrng);
+    updateText("label-rank", d.resRank);
+    updateText("res-retry-btn", d.resRetry);
+    updateText("res-share-btn", d.resShare);
+
+
+    updateText("guest-text", d.guest);
+    updateText("side-login-btn", d.loginBtn);
+    updateText("one-click-title", d.oneClick);
+    updateText("fb-login-btn", d.fbLogin);
+    updateText("google-login-btn", d.googLogin);
+    updateText("email-login-title", d.emailTitle);
+    updateText("forgot-pass", d.forgot);
+    updateText("main-signup-btn", d.signUp);
+    updateText("tab-login", d.loginBtn);
+    updateText("tab-register", d.createAcc);
+
+ 
+    updateText("race-title", d.raceTitle);
+    updateText("change-car-btn", d.changeCar);
+    updateText("create-room-btn", d.createRoom);
+    updateText("waiting-text", d.waiting);
+    updateText("select-car-title", d.selectCar);
+    updateText("close-modal-btn", d.close);
+    updateText("copy-link-label", d.copyLink);
+    
+
+    const pLabel = document.getElementById("players-label");
+    if(pLabel && pLabel.firstChild) pLabel.firstChild.textContent = d.players;
+
+    if (typeof resetGame === "function") resetGame();
+}
+
+
+function prepareWords() {
+    let sourceData;
+
+    if (currentLang === 'en') {
+        sourceData = dataEn;
+    } else if (currentLang === 'id') {
+        sourceData = dataId;
+    } else if (currentLang === 'km' || currentLang === 'ខ្មែរ') {
+        sourceData = dataKhmer;
+    } else {
+        sourceData = dataKh; 
     }
+
+    wordsArray = [...sourceData].sort(() => Math.random() - 0.5).slice(0, 150);
+    quoteDisplay.innerHTML = '';
+    
+    wordsArray.forEach((word, wIdx) => {
+        const span = document.createElement('span');
+        span.className = 'word' + (wIdx === 0 ? ' word-current' : '');
+        span.innerHTML = word.split('').map(c => `<span>${c}</span>`).join('');
+        quoteDisplay.appendChild(span);
+    });
+    quoteDisplay.scrollTop = 0;
+}
     
         function showResults() {
       clearInterval(timerInterval);
@@ -2072,11 +2329,15 @@ database.ref('leaderboard').on('value', (snapshot) => {
         wpmElement.innerText = wpm;
     
     const speedStatus = document.getElementById('speed-status'); 
-    if (isStarted) {
-        if (wpm <= 30) speedStatus.innerHTML = `<img src="" width="30"> <span>ល្បឿនកូនក្មេង (យឺតណាស់!)</span>`;
-        else if (wpm <= 60) speedStatus.innerHTML = `<img src="" width="30"> <span>ល្បឿនមធ្យម (ខំឡើង!)</span>`;
-        else speedStatus.innerHTML = `<img src="" width="30"> <span style="color:#ff0055; font-weight:bold;">ល្បឿនដូចហោះ (ខ្លាំងមែន!)</span>`;
-        }
+    let rankName = "";
+if (wpm <= 30) {
+    rankName = (currentLang === 'km' || currentLang === 'kh') ? "ល្បឿនកូនក្មេង" : (currentLang === 'id' ? "Kecepatan Lambat" : "Kid Speed");
+} else if (wpm <= 70) {
+    rankName = (currentLang === 'km' || currentLang === 'kh') ? "ល្បឿនមធ្យម" : (currentLang === 'id' ? "Kecepatan Normal" : "Normal Speed");
+} else {
+    rankName = (currentLang === 'km' || currentLang === 'kh') ? "ល្បឿនដូចហោះ" : (currentLang === 'id' ? "Luar Biasa" : "God Speed");
+}
+speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span>`;
      }
     
     function showResults() {
@@ -2132,6 +2393,7 @@ database.ref('leaderboard').on('value', (snapshot) => {
         timerElement.innerText = 60; wpmElement.innerText = 0; errorElement.innerText = 0;
         inputField.disabled = false; inputField.value = '';
         document.getElementById('result-overlay').style.display = 'none';
+        const savedLang = localStorage.getItem('selectedLang') || 'kh';
         prepareWords();
         inputField.focus();
     }
@@ -2166,7 +2428,11 @@ database.ref('leaderboard').on('value', (snapshot) => {
         });
         box.scrollTop = box.scrollHeight;
     });
+    
+    
 
+    const savedLang = localStorage.getItem('selectedLang') || 'kh';
+    switchLang(savedLang);
     prepareWords();
     
     database.ref('leaderboard').orderByChild('wpm').limitToLast(10).on('value', (snapshot) => {
@@ -2341,7 +2607,6 @@ let gameTimer;
 let countdownActive = false;
 let raceRef;
 
-// ចាប់ផ្តើមដំបូង
 window.onload = function() {
     changeLanguage();
 };
@@ -2349,13 +2614,12 @@ window.onload = function() {
 function changeLanguage() {
     const lang = document.getElementById('lang-select').value;
     const urlParams = new URLSearchParams(window.location.search);
-    
-    // បង្កើត RoomID តាមភាសា ដើម្បីកុំឱ្យលាយឡំគ្នា (ឧទាហរណ៍: global_kh)
+
     const roomId = urlParams.get('room') || 'global_' + lang;
     if (raceRef) raceRef.off(); 
     raceRef = firebase.database().ref('/' + roomId);
 
-    // រើសពាក្យថ្មីដោយចៃដន្យ
+
     const langTexts = texts[lang];
     currentText = langTexts[Math.floor(Math.random() * langTexts.length)];
     
@@ -2375,7 +2639,7 @@ function joinRace() {
     }
     document.getElementById('btn-join').style.display = 'none';
     
-    // Reset ទិន្នន័យរបស់ខ្ញុំក្នុង Firebase
+e
     raceRef.child('players').child(myId).set({
         name: playerName,
         car: selectedCar,
@@ -2396,7 +2660,6 @@ function listenToRace() {
         document.getElementById('p-count').innerText = pIds.length;
         renderLanes(players);
 
-        // ចាប់ផ្តើម AUTO បើមាន ២ នាក់ឡើងទៅ
         if (pIds.length >= 2 && !data.gameStatus && !countdownActive) {
             startCountdown(); 
         }
@@ -2519,11 +2782,11 @@ function endGame(msg) {
 }
 
 function restartGame() {
-    // លុបស្ថានភាពចាស់ចេញពី Firebase
+
     raceRef.child('gameStatus').remove();
     raceRef.child('players').child(myId).update({ progress: 0, wpm: 0 });
 
-    // រើសពាក្យថ្មី និង Reset UI
+
     changeLanguage();
     document.getElementById('btn-restart').style.display = 'none';
     document.getElementById('btn-exit').style.display = 'none';
@@ -2545,6 +2808,8 @@ function createPrivateRace() {
 function exitToGlobal() {
     window.location.href = window.location.origin + window.location.pathname;
 }
+
+
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
