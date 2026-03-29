@@ -19,6 +19,24 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 
 <html lang="km">
@@ -1200,9 +1218,175 @@ body { padding-left: 240px !important; }
   text-align: center;
   width: 100%;
 }
+.divider-dashed {
+    border: none;
+    border-top: 2px dashed #d4af37;
+    margin: 40px 0 20px 0;
+    opacity: 0.6;
+}
+
+.about-container {
+    background: #fdfaf1; /* ពណ៌ក្រដាសចាស់ៗ */
+    border: 2px solid #8b4513;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 10px;
+    box-shadow: inset 0 0 10px rgba(139, 69, 19, 0.1);
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8b4513;
+    border-bottom: 1px solid #e0c097;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* ចែកជា ២ ជួរ (ឆ្វេងព័ត៌មាន ស្តាំប្រអប់សារ) */
+    gap: 20px;
+    text-align: left;
+}
+
+.contact-form h4 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #333;
+}
+
+.contact-form input, .contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Kantumruy Pro', sans-serif;
+    outline: none;
+}
+
+.btn-send {
+    background: #8b4513;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+    width: 100%;
+}
+
+.btn-send:hover {
+    background: #d4af37;
+}
+
+/* សម្រាប់ទូរស័ព្ទ ឱ្យវាធ្លាក់មកនៅជួរដេកវិញ */
+@media (max-width: 600px) {
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+}
+.direct-contact {
+    margin-top: 20px;
+    border-top: 1px dashed #d4af37;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.direct-contact p {
+    font-size: 13px;
+    color: #8b4513;
+    margin-bottom: 12px;
+}
+
+.btn-telegram {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #0088cc; /* ពណ៌ Telegram */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 136, 204, 0.3);
+}
+
+.btn-telegram:hover {
+    background: #0077b5;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 136, 204, 0.4);
+}
+
+.other-links {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.other-links a {
+    color: #8b4513;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.other-links a:hover {
+    color: #d4af37;
+}
+
+.kny-banner {
+    background: linear-gradient(45deg, #b8860b, #ffd700, #b8860b);
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    color: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+}
+
+.kny-banner h1 {
+    font-family: 'Khmer OS Muol Light', cursive;
+    margin: 0;
+    font-size: 28px;
+    text-shadow: 1px 1px 2px white;
+}
+
+.kny-banner p {
+    font-family: 'Khmer OS Siemreap', sans-serif;
+    margin: 5px 0 0;
+    font-weight: bold;
+}
 
 
+.flower-left, .flower-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    animation: bounce 2s infinite;
+}
 
+.flower-left { left: 20px; }
+.flower-right { right: 20px; }
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(-50%) scale(1); }
+    50% { transform: translateY(-60%) scale(1.2); }
+}
+
+
+.typing-area {
+    border: 3px solid #ffd700 !important;
+    background-image: url('https://www.transparenttextures.com/patterns/gold-dust.png');
+}
     </style>
 
 </head>
@@ -1212,10 +1396,17 @@ body { padding-left: 240px !important; }
   
 
   <div class="side-menu">
+    <div class="kny-banner">
+    <div class="flower-left">🌸</div>
+    <h1>សួស្តីឆ្នាំថ្មី ប្រពៃណីខ្មែរ ២០២៦</h1>
+    <p>ឆ្នាំមមី អដ្ឋស័ក ពុទ្ធសករាជ ២៥៧០</p>
+    <div class="flower-right">🌸</div>
+</div>
 
     <div class="menu-header">
     <div class="pro-typer-logo">PRO-TYPER</div>
     </div>
+    
 
 <div class="khmer-scroll-wrapper">
     <div class="gold-pillar left"></div>
@@ -1593,14 +1784,141 @@ body { padding-left: 240px !important; }
         </table>
     </div>
 </div>
-              
+
+
+<div class="monetization-wrapper">
+    <div class="ads-space">
+        <p id="ads-text">"មានផ្សាយពាណិជ្ជកម្មនៅទីនេះ | ទាក់ទង៖ 0964326273 Telegram"</p>
+    </div>  
+
+    <div class="support-card">
+        <div class="scroll-pillar pillar-left"></div>
+        <div class="scroll-pillar pillar-right"></div>
+        <div class="donation-card">
+            <div class="card-content">
+                <h3 id="st-title" style="color: var(--primary-color);">☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍</h3>
+                
+                <p id="st-desc">ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ អ្នកអាចឧបត្ថម្ភកាហ្វេខ្ញុំម្នាក់មួយកែវបាន</p>
+
+                <div style="font-weight: bold;">
+                    <p id="dev-name" style="margin: 5px 0;">ឈ្មោះ: KEO CHANREAKSMEY</p>
+                    <p id="acc-num" style="margin: 5px 0; color: #00f2ff;">លេខគណនី: 006 010 618</p>
+                </div> 
+
+                <div class="aba-btn-container">
+                    <button class="open-qr-btn" onclick="showQR()">
+                        <i class="fa-solid fa-qrcode"></i> 
+                        <span id="qr-text">ចុចលើកន្លែងនេះដើម្បីបង្ហាញ QR BANK ABA</span>
+                    </button>
+</div>
+
+<div id="abaModal" class="qr-overlay" onclick="hideQR()">
+    <div class="qr-card" onclick="event.stopPropagation()">
+        <h3 style="color:#005aab; margin-top:0;">ABA PAY</h3>
+        <img src="https://uploads.onecompiler.io/44b5h5aqk/44hgxs8b5/Screenshot_6.png" alt="ABA QR Code">
+        <br>
+        <button class="close-qr" onclick="hideQR()">បិទវិញ</button>
+    </div>
+</div>
+</div>
+</div>
+</div>
             
+  <hr class="divider-dashed">
+
+<div class="about-container">
+    <div class="info-header">
+        <i class="fas fa-info-circle"></i>
+        <h3>អំពីកម្មវិធី និង ការទំនាក់ទំនង</h3>
+    </div>
+    
+    <div class="about-content">
+        <div class="about-text">
+            <p><strong>Typing Khmer Pro</strong> មិនមែនត្រឹមតែជាកម្មវិធីហ្វឹកហាត់ប៉ុណ្ណោះទេ ប៉ុន្តែគឺជាឧបករណ៍ឌីជីថលដែលជួយសម្រួលដល់ការប្រើប្រាស់អក្សរសាស្ត្រខ្មែរឱ្យកាន់តែមានភាពងាយស្រួល និងរហ័ស។ យើងផ្តោតសំខាន់ទៅលើ៖ស្ដង់ដារ។</p>
+            <p><small> ភាពត្រឹមត្រូវ៖ បង្រៀនឱ្យវាយត្រូវតាមអក្ខរាវិរុទ្ធ និងស្ដង់ដារយូនីកូដ (Unicode)។
+
+ល្បឿន៖ កម្មវិធីតាមដាន និងបង្កើនល្បឿនវាយអក្សរ (WPM) របស់អ្នកឱ្យដល់កម្រិតអតិបរមា។
+
+ភាពទំនើប៖ បទពិសោធន៍ប្រើប្រាស់រលូន (UI/UX) និងងាយស្រួលយល់។ កំណែទម្រង់បច្ចុប្បន្ន៖ v2.5.0 (Updated 2026)</small></p>
+        </div>
+
+       <div class="contact-form">
+    <input type="text" id="sender-name" placeholder="ឈ្មោះរបស់អ្នក...">
+    <textarea id="sender-message" rows="3" placeholder="សរសេរសារ..."></textarea>
+    <button id="btn-submit-feedback" class="btn-send">
+        <i class="fas fa-paper-plane"></i> ផ្ញើទៅកាន់ Firebase
+    </button>
+</div>
+</div>
+<div class="direct-contact">
+        <p>ឬទំនាក់ទំនងមកយើងផ្ទាល់តាមរយៈ៖</p>
+        <div class="social-buttons">
+            <a href="https://t.me/kevchanreaksmey" target="_blank" class="btn-telegram">
+                <i class="fab fa-telegram-plane"></i> Telegram: @kevchanreaksmey
+            </a>
+            
+            <div class="other-links">
+                <a href="https://facebook.com/your_page" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://reaksmey10012004-stack.github.io/my-typing-master-khmer-typing-pro/?room=room_8232" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <div id="fb-root"></div>
 
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <script>
+  import { db } from "./firebase-config.js";
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.x.x/firebase-firestore.js";
+
+const btnSubmit = document.getElementById('btn-submit-feedback');
+
+if (btnSubmit) {
+    btnSubmit.addEventListener('click', async () => {
+        const nameInput = document.getElementById('sender-name');
+        const messageInput = document.getElementById('sender-message');
+        
+        const name = nameInput.value.trim();
+        const message = messageInput.value.trim();
+
+        if (name === "" || message === "") {
+            alert("សូមបំពេញឈ្មោះ និងសាររបស់អ្នក!");
+            return;
+        }
+
+        try {
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = "កំពុងផ្ញើ...";
+
+
+            await addDoc(collection(db, "feedbacks"), {
+                username: name,
+                content: message,
+                timestamp: serverTimestamp()
+            });
+
+            alert("ផ្ញើសារជោគជ័យ! អរគុណសម្រាប់ការផ្ដល់មតិ។");
+            
+
+            nameInput.value = "";
+            messageInput.value = "";
+
+        } catch (error) {
+            console.error("Firebase Error: ", error);
+            alert("មានបញ្ហាក្នុងការផ្ញើ! សូមពិនិត្យមើល Console (F12)។");
+        } finally {
+            btnSubmit.disabled = false;
+            btnSubmit.innerHTML = '<i class="fas fa-paper-plane"></i> ផ្ញើទៅកាន់ Firebase';
+        }
+    });
+}
   
 
 
@@ -1765,46 +2083,14 @@ function showAuth(type) {
     });
 
 </script>
-<div class="monetization-wrapper">
-    <div class="ads-space">
-        <p id="ads-text">"មានផ្សាយពាណិជ្ជកម្មនៅទីនេះ | ទាក់ទង៖ 0964326273 Telegram"</p>
-    </div>  
 
-    <div class="support-card">
-        <div class="scroll-pillar pillar-left"></div>
-        <div class="scroll-pillar pillar-right"></div>
-        <div class="donation-card">
-            <div class="card-content">
-                <h3 id="st-title" style="color: var(--primary-color);">☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍</h3>
-                
-                <p id="st-desc">ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ អ្នកអាចឧបត្ថម្ភកាហ្វេខ្ញុំម្នាក់មួយកែវបាន</p>
-
-                <div style="font-weight: bold;">
-                    <p id="dev-name" style="margin: 5px 0;">ឈ្មោះ: KEO CHANREAKSMEY</p>
-                    <p id="acc-num" style="margin: 5px 0; color: #00f2ff;">លេខគណនី: 006 010 618</p>
-                </div> 
-
-                <div class="aba-btn-container">
-                    <button class="open-qr-btn" onclick="showQR()">
-                        <i class="fa-solid fa-qrcode"></i> 
-                        <span id="qr-text">ចុចលើកន្លែងនេះដើម្បីបង្ហាញ QR BANK ABA</span>
-                    </button>
-</div>
-
-<div id="abaModal" class="qr-overlay" onclick="hideQR()">
-    <div class="qr-card" onclick="event.stopPropagation()">
-        <h3 style="color:#005aab; margin-top:0;">ABA PAY</h3>
-        <img src="https://uploads.onecompiler.io/44b5h5aqk/44hgxs8b5/Screenshot_6.png" alt="ABA QR Code">
-        <br>
-        <button class="close-qr" onclick="hideQR()">បិទវិញ</button>
-    </div>
-</div>
 
 </div> 
     
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
 <script>
     const firebaseConfig = {
@@ -1936,6 +2222,43 @@ database.ref('leaderboard').on('value', (snapshot) => {
     }
     chain.addEventListener('click', toggleLight);
     lampImg.addEventListener('click', toggleLight);
+    
+    const db = firebase.firestore();
+
+
+document.getElementById('btn-submit-feedback').addEventListener('click', function() {
+    const name = document.getElementById('sender-name').value;
+    const message = document.getElementById('sender-message').value;
+
+    if (name.trim() === "" || message.trim() === "") {
+        alert("សូមបំពេញឈ្មោះ និងសាររបស់អ្នក!");
+        return;
+    }
+
+    const btn = this;
+    btn.disabled = true;
+    btn.innerHTML = "កំពុងផ្ញើ...";
+
+
+    db.collection("feedbacks").add({
+        username: name,
+        content: message,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(() => {
+        alert("សាររបស់អ្នកត្រូវបានផ្ញើជោគជ័យ!");
+        document.getElementById('sender-name').value = "";
+        document.getElementById('sender-message').value = "";
+    })
+    .catch((error) => {
+        console.error("Error: ", error);
+        alert("ផ្ញើមិនចេញទេ! សូមឆែកមើល Rules ក្នុង Firebase របស់អ្នក។");
+    })
+    .finally(() => {
+        btn.disabled = false;
+        btn.innerHTML = "ផ្ញើទៅកាន់ Firebase";
+    });
+});
 
     const dataKh = ["kal", "phearun", "nv", "vannak", "slanh", "kmeang", "jol", "jit", "der", "lg", "srat", "kor", "run", "tv", "vinh", "mor", "min", "derl", "jes", "klach", "nak", "na", "ngaii", "muy", "mean", "ke", "som", "lanh", "nh", "ter", "ort", "prom", "pi", "lob", "leler", "pek", "ban", "chea", "dg", "puk", "ng", "sit", "chkut", "name", "voan", "koy", "ouy", "sak", "bek", "jeang", "na", "ber", "vea", "tok", "nis", "klean", "bay", "has", "cher", "kbal", "nas", "lok", "hery", "thonh", "hot", "anh", "dob", "bek", "pler", "lan", "motor", "kev", "kabob", "nom", "nham", "bay", "mhob", "klean", "ey", "hmm", "puk", "hg", "rean", "kru", "lork", "kru", "nak", "ming", "pu", "kmeang", "has", "pler", "juk", "tnam", "poipet", "kmeang", "angkor", "wat", "vital", "cambodia", "khmer", "klang", "jit", "khg", "masel", "minh", "khg", "kbea", "chgay", "chganh", "cheat", "kdmv", "srul", "klang", "hea", "therk", "tmenh", "cher", "met", "av", "kor", "lyly", "chana", "noun", "neang", "ter", "neak", "jg", "niyeay", "ampi", "khang","ler", "banthem", "banteb", "mdg", "tt", "khjal", "tangos", "ster", "ter", "nv", "cheamuy", "krr", "chea", "nis", "sat", "avy", "muy", "tt", "na", "muy", "nv", "mean", "jomvinh", "doch", "derl", "sur", "nv", "chgay", "tlob", "trov", "doysa", "tleab", "pimon", "jam", "pderm", "kompong", "seavpav", "kmeang", "brozz", "krusa", "tix", "toch", "bun", "ahha", "somrab", "rksee", "ttul", "kbal", "jom", "thonh", "rhas", "kur", "niyeay", "pitherksamot", "klas", "avy", "pelklas", "knom", "tver", "beb", "oy", "peak", "vea", "veang", "kom", "tha", "oy", "nh", "min", "jes", "singkhmer", "morpi", "dak", "beab", "nis", "therb", "mean", "peak", "sorsea", "merl", "tv", "loy", "doch", "ke", "pheak", "jren", "peak", "yg", "sorsea", "klai", "klai", "doch", "chnes", "hx", "terb", "knom", "tver", "beb", "nis", "salarean", "mean", "kru", "nv", "tes", "mean", "nakmak", "bang", "paon", "trov", "jes", "slanh", "kne", "songsa", "sneaha", "kambit", "motor", "lanjis", "nakklas", "puk", "khea", "niyeay", "derm", "ke", "chea", "pi", "seas", "kmeang", "poipet", "ter", "mdg", "muy", "ngaii", "muy", "ngaii", "min", "kit", "khom", "phrong", "niyeay", "derm", "khom", "tv", "tham", "ten", "vaii", "khom", "tha", "koch", "baycha", "micheat", "breangkala", "av", "ach", "plerng", "punler"];
     const dataEn = ["the", "great", "world", "both", "run", "by", "near", "most", "so", "people", "picture", "once", "large", "between", "most", "light", "write", "are", "go", "picture", "me", "country", "little", "keep", "read", "call", "never", "open", "that", "story", "good", "until", "write", "air", "kind", "there", "change", "far", "over", "any", "may", "three", "children", "said", "put", "is", "us", "that", "animal", "let", "was", "America", "change", "other", "always", "every", "animal", "find", "old", "picture", "made", "work", "school", "grow", "us", "ask", "life", "find", "spell", "never", "went", "she", "food", "really", "run", "almost", "own", "she", "left", "by", "question", "home", "or", "help", "second", "quickly", "just", "turn", "these", "state", "who", "so", "water", "even", "large", "eye", "below", "be", "face", "hear", "went", "at", "when", "number", "important", "sound", "who", "kecil", "into", "enough", "tell", "only", "country", "really", "turn", "white", "home", "they", "your", "because", "such", "not", "form", "how", "they", "left", "cut", "part", "sentence", "be", "between", "dream"];
@@ -1954,13 +2277,11 @@ database.ref('leaderboard').on('value', (snapshot) => {
     
 function switchLang(lang) {
     currentLang = lang;
-    const langSelect = document.getElementById('lang-select');
     localStorage.setItem('selectedLang', lang);
-    const select = document.getElementById('lang-select');
-    if (select) select.value = lang;
-    if (langSelect) {
-    langSelect.value = lang;
-    }
+    
+    const langSelect = document.getElementById('lang-select');
+    if (langSelect) langSelect.value = lang;
+
     const dictionary = {
         kh: { 
             metaTitle: "Typing Khmer Pro - តេស្តល្បឿនវាយអក្សរ",
@@ -1971,17 +2292,14 @@ function switchLang(lang) {
             t: "⏰ពេល:", w: "🚀WPM:", e: "❌កំហុស:",
             label: "ជ្រើសរើសភាសា៖",
             loginBtn: "LOGIN",
-
             lbTitle: "🏆 កំពូលអ្នកវាយអក្សរ (80+ WPM)",
             rank: "Rank", name: "Name", speed: "Speed", time: "Time",
-
             stTitle: "☕ ជួយឧបត្ថម្ភអ្នកអភិវឌ្ឍន៍",
             stDesc: "ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ អ្នកអាចឧបត្ថម្ភកាហ្វេខ្ញុំម្នាក់មួយកែវបាន",
             qrText: "ចុចលើកន្លែងនេះដើម្បីបង្ហាញ QR BANK ABA",
             devName: "ឈ្មោះ: KEO CHANREAKSMEY",
             accNum: "លេខគណនី: 006 010 618",
             ads: "មានផ្សាយពាណិជ្ជកម្មនៅទីនេះ | ទាក់ទង៖ 0964326273 Telegram",
-
             resTitle: "🏆 លទ្ធផលរបស់អ្នក 🏆",
             resSpd: "ល្បឿនមធ្យម",
             resAcc: "ភាពត្រឹមត្រូវ",
@@ -2005,11 +2323,19 @@ function switchLang(lang) {
             emailTitle: "Email Login",
             forgot: "Forgot Password?",
             signUp: "Sign Up",
-            createAcc: "Create Account"
+            createAcc: "Create Account",
+            // About Section
+            aboutTitle: "អំពីកម្មវិធី និង ការទំនាក់ទំនង",
+            aboutDesc1: "Typing Khmer Pro មិនមែនត្រឹមតែជាកម្មវិធីហ្វឹកហាត់ប៉ុណ្ណោះទេ ប៉ុន្តែគឺជាឧបករណ៍ឌីជីថលដែលជួយសម្រួលដល់ការប្រើប្រាស់អក្សរសាស្ត្រខ្មែរឱ្យកាន់តែមានភាពងាយស្រួល និងរហ័ស។",
+            aboutDesc2: "ភាពត្រឹមត្រូវ៖ បង្រៀនឱ្យវាយត្រូវតាមអក្ខរាវិរុទ្ធ និងស្ដង់ដារយូនីកូដ (Unicode)។ ល្បឿន៖ កម្មវិធីតាមដាន និងបង្កើនល្បឿនវាយអក្សរ (WPM) របស់អ្នក។ កំណែទម្រង់បច្ចុប្បន្ន៖ v2.5.0 (Updated 2026)",
+            fbName: "ឈ្មោះរបស់អ្នក...",
+            fbMsg: "សរសេរសារ...",
+            fbSend: "ផ្ញើទៅកាន់ Firebase",
+            directContact: "ឬទំនាក់ទំនងមកយើងផ្ទាល់តាមរយៈ៖"
         },
         km: { 
             metaTitle: "Typing Khmer Pro - តេស្តល្បឿនវាយអក្សរខ្មែរអនឡាញ",
-            metaDesc: "ហាត់វាយអក្សរខ្មែរ និងអង់គ្លេស ដើម្បីបង្កើនល្បឿនម្រាមដៃរបស់អ្នកជាមួយ Typing Khmer Pro។ តេស្តល្បឿន WPM ដោយឥតគិតថ្លៃ!",
+            metaDesc: "ហាត់វាយអក្សរខ្មែរ និងអង់គ្លេស ដើម្បីបង្កើនល្បឿនម្រាមដៃរបស់អ្នកជាមួយ Typing Khmer Pro។",
             ready: "ត្រៀមខ្លួនរួចរាល់!",
             p: "វាយអក្សរខ្មែរនៅទីនេះ...",
             r: "លេងម្ដងទៀត",
@@ -2047,11 +2373,18 @@ function switchLang(lang) {
             emailTitle: "ចូលតាមអ៊ីមែល",
             forgot: "ភ្លេចលេខសម្ងាត់?",
             signUp: "ចុះឈ្មោះ",
-            createAcc: "បង្កើតគណនី"
+            createAcc: "បង្កើតគណនី",
+            aboutTitle: "អំពីកម្មវិធី និង ការទំនាក់ទំនង",
+            aboutDesc1: "Typing Khmer Pro មិនមែនត្រឹមតែជាកម្មវិធីហ្វឹកហាត់ប៉ុណ្ណោះទេ ប៉ុន្តែគឺជាឧបករណ៍ឌីជីថលដែលជួយសម្រួលដល់ការប្រើប្រាស់អក្សរសាស្ត្រខ្មែរឱ្យកាន់តែមានភាពងាយស្រួល និងរហ័ស។",
+            aboutDesc2: "ភាពត្រឹមត្រូវ៖ បង្រៀនឱ្យវាយត្រូវតាមអក្ខរាវិរុទ្ធ និងស្ដង់ដារយូនីកូដ (Unicode)។ ល្បឿន៖ កម្មវិធីតាមដាន និងបង្កើនល្បឿនវាយអក្សរ (WPM) របស់អ្នក។ កំណែទម្រង់បច្ចុប្បន្ន៖ v2.5.0 (Updated 2026)",
+            fbName: "ឈ្មោះរបស់អ្នក...",
+            fbMsg: "សរសេរសារ...",
+            fbSend: "ផ្ញើទៅកាន់ Firebase",
+            directContact: "ឬទំនាក់ទំនងមកយើងផ្ទាល់តាមរយៈ៖"
         },
         en: { 
             metaTitle: "Typing Khmer Pro - Online Typing Speed Test",
-            metaDesc: "Practice Khmer and English typing to improve your finger speed with Typing Khmer Pro. Free WPM Test!",
+            metaDesc: "Practice Khmer and English typing to improve your finger speed with Typing Khmer Pro.",
             ready: "Ready to Start!",
             p: "Start typing here...",
             r: "Restart",
@@ -2089,11 +2422,18 @@ function switchLang(lang) {
             emailTitle: "Email Login",
             forgot: "Forgot Password?",
             signUp: "Sign Up",
-            createAcc: "Create Account"
+            createAcc: "Create Account",
+            aboutTitle: "About & Contact",
+            aboutDesc1: "Typing Khmer Pro is a digital tool designed to make using Khmer literature easier and faster.",
+            aboutDesc2: "Accuracy: Standard Unicode training. Speed: Maximize your WPM. Modernity: Smooth UI/UX experience. Version: v2.5.0 (Updated 2026)",
+            fbName: "Your name...",
+            fbMsg: "Type message...",
+            fbSend: "Send to Firebase",
+            directContact: "Or contact us directly via:"
         },
         id: { 
             metaTitle: "Typing Khmer Pro - Tes Kecepatan Mengetik",
-            metaDesc: "Berlatih mengetik Khmer dan Inggris untuk meningkatkan kecepatan jari Anda dengan Typing Khmer Pro. Tes WPM Gratis!",
+            metaDesc: "Berlatih mengetik Khmer dan Inggris dengan Typing Khmer Pro.",
             ready: "Siap Dimulai!",
             p: "Mulai ketik di sini...",
             r: "Mulai Ulang",
@@ -2131,72 +2471,73 @@ function switchLang(lang) {
             emailTitle: "Masuk Email",
             forgot: "Lupa Kata Sandi?",
             signUp: "Daftar",
-            createAcc: "Buat Akun"
+            createAcc: "Buat Akun",
+            aboutTitle: "Tentang & Kontak",
+            aboutDesc1: "Typing Khmer Pro adalah alat digital yang memudahkan penggunaan literatur Khmer secara cepat.",
+            aboutDesc2: "Akurasi: Standar Unicode. Kecepatan: Maksimalkan WPM Anda. Modernitas: Pengalaman UI/UX yang mulus. Versi: v2.5.0 (Updated 2026)",
+            fbName: "Nama Anda...",
+            fbMsg: "Tulis pesan...",
+            fbSend: "Kirim ke Firebase",
+            directContact: "Atau hubungi kami langsung melalui:"
         }
     };
 
     const d = dictionary[lang] || dictionary['kh'];
 
+  
     const updateText = (id, text) => {
         const el = document.getElementById(id);
-        if (el) el.innerText = text;
+        if (el && text !== undefined) el.innerText = text;
     };
 
-   
+    const updatePlaceholder = (id, text) => {
+        const el = document.getElementById(id);
+        if (el && text !== undefined) el.placeholder = text;
+    };
+
+  
     document.title = d.metaTitle;
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.setAttribute("content", d.metaDesc);
 
-  
     updateText("ready-text", d.ready);
-    if(document.getElementById("input-field")) document.getElementById("input-field").placeholder = d.p;
+    updatePlaceholder("input-field", d.p);
     updateText("reset-btn", d.r);
     updateText("lang-label", d.label);
     updateText("login-gold-btn", d.loginBtn);
 
- 
     const labels = document.querySelectorAll('.stat-label');
     if(labels.length >= 3) {
         labels[0].innerText = d.t; labels[1].innerText = d.w; labels[2].innerText = d.e;
     }
 
-   
+    
     updateText("lb-title", d.lbTitle);
-    updateText("th-rank", d.rank);
-    updateText("th-name", d.name);
-    updateText("th-speed", d.speed);
-    updateText("th-time", d.time);
+    updateText("th-rank", d.rank); updateText("th-name", d.name);
+    updateText("th-speed", d.speed); updateText("th-time", d.time);
+    updateText("res-title", d.resTitle);
+    updateText("label-speed", d.resSpd); updateText("label-acc", d.resAcc);
+    updateText("label-wrong", d.resWrng); updateText("label-rank", d.resRank);
+    updateText("res-retry-btn", d.resRetry); updateText("res-share-btn", d.resShare);
 
   
-    updateText("st-title", d.stTitle);
-    updateText("st-desc", d.stDesc);
-    updateText("qr-text", d.qrText);
-    updateText("dev-name", d.devName);
-    updateText("acc-num", d.accNum);
-    updateText("ads-text", d.ads);
+    updateText("st-title", d.stTitle); updateText("st-desc", d.stDesc);
+    updateText("qr-text", d.qrText); updateText("dev-name", d.devName);
+    updateText("acc-num", d.accNum); updateText("ads-text", d.ads);
 
- 
-    updateText("res-title", d.resTitle);
-    updateText("label-speed", d.resSpd);
-    updateText("label-acc", d.resAcc);
-    updateText("label-wrong", d.resWrng);
-    updateText("label-rank", d.resRank);
-    updateText("res-retry-btn", d.resRetry);
-    updateText("res-share-btn", d.resShare);
-
-
+    
     updateText("guest-text", d.guest);
     updateText("side-login-btn", d.loginBtn);
+    updateText("tab-login", d.loginBtn);
+    updateText("tab-register", d.createAcc);
     updateText("one-click-title", d.oneClick);
     updateText("fb-login-btn", d.fbLogin);
     updateText("google-login-btn", d.googLogin);
     updateText("email-login-title", d.emailTitle);
     updateText("forgot-pass", d.forgot);
     updateText("main-signup-btn", d.signUp);
-    updateText("tab-login", d.loginBtn);
-    updateText("tab-register", d.createAcc);
 
- 
+   
     updateText("race-title", d.raceTitle);
     updateText("change-car-btn", d.changeCar);
     updateText("create-room-btn", d.createRoom);
@@ -2204,14 +2545,28 @@ function switchLang(lang) {
     updateText("select-car-title", d.selectCar);
     updateText("close-modal-btn", d.close);
     updateText("copy-link-label", d.copyLink);
-    
-
     const pLabel = document.getElementById("players-label");
     if(pLabel && pLabel.firstChild) pLabel.firstChild.textContent = d.players;
 
+   
+    const aboutHeader = document.querySelector('.info-header h3');
+    if (aboutHeader) aboutHeader.innerText = d.aboutTitle;
+
+    const aboutTexts = document.querySelectorAll('.about-text p');
+    if (aboutTexts.length >= 2) {
+        aboutTexts[0].innerText = d.aboutDesc1;
+        aboutTexts[1].innerHTML = `<small>${d.aboutDesc2}</small>`;
+    }
+
+    updatePlaceholder("sender-name", d.fbName);
+    updatePlaceholder("sender-message", d.fbMsg);
+    const btnFeedback = document.getElementById("btn-submit-feedback");
+    if (btnFeedback) btnFeedback.innerHTML = `<i class="fas fa-paper-plane"></i> ${d.fbSend}`;
+    const directText = document.querySelector('.direct-contact p');
+    if (directText) directText.innerText = d.directContact;
+
     if (typeof resetGame === "function") resetGame();
 }
-
 
 function prepareWords() {
     let sourceData;
@@ -2809,12 +3164,94 @@ function exitToGlobal() {
     window.location.href = window.location.origin + window.location.pathname;
 }
 
+function startNewYearEffect() {
+    const symbols = ['🌸', '✨', '🏮', '🌼'];
+    
+    setInterval(() => {
+        const petal = document.createElement('div');
+        petal.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        petal.style.position = 'fixed';
+        petal.style.top = '-20px';
+        petal.style.left = Math.random() * 100 + 'vw';
+        petal.style.fontSize = Math.random() * 20 + 10 + 'px';
+        petal.style.zIndex = '9999';
+        petal.style.pointerEvents = 'none';
+        petal.style.transition = 'transform 5s linear, opacity 5s';
+        
+        document.body.appendChild(petal);
+        
+
+        setTimeout(() => {
+            petal.style.transform = `translateY(${window.innerHeight + 50}px) rotate(${Math.random() * 360}deg)`;
+            petal.style.opacity = '0';
+        }, 100);
+        
+
+        setTimeout(() => {
+            petal.remove();
+        }, 6000);
+    }, 400);
+}
 
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
