@@ -1803,44 +1803,6 @@ body { padding-left: 240px !important; }
 
 </div>
 
-<div class="chat-container">
-<div class="scroll-pillar pillar-left"></div>
-    <div class="scroll-pillar pillar-right"></div>
-
-    <div class="chat-title-wrapper">
-
-        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
-
-    </div>
-
-    <div id="chat-box"></div>
-
-    <div class="chat-input-area">
-
-        <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12">
-
-        <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
-
-        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
-
-        <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
-
-        <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
-
-    </div>
-
-    <div style="text-align: left; margin-top: 10px;">
-
-        <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
-
-        <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
-
-        <button class="btn-chat-send" style="background: var(--error-color); margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
-
-    </div>
-
-</div>
-
 
 
 <div class="chat-container">
