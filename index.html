@@ -1471,6 +1471,89 @@ body { padding-left: 240px !important; }
     border-radius: 50%;
     display: none;
 }
+        
+    #chat-toggle-btn {
+        cursor: pointer; 
+        position: fixed; 
+        bottom: 30px; 
+        right: 30px; 
+        z-index: 10001; 
+        background: #2c1e12; 
+        border: 2px solid #ffd700; 
+        height: 55px; 
+        border-radius: 30px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        padding: 0 20px; 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(255,215,0,0.3); 
+        color: #ffd700;
+        transition: all 0.3s ease;
+        font-family: 'Inter', 'Khmer OS Battambang', sans-serif;
+    }
+
+  
+    .chat-text {
+        font-size: 15px; 
+        font-weight: bold; 
+        margin-right: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+
+    #chat-badge {
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        background: #ff0000; 
+        color: white; 
+        width: 24px; 
+        height: 24px; 
+        border-radius: 50%; 
+        position: absolute; 
+        top: -15px; 
+        right: -12px; 
+        border: 2px solid white; 
+        font-size: 13px; 
+        font-weight: bold;
+        box-shadow: 0 0 15px rgba(255,0,0,0.7);
+        animation: heart-beat 1.5s infinite; 
+    }
+
+
+    @keyframes heart-beat {
+        0% { transform: scale(1); }
+        15% { transform: scale(1.3); }
+        30% { transform: scale(1); }
+        45% { transform: scale(1.3); }
+        100% { transform: scale(1); }
+    }
+
+/
+    .glow-effect {
+        animation: glowing-border 2s infinite alternate;
+    }
+
+    @keyframes glowing-border {
+        from { box-shadow: 0 0 5px #ffd700, 0 10px 20px rgba(0,0,0,0.4); }
+        to { box-shadow: 0 0 25px #ffd700, 0 0 40px #ffaa00; }
+    }
+
+
+    @media (max-width: 600px) {
+        #chat-toggle-btn {
+            width: 60px;
+            padding: 0;
+            border-radius: 50%;
+            bottom: 20px;
+            right: 20px;
+        }
+        .chat-text { display: none; }
+    }
+
+
+        
     </style>
 
 </head>
@@ -1912,10 +1995,14 @@ body { padding-left: 240px !important; }
             </div>
         </div>
     </div>
-</div><div id="chat-toggle-btn" onclick="toggleChat()" style="cursor: pointer; position: fixed; bottom: 20px; right: 20px; z-index: 10001; background: #2c1e12; border: 2px solid #ffd700; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; box-shadow: 0 0 10px rgba(255,215,0,0.5);">
-    <div class="badge" id="chat-badge" style="display: none; background: red; width: 14px; height: 14px; border-radius: 50%; position: absolute; top: -2px; right: -2px; border: 2px solid white;"></div>
-    📩
-</div>
+    
+    <div id="chat-toggle-btn" onclick="toggleChat()" class="glow-effect">
+    <span class="chat-text">👉</span>
+    
+    <div style="position: relative; display: flex; align-items: center; justify-content: center; font-size: 28px;">
+        <div class="badge" id="chat-badge">1</div>
+        📩
+    </div>
 
 <div id="admin-reply-popup" style="display: none; position: fixed; bottom: 85px; right: 20px; width: 300px; background: #1a120a; border: 2px solid #ffd700; border-radius: 12px; box-shadow: 0 5px 30px rgba(0,0,0,0.8); z-index: 10000; overflow: hidden; pointer-events: auto !important;">
     
