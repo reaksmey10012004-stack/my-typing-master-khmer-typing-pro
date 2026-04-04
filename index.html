@@ -54,7 +54,6 @@
 
 
 
-
 <!DOCTYPE html>
 
 <html lang="km">
@@ -1791,7 +1790,7 @@ body { padding-left: 240px !important; }
 <div class="khmer-top-bar">
     <div class="lang-group">
     <span id="lang-label">ជ្រើសរើសភាសា៖</span>
-    <select id="lang-select" onchange="switchLang(this.value)" class="khmer-select">
+    <select id="lang-select-main" onchange="switchLang(this.value)" class="khmer-select">
         <option value="kh">Khmer Latin</option>
         <option value="en">English</option>
         <option value="id">Indonesia</option>
@@ -2110,47 +2109,6 @@ function loginWithFacebook() {
         .catch((error) => alert("Facebook Login Error: " + error.message));
 
 }
-
-
-
-
-
-function openModal(id) { document.getElementById(id).style.display = 'block'; }
-
-function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
-    function showAuth(type) {
-
-function showAuth(type) {
-
-    if(type === 'login') {
-
-        document.getElementById('loginForm').style.display = (type === 'login') ? 'block' : 'none';
-
-        document.getElementById('registerForm').style.display = (type === 'register') ? 'block' : 'none';
-
-        document.getElementById('tab-login').classList.toggle('active', type === 'login');
-
-        document.getElementById('tab-register').classList.toggle('active', type === 'register');
-
-    } else {
-
-        document.getElementById('loginForm').style.display = 'none';
-
-        document.getElementById('registerForm').style.display = 'block';
-
-    }
-
-    
-
-    function loginWithGoogle() {
-
-        const provider = new firebase.auth.GoogleAuthProvider();
-
-        auth.signInWithPopup(provider).then(() => closeModal('loginModal')).catch(e => alert(e.message));
-
-    }
-
 
 
     function loginWithEmail() {
@@ -2766,33 +2724,6 @@ function prepareWords() {
     quoteDisplay.scrollTop = 0;
 }
     
-        function showResults() {
-      clearInterval(timerInterval);
-      inputField.disabled = true;
-      
-      const finalWPM = parseInt(wpmElement.innerText);
-      const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
-      
-      document.getElementById('result-overlay').style.display = 'flex';
-      document.getElementById('result-overlay').style.display = 'flex';
-      document.getElementById('res-wpm').innerText = finalWPM;
-      document.getElementById('res-errors-final').innerText = wrongWords;
-      document.getElementById('res-acc').innerText = acc;
-      
-      if (finalWPM > 5) { 
-      setTimeout(() => {
-        let playerName = prompt("អបអរសាទរ! សូមបញ្ចូលឈ្មោះរបស់អ្នកដើម្បីដាក់ក្នុងតារាងពិន្ទុ:", "អ្នកលេង");
-        if (playerName) {
-          database.ref('leaderboard').push({
-            name: playerName,
-            wpm: finalWPM,
-            date: new Date().toLocaleDateString()
-          });
-        }
-      }, 1500);
-      }
-    }
-
     inputField.addEventListener('input', () => {
         if (!isStarted) startTimer();
         isStarted = true;
@@ -2867,46 +2798,37 @@ if (wpm <= 30) {
 }
 speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span>`;
      }
-    
+  
     function showResults() {
-        clearInterval(timerInterval);
-        inputField.disabled = true;
-        document.getElementById('result-overlay').style.display = 'flex';
-        document.getElementById('res-wpm').innerText = wpmElement.innerText;
-        document.getElementById('res-errors-final').innerText = wrongWords;
-        const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
-        document.getElementById('res-acc').innerText = acc;
-        if (wpm >= 20) {
-          saveToLeaderboard(wpm);
+    clearInterval(timerInterval);
+    inputField.disabled = true;
+
+
+    let finalWPM = parseInt(wpmElement.innerText);
+
+    if(finalWPM > 70) finalWPM = 70;
+
+    const acc = totalKeystrokes > 0 ? Math.min(Math.round((correctChars / totalKeystrokes) * 100), 100) : 0;
+
+    document.getElementById('result-overlay').style.display = 'flex';
+    document.getElementById('res-wpm').innerText = finalWPM;
+    document.getElementById('res-errors-final').innerText = wrongWords;
+    document.getElementById('res-acc').innerText = acc;
+
+    if(finalWPM >= 30) {
+        let userName = prompt("អស្ចារ្យ! សូមបញ្ចូលឈ្មោះរបស់អ្នក៖");
+        if(userName) {
+            const now = new Date();
+            const timeString = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
+            database.ref('leaderboard').push({
+                name: userName,
+                wpm: finalWPM,
+                time: timeString,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
         }
     }
-    
-    function showResults() {
-      clearInterval(timerInterval);
-      inputField.disabled = true;
-      const finalWpm = parseInt(wpmElement.innerText);
-      const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
-      
-      document.getElementById('result-overlay').style.display = 'flex';
-      document.getElementById('res-wpm').innerText = finalWpm;
-      document.getElementById('res-errors-final').innerText = wrongWords;
-      document.getElementById('res-acc').innerText = acc;
-      
-      if (finalWpm >= 30) {
-      let userName = prompt("អស្ចារ្យ! ល្បឿនអ្នកលើសពី 80WPM! សូមបញ្ចូលឈ្មោះរបស់អ្នក៖");
-      if (userName) {
-        const now = new Date();
-        const timeString = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
-        
-        database.ref('leaderboard').push({
-          name: userName,
-          wpm: finalWpm,
-          time: timeString,
-          timestamp: firebase.database.ServerValue.TIMESTAMP
-        });
-      }
-      }
-    }
+}
     function showQR() {
         document.getElementById('abaModal').style.display = 'flex';
     }
@@ -3425,6 +3347,7 @@ function listenForAdminReplies() {
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
 
 
 
