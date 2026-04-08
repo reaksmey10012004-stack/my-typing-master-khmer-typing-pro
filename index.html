@@ -1906,45 +1906,49 @@ body { padding-left: 240px !important; }
         </div>
 
     </div>
-            <div class="chat-container">
+            
+    </div>
+    <div class="chat-container">
+    <div class="scroll-pillar pillar-left"></div>
+    <div class="scroll-pillar pillar-right"></div>
+
     <div class="chat-title-wrapper">
-        <span class="bouncing-letter">💬</span> ប្រអប់ឆាត
+        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
     </div>
 
-    <div id="step-1" style="text-align: center; padding: 40px;">
-        <button onclick="toStep2()" class="btn-submit">🚀 ចុចចូលលេងឆាត</button>
+    <div id="step-1" style="text-align: center; padding: 50px 0;">
+        <button onclick="toStep2()" style="background: #4CAF50; color: white; border: none; padding: 15px 35px; border-radius: 12px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🚀 ចុចចូលលេងឆាត</button>
     </div>
 
-    <div id="step-2" style="display: none;">
-        <div class="reg-form">
-            <h3 style="text-align:center;">📝 បំពេញព័ត៌មាន</h3>
-            <input type="text" id="reg-name" placeholder="ឈ្មោះពិតរបស់អ្នក...">
-            <input type="email" id="reg-email" placeholder="Gmail (ត្រូវមាន @gmail.com)">
-            
-            <button onclick="getExactLocation()" id="btn-gps" class="btn-gps">📍 ចុចផ្តល់ទីតាំងពិត (GPS)</button>
-            <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 5px;">*មិនទាន់មានទីតាំង*</p>
-            
-            <button onclick="finalSubmit()" class="btn-submit">យល់ព្រមចូលលេង</button>
-        </div>
+    <div id="step-2" style="display: none; padding: 20px; background: rgba(255,255,255,0.9); border-radius: 15px; border: 1px solid #ddd; margin: 10px;">
+        <h3 style="text-align: center; color: #333;">📝 ចុះឈ្មោះប្រើប្រាស់</h3>
+        <input type="text" id="reg-name" placeholder="ឈ្មោះពិតរបស់អ្នក..." style="width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:8px;">
+        <input type="email" id="reg-email" placeholder="បញ្ចូល Gmail (ឧទាហរណ៍: name@gmail.com)" style="width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:8px;">
+        
+        <button onclick="getExactLocation()" id="btn-gps" style="width:100%; background:#2196F3; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold;">📍 ចុចផ្តល់ទីតាំងពិត (GPS)</button>
+        <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 8px; font-weight: bold;">*មិនទាន់មានទីតាំង*</p>
+        
+        <button onclick="finalSubmit()" style="width:100%; background:#4CAF50; color:white; border:none; padding:15px; border-radius:8px; margin-top:15px; font-size: 1.1rem; font-weight:bold;">យល់ព្រមចូលឆាត</button>
     </div>
 
     <div id="step-3" style="display: none;">
-        <div id="chat-box"></div>
+        <div id="chat-box" style="height: 350px; overflow-y: auto; background: white; padding: 10px; border-bottom: 1px solid #eee;"></div>
+
         <div class="chat-input-area">
-            <input type="text" id="chat-user-input" readonly>
+            <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12" readonly style="background: #f0f0f0;">
             <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
             <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
             <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
             <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
         </div>
-        <div style="margin-top:10px;">
-            <input type="password" id="admin-code" placeholder="Code" style="width: 60px;">
-            <button class="btn-chat-send" style="background:var(--error-color);" onclick="clearAllChat()">លុបសារ</button>
+
+        <div style="text-align: left; margin-top: 10px;">
+            <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
+            <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
+            <button class="btn-chat-send" style="background: #ff4d4d; margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
         </div>
     </div>
 </div>
-
-
 
 
 
