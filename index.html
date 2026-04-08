@@ -1602,8 +1602,25 @@ body { padding-left: 240px !important; }
     margin-top: 20px;
     cursor: pointer;
 }
-    
+        
+     .chat-input-style {
+    width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;
+}
+.btn-main-action {
+    background: #4CAF50; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+}
+.btn-gps-style {
+    width: 100%; background: #008CBA; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;
+}
+.chat-box-msg {
+    margin: 5px 0; padding: 8px; border-radius: 5px; background: #f1f1f1; font-size: 0.9rem;
+}  
 
+.btn-main { background: #4CAF50; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; font-size: 1rem; }
+.reg-box { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.input-field { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+.btn-gps { width: 100%; background: #008CBA; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; }
+.chat-msg { margin: 5px 0; padding: 8px; border-radius: 8px; background: #f1f1f1; font-size: 0.9rem; border-left: 4px solid #4CAF50; }
         
     </style>
 
@@ -1934,9 +1951,6 @@ body { padding-left: 240px !important; }
         </div>
 
     </div>
-
-</div>
-
     <div class="chat-container">
     <div class="chat-title-wrapper">
         <span class="bouncing-letter">💬</span> ប្រអប់ឆាត
@@ -1970,6 +1984,9 @@ body { padding-left: 240px !important; }
             <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;" onkeypress="if(event.key==='Enter') sendChatMessage()">
             <button class="btn-chat-send" onclick="sendChatMessage()" style="margin-left: 10px;">ផ្ញើ</button>
         </div>
+    </div>
+    </div>
+</div>
     </div>
 
     <div style="text-align: left; margin-top: 10px; padding: 10px;">
@@ -3471,54 +3488,62 @@ function listenForAdminReplies() {
           }
       });
 }
-
-    const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
+const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
 const CHAT_ID = "955031659";
 let userLocationLink = "";
 
-// ជំហានទី ១ ទៅ ២
+// ជំហានទី ១ -> ២
 function toStep2() {
     document.getElementById('step-1').style.display = 'none';
     document.getElementById('step-2').style.display = 'block';
 }
 
-// មុខងារ GPS ឱ្យចំទីតាំងបំផុត (High Accuracy)
+// មុខងារចាប់ទីតាំងឱ្យ "ចំកន្លែង" បំផុត
 function getExactLocation() {
-    if (navigator.geolocation) {
-        document.getElementById('gps-status').innerText = "⌛ កំពុងស្វែងរកទីតាំងពិតប្រាកដ...";
-        
-        navigator.geolocation.getCurrentPosition(function(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            
-            // Link ផែនទី Google Maps ពិតប្រាកដ
-            userLocationLink = `https://www.google.com/maps?q=${lat},${lon}`;
-            
-            document.getElementById('gps-status').innerText = "✅ ចាប់បានទីតាំងហើយ!";
-            document.getElementById('gps-status').style.color = "green";
-            document.getElementById('btn-gps').style.background = "#4CAF50";
-        }, function(error) {
-            alert("Error: " + error.message + " សូមចុច Allow លើ Browser!");
-        }, {
-            enableHighAccuracy: true, // បង្ខំឱ្យប្រើ GPS កម្រិតខ្ពស់
-            timeout: 10000,
-            maximumAge: 0
-        });
+    const status = document.getElementById('gps-status');
+    if (!navigator.geolocation) {
+        alert("Browser របស់អ្នកមិនគាំទ្រ GPS ទេ!");
+        return;
     }
+
+    status.innerText = "⌛ កំពុងស្វែងរកទីតាំងពិតប្រាកដរបស់អ្នក...";
+    
+    // កំណត់ឱ្យប្រើកម្រិតខ្ពស់បំផុត (High Accuracy)
+    const geoOptions = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0
+    };
+
+    navigator.geolocation.getCurrentPosition(function(position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        
+        // Link ទៅកាន់ Google Maps ចំគោលដៅ
+        userLocationLink = `https://www.google.com/maps?q=${lat},${lon}`;
+        
+        status.innerText = "✅ ទទួលបានទីតាំងចំគោលដៅហើយ!";
+        status.style.color = "green";
+        document.getElementById('btn-gps').style.background = "#4CAF50";
+    }, function(error) {
+        alert("មិនអាចចាប់ទីតាំងបាន! សូមចុច 'Allow' នៅខាងលើ Browser!");
+        status.innerText = "❌ បរាជ័យក្នុងការចាប់ទីតាំង";
+    }, geoOptions);
 }
 
-// ជំហានទី ២ ទៅ ៣ (ចុះឈ្មោះ និងផ្ញើទៅ Telegram)
+// ជំហានទី ២ -> ៣ (ចុះឈ្មោះ និងផ្ញើទិន្នន័យ)
 async function submitRegistration() {
     const name = document.getElementById('reg-name').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
     const email = document.getElementById('reg-email').value.trim();
 
     if (!name || !phone || !email || !userLocationLink) {
-        alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ និងចុចផ្តល់ទីតាំង GPS!");
+        alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ និងផ្តល់ទីតាំង GPS!");
         return;
     }
 
-    const text = `🚨 *អ្នកលេងថ្មី*\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${userLocationLink}`;
+    // សារផ្ញើទៅ Admin Telegram
+    const text = `🚨 *អ្នកលេងថ្មី*\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📧 Gmail: ${email}\n📍 ទីតាំងពិត: ${userLocationLink}`;
 
     try {
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -3527,36 +3552,28 @@ async function submitRegistration() {
             body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: "Markdown" })
         });
 
-        // ប្តូរទៅអេក្រង់ឆាត
-        document.getElementById('display-name').value = name;
+        // បង្ហាញកន្លែងឆាត
+        document.getElementById('user-display-name').innerText = name;
         document.getElementById('step-2').style.display = 'none';
         document.getElementById('step-3').style.display = 'block';
         
-        document.getElementById('chat-box').innerHTML += `<div style="text-align:center; color:green; font-size:0.8rem;">--- ស្វាគមន៍ ${name} ---</div>`;
+        document.getElementById('chat-box').innerHTML += `<p style="text-align:center; color:gray; font-size:0.7rem;">--- ស្វាគមន៍ ${name} ចូលក្នុងឆាត ---</p>`;
     } catch (e) {
-        alert("មានបញ្ហាក្នុងការផ្ញើទិន្នន័យ!");
+        alert("អ៊ីនធឺណិតមានបញ្ហា!");
     }
 }
 
-// មុខងារផ្ញើសារក្នុងឆាត
+// មុខងារឆាត
 function sendChatMessage() {
-    const msg = document.getElementById('chat-msg-input').value.trim();
-    const name = document.getElementById('display-name').value;
+    const msgInput = document.getElementById('chat-msg-input');
+    const msg = msgInput.value.trim();
+    const name = document.getElementById('user-display-name').innerText;
     if (msg === "") return;
 
     const chatBox = document.getElementById('chat-box');
-    chatBox.innerHTML += `<div class="chat-box-msg"><b>${name}:</b> ${msg}</div>`;
-    document.getElementById('chat-msg-input').value = "";
+    chatBox.innerHTML += `<div class="chat-msg"><b>${name}:</b> ${msg}</div>`;
+    msgInput.value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-// លុបសារ (Admin)
-function clearAllChat() {
-    if (document.getElementById('admin-code').value === "123") {
-        document.getElementById('chat-box').innerHTML = "";
-    } else {
-        alert("លេខកូដខុស!");
-    }
 }
 </script>
 </body>
