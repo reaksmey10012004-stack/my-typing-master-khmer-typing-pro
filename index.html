@@ -3547,6 +3547,19 @@ function submitRegistration() {
     document.getElementById('step-2').style.display = 'none';
     document.getElementById('step-3').style.display = 'block';
 }
+    
+function sendChatMessage() {
+    const msgInput = document.getElementById('chat-msg-input');
+    const msg = msgInput.value.trim();
+    const name = document.getElementById('user-display-name').innerText;
+    if (msg === "") return;
+
+    const chatBox = document.getElementById('chat-box');
+    chatBox.innerHTML += `<div class="chat-msg"><b>${name}:</b> ${msg}</div>`;
+    msgInput.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+    
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
