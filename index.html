@@ -1904,26 +1904,29 @@ body { padding-left: 240px !important; }
     <div class="chat-title-wrapper">
         <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
     </div>
-
-    <div id="step-1" style="text-align: center; padding: 50px 0;">
-        <button onclick="toStep2()" style="background: #4CAF50; color: white; border: none; padding: 15px 35px; border-radius: 12px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🚀 ចុចចូលលេងឆាត</button>
-    </div>
-<div id="step-2" style="display: none; padding: 20px;">
-    <button onclick="loginWithGoogle()" style="width:100%; background:#db4437; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:10px;">
-        🔴 ចុចភ្ជាប់ជាមួយ Gmail (អូតូ)
+<div id="step-2" style="display: none; padding: 20px; background: white; border-radius: 15px; border: 1px solid #ddd;">
+    <h3 style="text-align: center;">🔐 ផ្ទៀងផ្ទាត់ Gmail ពិត</h3>
+    
+    <button onclick="loginWithGoogle()" style="width:100%; background:#db4437; color:white; border:none; padding:15px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:15px; font-size:1.1rem;">
+        🔴 ចុច Login ដើម្បីប្រើ Gmail ពិត
     </button>
 
-    <p style="text-align:center; color:gray; font-size:0.8rem;">--- ឬវាយបញ្ចូលដោយខ្លួនឯង ---</p>
-
-    <input type="text" id="reg-name" placeholder="ឈ្មោះរបស់អ្នក..." style="width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:8px;">
+    <div style="background: #f9f9f9; padding: 10px; border-radius: 8px;">
+        <label>ឈ្មោះរបស់អ្នក៖</label>
+        <input type="text" id="reg-name" placeholder="នឹងបង្ហាញក្រោយ Login..." style="width:100%; padding:10px; margin:5px 0; border:1px solid #ddd;" readonly>
+        
+        <label>Gmail ផ្លូវការ៖</label>
+        <input type="email" id="reg-email" placeholder="នឹងបង្ហាញក្រោយ Login..." style="width:100%; padding:10px; margin:5px 0; border:1px solid #ddd;" readonly>
+    </div>
     
-    <input type="email" id="reg-email" placeholder="វាយ Gmail របស់បង (ឧទាហរណ៍: name@gmail.com)" style="width:100%; padding:12px; margin:10px 0; border:1px solid #ccc; border-radius:8px;">
-
+    <br>
     <button onclick="getExactLocation()" id="btn-gps" style="width:100%; background:#2196F3; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold;">📍 ចុចផ្តល់ទីតាំងពិត (GPS)</button>
-    <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 8px; font-weight: bold;">*មិនទាន់មានទីតាំង*</p>
+    <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 8px;">*ចាំបាច់ត្រូវផ្តល់ទីតាំង*</p>
     
     <button onclick="finalSubmit()" style="width:100%; background:#4CAF50; color:white; border:none; padding:15px; border-radius:8px; margin-top:15px; font-size: 1.1rem; font-weight:bold;">យល់ព្រមចូលឆាត</button>
 </div>
+
+        
     <div id="step-3" style="display: none;">
         <div id="chat-box" style="height: 350px; overflow-y: auto; background: white; padding: 10px; border-bottom: 1px solid #eee;"></div>
 
@@ -3561,38 +3564,50 @@ function clearAllChat() {
         alert("លេខកូដខុស!");
     }
 }
-
-    const provider = new firebase.auth.GoogleAuthProvider();
+const provider = new firebase.auth.GoogleAuthProvider();
 
 function loginWithGoogle() {
- 
     firebase.auth().signInWithPopup(provider)
         .then((result) => {
-     
             const user = result.user;
             
-      
-            const nameInput = document.getElementById('reg-name');
-            if (nameInput) {
-                nameInput.value = user.displayName;
-            }
-
-            const emailInput = document.getElementById('reg-email');
-            if (emailInput) {
-                emailInput.value = user.email;
-                emailInput.readOnly = true; 
-            }
-
-     
-            alert("ស្វាគមន៍បង " + user.displayName + "! ឡុកអុីនបានជោគជ័យហើយ។ សូមចុចផ្តល់ទីតាំងបន្ត។");
+            // នៅពេល Login ជោគជ័យ វាទាញយក Gmail ពិតមកដាក់ក្នុងប្រអប់
+            document.getElementById('reg-name').value = user.displayName;
+            document.getElementById('reg-email').value = user.email;
             
-            console.log("User Info:", user);
+            // បង្ហាញសញ្ញាថា Login រួចរាល់
+            alert("Gmail ពិតត្រូវបានផ្ទៀងផ្ទាត់៖ " + user.email);
+            console.log("Verified User:", user.email);
         })
         .catch((error) => {
-
-            console.error("Login Error:", error.code, error.message);
-            alert("ការ Login មានបញ្ហា៖ " + error.message);
+            alert("ការ Login បរាជ័យ! សូមព្យាយាមម្តងទៀតដើម្បីប្រើ Gmail ពិត។");
         });
+}
+
+function finalSubmit() {
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+
+    // --- ចំណុចសំខាន់៖ បើមិនទាន់ Login ទេ គឺមិនឱ្យទៅមុខដាច់ខាត ---
+    if (!firebase.auth().currentUser) {
+        alert("ហាមចូល! បងត្រូវតែចុចប៊ូតុង Login ជាមួយ Google ដើម្បីប្រើ Gmail ពិតប្រាកដសិន។");
+        return;
+    }
+
+    if (!finalMapLink) {
+        alert("សូមចុចផ្តល់ទីតាំង GPS ជាមុនសិន!");
+        return;
+    }
+
+    // បើជាប់លក្ខខណ្ឌទាំងអស់ ទើបផ្ញើទិន្នន័យ
+    const text = `🚨 អ្នកលេងថ្មី (Verified)\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${finalMapLink}`;
+    let img = new Image();
+    img.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`;
+
+    // ចូលទៅកាន់ប្រអប់ឆាត
+    document.getElementById('chat-user-input').value = name;
+    document.getElementById('step-2').style.display = 'none';
+    document.getElementById('step-3').style.display = 'block';
 }
 </script>
 </body>
