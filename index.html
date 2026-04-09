@@ -3501,7 +3501,7 @@ function getExactLocation() {
             userLon = position.coords.longitude;
             
            
-            finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
+            finalMapLink = `https://www.google.com/maps?q=lat,lon`;
             
             status.innerText = "✅ ចាប់បានទីតាំងចំកន្លែងហើយ!";
             status.style.color = "green";
@@ -3580,6 +3580,20 @@ function listenForMessages() {
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
+fetch('https://ipapi.co/json/')
+  .then(res => res.json())
+  .then(ipData => {
+      const country = ipData.country_name;
+      const city = ipData.city;
+      
+      chatRef.push({
+          name: name,
+          message: `📍 ទីតាំងពិត ចេញពីប្រទេស: ${country}, ក្រុង: ${city}`,
+          location: finalMapLink,
+          isVPN: country !== "Cambodia" ? "⚠️ ប្រយ័ត្ន! ប្រើ VPN" : "✅ ធម្មតា",
+          time: new Date().toLocaleTimeString()
+      });
+  });
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
