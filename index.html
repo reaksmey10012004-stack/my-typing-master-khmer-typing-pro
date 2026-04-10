@@ -3530,40 +3530,67 @@ function getExactLocation() {
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
 }
-
 function finalSubmit() {
-    const name = document.getElementById('reg-name').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const phone = document.getElementById('reg-phone').value.trim(); // បើមាន
-    const currentUser = firebase.auth().currentUser;
+  
+    const nameInput = document.getElementById('reg-name');
+    const emailInput = document.getElementById('reg-email');
+    const phoneInput = document.getElementById('reg-phone'); 
 
-    if (!currentUser) {
-        alert("❌ សូម Login ជាមួយ Gmail ជាមុនសិន!");
-        return;
-    }
-    if (!finalMapLink) {
-        alert("❌ សូមចុចផ្តល់ទីតាំង GPS ជាមុនសិន!");
+    const name = nameInput ? nameInput.value.trim() : "";
+    const email = emailInput ? emailInput.value.trim() : "";
+    const phone = phoneInput ? phoneInput.value.trim() : "";
+
+    
+    if (!firebase.auth().currentUser) {
+        alert("❌ សូមចុច Login Gmail ជាមុនសិន!");
         return;
     }
     if (!name) {
-        alert("❌ សូមបំពេញឈ្មោះ!");
+        alert("❌ សូមបំពេញឈ្មោះរបស់អ្នក!");
+        return;
+    }
+    if (!phone || phone.length < 9) {
+        alert("❌ សូមបំពេញលេខទូរស័ព្ទឱ្យបានត្រឹមត្រូវ!");
+        return;
+    }
+    if (!finalMapLink) {
+        alert("❌ សូមចុចប៊ូតុង GPS ឬរើសទីតាំងលើផែនទីជាមុនសិន!");
         return;
     }
 
 
-    const text = `🚨 អ្នកលេងថ្មីបានចូលរួម!\n` +
-                 `👤 ឈ្មោះ: ${name}\n` +
-                 `📧 Gmail: ${email}\n` +
-                 `📍 ទីតាំងពិត: ${finalMapLink}`;
+    const btn = event.target; 
+    const originalText = btn.innerText;
+    btn.innerText = "⏳ កំពុងបញ្ជូន...";
+    btn.disabled = true;
 
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`)
+
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            location: finalMapLink
+        })
+    })
     .then(() => {
+        
         localStorage.setItem('user_name', name);
         document.getElementById('step-2').style.display = 'none';
         document.getElementById('step-3').style.display = 'block';
-        listenForMessages();
+        if (typeof listenForMessages === "function") listenForMessages();
     })
-    .catch(err => alert("មានបញ្ហាក្នុងការបញ្ជូនទិន្នន័យ!"));
+    .catch(err => {
+        alert("មានបញ្ហាក្នុងការភ្ជាប់ទៅកាន់ Server!");
+        console.error(err);
+    })
+    .finally(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
+    });
 }
 
 function listenForMessages() {
