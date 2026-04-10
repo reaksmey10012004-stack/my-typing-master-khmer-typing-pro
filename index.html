@@ -1908,18 +1908,25 @@ body { padding-left: 240px !important; }
          <div id="step-1" style="text-align: center; padding: 50px 0;">
         <button onclick="toStep2()" style="background: #4CAF50; color: white; border: none; padding: 15px 35px; border-radius: 12px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🚀 ចុចចូលលេងឆាត</button>
     </div>
-    
-    
-        <div id="step-2" style="display: none; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+    <div id="step-2" style="display: none; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
     <h3 style="text-align: center; color: #d32f2f;">🔒 ផ្ទៀងផ្ទាត់គណនី Gmail</h3>
     
     <button onclick="loginWithGoogle()" style="width:100%; background:#db4437; color:white; border:none; padding:15px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:15px;">
-        🔴 ចុច Login ជាមួយ Gmail ពិតប្រាកដ ទើបអាចលេងបាន អ្នកមិនអាចវាយពាក្យនៅខាងក្រោមនោះបានតេលុះត្រចុះនៅលើពាក្យរបស់យើងក្រហមនេះ
+        🔴 ចុច Login ជាមួយ Gmail ពិតប្រាកដ ទើបអាចលេងបាន​សូមចុចពីលើបូតុងក្រហមយើងនេះ
     </button>
 
     <div style="text-align: left; margin-bottom: 10px;">
         <label>👤 ឈ្មោះហៅក្រៅ៖</label>
         <input type="text" id="reg-name" placeholder="វាយឈ្មោះរបស់អ្នក..." style="width:100%; padding:12px; margin-top:5px; border:1px solid #ccc; border-radius:8px;">
+    </div>
+
+    <div style="text-align: left; margin-bottom: 10px;">
+        <label>📞 លេខទូរស័ព្ទពិតប្រាកដ៖</label>
+        <input type="tel" id="reg-phone" 
+               placeholder="ឧទាហរណ៍៖ 012345678" 
+               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+               maxlength="10"
+               style="width:100%; padding:12px; margin-top:5px; border:1px solid #ccc; border-radius:8px;">
     </div>
 
     <div style="text-align: left; margin-bottom: 15px;">
@@ -3531,43 +3538,45 @@ function getExactLocation() {
     );
 }
 function finalSubmit() {
-  
-    const nameInput = document.getElementById('reg-name');
-    const emailInput = document.getElementById('reg-email');
-    const phoneInput = document.getElementById('reg-phone'); 
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
 
-    const name = nameInput ? nameInput.value.trim() : "";
-    const email = emailInput ? emailInput.value.trim() : "";
-    const phone = phoneInput ? phoneInput.value.trim() : "";
 
-    
     if (!firebase.auth().currentUser) {
-        alert("❌ សូមចុច Login Gmail ជាមុនសិន!");
+        alert("❌ សូម Login ជាមួយ Gmail ជាមុនសិន!");
         return;
     }
+
+
     if (!name) {
         alert("❌ សូមបំពេញឈ្មោះរបស់អ្នក!");
         return;
     }
-    if (!phone || phone.length < 9) {
-        alert("❌ សូមបំពេញលេខទូរស័ព្ទឱ្យបានត្រឹមត្រូវ!");
+
+  
+    const phonePattern = /^0[0-9]{8,9}$/;
+    if (!phone || !phonePattern.test(phone)) {
+        alert("❌ សូមបញ្ចូលលេខទូរស័ព្ទពិតប្រាកដ (ឧទាហរណ៍៖ 012345678)!");
         return;
     }
+
+  
     if (!finalMapLink) {
-        alert("❌ សូមចុចប៊ូតុង GPS ឬរើសទីតាំងលើផែនទីជាមុនសិន!");
+        alert("❌ សូមចុចផ្តល់ទីតាំង GPS ជាមុនសិន!");
         return;
     }
 
-
-    const btn = event.target; 
+   
+    const btn = event.target;
     const originalText = btn.innerText;
-    btn.innerText = "⏳ កំពុងបញ្ជូន...";
+    btn.innerText = "⏳ កំពុងដំណើរការ...";
     btn.disabled = true;
 
-
+  
     fetch(SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', 
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             name: name,
@@ -3577,14 +3586,13 @@ function finalSubmit() {
         })
     })
     .then(() => {
-        
         localStorage.setItem('user_name', name);
         document.getElementById('step-2').style.display = 'none';
         document.getElementById('step-3').style.display = 'block';
         if (typeof listenForMessages === "function") listenForMessages();
     })
     .catch(err => {
-        alert("មានបញ្ហាក្នុងការភ្ជាប់ទៅកាន់ Server!");
+        alert("មានបញ្ហាបច្ចេកទេស! សូមព្យាយាមម្ដងទៀត។");
         console.error(err);
     })
     .finally(() => {
@@ -3592,7 +3600,6 @@ function finalSubmit() {
         btn.disabled = false;
     });
 }
-
 function listenForMessages() {
     chatRef.limitToLast(30).on('value', (snapshot) => {
         const chatBox = document.getElementById('chat-box');
