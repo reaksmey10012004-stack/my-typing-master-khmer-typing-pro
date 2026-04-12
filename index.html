@@ -53,7 +53,6 @@
 
 
 
-
 <!DOCTYPE html>
 
 <html lang="km">
@@ -1548,29 +1547,639 @@ body { padding-left: 240px !important; }
             bottom: 20px;
             right: 20px;
         }
-        .chat-container {
-        max-width: 500px; margin: 20px auto; background: #fdf6e3;
-        border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        position: relative; overflow: hidden; padding: 20px; font-family: 'Khmer OS Battambang', sans-serif;
-    }
-    .chat-title-wrapper {
-        text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 15px; color: #5d4037;
-    }
-    .bouncing-letter { display: inline-block; animation: bounce 1s infinite alternate; }
-    @keyframes bounce { from { transform: translateY(0); } to { transform: translateY(-5px); } }
-    
-    .reg-form { background: white; padding: 20px; border-radius: 10px; border: 1px solid #ddd; }
-    .reg-form input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-    .btn-gps { width: 100%; background: var(--secondary-color); color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .btn-submit { width: 100%; background: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 5px; margin-top: 10px; cursor: pointer; font-size: 1.1rem; }
         .chat-text { display: none; }
     }
 
+.page-section {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+}
+
+.combat-main-layout {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    min-height: 500px;
+}
+
+.combat-sidebar {
+    width: 250px;
+    background: #111;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+.combat-arena {
+    flex-grow: 1;
+    background: #0a0a0a;
+    border-radius: 15px;
+    padding: 30px;
+    position: relative;
+    border: 2px solid #222;
+}
+
+.battle-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.player-stats {
+    text-align: center;
+    width: 150px;
+}
+
+.avatar-v2 {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid gold;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.hp-bar-bg {
+    width: 100%;
+    height: 12px;
+    background: #444;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.hp-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff4d4d, #ff0000);
+    transition: width 0.3s ease;
+}
+
+.vs-text {
+    font-size: 40px;
+    color: gold;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+
+.typing-area {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.text-target-display {
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 20px;
+    min-height: 50px;
+    text-shadow: 0 0 5px cyan;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+.kb-input-big {
+    width: 80%;
+    max-width: 500px;
+    padding: 15px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 2px solid gold;
+    background: #1a1a1a;
+    color: white;
+    text-align: center;
+}
+
+.kb-input-big:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+#countdown-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: gold;
+    z-index: 10;
+    pointer-events: none;
+}
+    .chat-text { display: none; }
+    }
+
+.page-section {
+    display: none;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+}
+
+
+.combat-layout { display: flex; gap: 20px; padding: 20px; color: white; }
+.combat-sidebar { width: 250px; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #333; }
+.combat-arena { flex: 1; background: rgba(0,0,0,0.5); border-radius: 10px; padding: 30px; text-align: center; }
+.kb-input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid gold; color: #fff; }
+.kb-btn { background: gold; color: #000; padding: 12px 25px; border: none; cursor: pointer; font-weight: bold; width: 100%; }
+.hp-bar { width: 150px; height: 15px; background: #333; border-radius: 10px; overflow: hidden; display: inline-block; }
+.hp-fill { height: 100%; width: 100%; background: red; transition: 0.3s; }
+.target-text { font-size: 24px; margin: 20px 0; padding: 20px; background: #222; border-radius: 5px; }
+.led-sidebar { z-index: 1 !important; }
+
+.combat-main-layout {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    position: relative;
+    z-index: 100; 
+    background: #000;
+    min-height: 500px;
+}
+
+.combat-main-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 20px;
+    padding: 20px;
+    background: #0b0e14;
+    min-height: 80vh;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+
+.combat-sidebar {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    backdrop-filter: blur(10px);
+}
+
+
+.combat-card {
+    background: linear-gradient(145deg, #161b22, #0d1117);
+    border: 2px solid gold;
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(255, 215, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+}
+
+
+.avatar-selection img {
+    width: 100px;
+    height: 100px;
+    border: 3px solid gold;
+    padding: 5px;
+    background: #1a1a1a;
+    box-shadow: 0 0 15px gold;
+    transition: transform 0.3s ease;
+}
+.avatar-selection img:hover {
+    transform: rotate(5deg) scale(1.05);
+}
+
+
+.kb-input {
+    width: 100%;
+    background: #1a1f26 !important;
+    border: 1px solid #30363d !important;
+    color: white !important;
+    padding: 12px !important;
+    margin: 10px 0 !important;
+    border-radius: 8px !important;
+    transition: 0.3s;
+}
+.kb-input:focus {
+    border-color: gold !important;
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+
+.kb-btn-gold {
+    background: linear-gradient(45deg, #ffd700, #ff8c00);
+    color: black;
+    font-weight: bold;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 15px;
+}
+.kb-btn-gold:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+
+#combat-battle-ui {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    padding: 40px 20px;
+    border: 1px solid #333;
+}
+
+
+.text-target-display {
+    background: #161b22 !important;
+    border-left: 5px solid gold !important;
+    font-size: 22px !important;
+    letter-spacing: 1px;
+    padding: 25px !important;
+    border-radius: 12px !important;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.player-stats div[style*="background: #333"] {
+    background: #222 !important;
+    border: 1px solid #444;
+    height: 15px !important;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+#hp-p1, #hp-p2 {
+    background: linear-gradient(90deg, #ff4d4d, #ff0000) !important; 
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+
+#invite-popup {
+    background: #0d1117 !important;
+    border: 2px solid gold !important;
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    min-width: 300px;
+}
+
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.combat-sidebar { width: 250px; background: #111; padding: 15px; border-radius: 10px; border: 1px solid #333; }
+.combat-arena { flex: 1; background: #0a0a0a; border-radius: 10px; padding: 30px; border: 1px solid #222; }
+
+.hp-bar-bg { width: 150px; height: 15px; background: #333; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+.hp-fill { width: 100%; height: 100%; background: #e74c3c; transition: 0.3s; }
+
+.text-target-display {
+    font-size: 35px;
+    color: #fff;
+    background: #222;
+    padding: 30px;
+    border-radius: 10px;
+    margin: 20px 0;
+    text-align: center;
+    border: 2px dashed gold;
+}
+
+.kb-input-big { width: 100%; padding: 15px; font-size: 25px; text-align: center; background: #000; color: gold; border: 2px solid gold; }
+.kb-btn-gold { background: gold; color: black; padding: 15px 30px; border: none; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
+
+.user-card { display: flex; align-items: center; gap: 10px; background: #222; padding: 8px; margin-bottom: 5px; border-radius: 5px; }
+.user-card button { background: gold; border: none; padding: 5px 10px; cursor: pointer; font-size: 12px; }
+.text-target-display {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed gold;
+    max-width: 600px;
+    margin: 10px auto;
+    font-size: 18px;
+    text-align: left; 
+    word-wrap: break-word;
+}
+#combat-battle-ui {
+    background: radial-gradient(circle, #1a1a2e 0%, #0f0f1a 100%);
+    border: 2px solid gold;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    color: white;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+
+#combat-text-target {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 22px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    border-left: 5px solid gold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+
+#combat-input {
+    width: 100%;
+    background: #222;
+    border: 2px solid #444;
+    border-radius: 8px;
+    padding: 15px;
+    color: white;
+    font-size: 18px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+#combat-input:focus {
+    border-color: gold;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+
+#combat-result {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    border: 3px solid gold;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    z-index: 1000; 
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1), 0 0 30px gold;
+    display: none; 
+    animation: zoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes zoomIn {
+    from { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+#win-lose-status {
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+
+.btn-back {
+    margin-top: 20px;
+    background: linear-gradient(45deg, gold, #ffcc00);
+    border: none;
+    padding: 10px 30px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.btn-back:hover {
+    transform: scale(1.1);
+}
+.bullet {
+    position: absolute;
+    width: 20px;
+    height: 6px;
+    background: linear-gradient(90deg, gold, #ff4500);
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 0 10px gold;
+    pointer-events: none;
+}
+
+
+@keyframes flyRight {
+    from { left: 150px; opacity: 1; }
+    to { left: calc(100% - 150px); opacity: 0.5; transform: scale(0.5); }
+}
+
+
+@keyframes flyLeft {
+    from { right: 150px; opacity: 1; }
+    to { right: calc(100% - 150px); opacity: 0.5; transform: scale(0.5); }
+}
+#combat-timer {
+    font-variant-numeric: tabular-nums; 
+    transition: all 0.2s ease;
+}
+
+#combat-battle-ui {
+    background: rgba(255, 255, 255, 0.03); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 215, 0, 0.3); 
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    padding: 20px;
+}
+
+
+#combat-text-target {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 4px solid gold; 
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+#combat-input {
+    background: #222;
+    border: 2px solid #444;
+    border-radius: 10px;
+    color: white;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+#combat-input:focus {
+    border-color: gold;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+    outline: none;
+}
+
+
+.btn-combat {
+    background: linear-gradient(135deg, #ffd700, #b8860b);
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.2s;
+}
+
+.btn-combat:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+.hp-container {
+    height: 12px;
+    background: #333;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #444;
+}
+
+.hp-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #ff4d4d, #ff0000);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    transition: width 0.3s ease-out;
+}
+
+.combat-main-layout {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    min-height: 80vh;
+    font-family: 'Kantumruy Pro', sans-serif;
+}
+
+
+.combat-sidebar {
+    width: 280px;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    padding: 15px;
+}
+.sidebar-title { color: gold; text-align: center; border-bottom: 1px solid #333; padding-bottom: 10px; }
+
+
+.combat-card {
+    background: linear-gradient(145deg, #1a1a1a, #000);
+    border: 2px solid gold;
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+    max-width: 450px;
+    margin: auto;
+}
+.avatar-selection img {
+    width: 100px; height: 100px;
+    border-radius: 50%; border: 3px solid gold;
+    object-fit: cover; margin-bottom: 10px;
+    box-shadow: 0 0 15px gold;
+}
+
+
+.battle-container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    padding: 30px;
+    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+}
+
+#combat-timer {
+    font-size: 32px; color: #ff4d4d; font-weight: bold;
+    background: #000; padding: 10px 40px;
+    border-radius: 50px; border: 3px solid gold;
+    display: inline-block; box-shadow: 0 0 20px rgba(255, 77, 77, 0.3);
+}
+
+
+.battle-header { display: flex; justify-content: space-around; align-items: center; margin: 30px 0; }
+.avatar-frame {
+    width: 90px; height: 90px; border-radius: 50%;
+    border: 3px solid #00ff00; padding: 3px; background: #222;
+}
+.avatar-frame.enemy { border-color: #ff4d4d; }
+.avatar-frame img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+.hp-container {
+    width: 130px; height: 14px; background: #333;
+    border-radius: 10px; margin-top: 10px; overflow: hidden;
+    border: 1px solid #444;
+}
+.hp-fill {
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    transition: width 0.4s ease-out;
+}
+
+
+.text-target-v2 {
+    background: rgba(0, 0, 0, 0.5);
+    border-left: 6px solid gold;
+    padding: 25px; border-radius: 15px;
+    font-size: 26px; color: white; margin: 25px 0;
+    text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
+
+
+.kb-input-battle {
+    width: 100%; max-width: 500px;
+    padding: 18px; background: #111;
+    border: 2px solid #444; color: gold;
+    font-size: 22px; border-radius: 12px;
+    text-align: center; transition: 0.3s;
+}
+.kb-input-battle:focus { border-color: gold; box-shadow: 0 0 15px gold; outline: none; }
+
+
+.kb-btn-gold {
+    background: linear-gradient(45deg, #ffd700, #ff8c00);
+    color: black; font-weight: bold; padding: 15px 30px;
+    border: none; border-radius: 10px; cursor: pointer;
+    width: 100%; margin-top: 20px; transition: 0.3s;
+}
+.kb-btn-gold:hover { transform: translateY(-3px); box-shadow: 0 5px 15px gold; }
+
+.btn-surrender {
+    background: transparent; color: #ff4d4d; border: 1px solid #ff4d4d;
+    padding: 8px 20px; border-radius: 5px; margin-top: 15px; cursor: pointer;
+}
+.btn-surrender:hover { background: #ff4d4d; color: white; }
+
+
+.wait-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9); z-index: 10000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    color: gold;
+}
+.loader {
+    border: 5px solid #333; border-top: 5px solid gold;
+    border-radius: 50%; width: 50px; height: 50px;
+    animation: spin 1s linear infinite; margin-bottom: 20px;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+
+.popup-invite {
+    position: fixed; top: 20px; right: 20px;
+    background: #1a1a1a; border: 2px solid gold;
+    padding: 20px; border-radius: 15px; color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 9999;
+}
     </style>
 
 </head>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <body class="dark-mode">
 
   
@@ -1596,18 +2205,17 @@ body { padding-left: 240px !important; }
 </div>
 
     
-
 <nav class="menu-links">
-    <a href="#" class="menu-item active" onclick="showPage('typing')">
+    <a href="javascript:void(0)" class="menu-item active" onclick="showPage('typing-page')">
         <span class="icon">⌨️</span> Typing Test
     </a>
 
-    <a href="#" class="menu-item" onclick="showPage('race')">
+    <a href="javascript:void(0)" class="menu-item" onclick="showPage('race-page')">
         <span class="icon">🏎️</span> Multiplayer Race
     </a>
-
-    <a href="#" class="menu-item" onclick="showPage('race')">
-        <span class="icon">🏆</span> Leaderboard
+        
+    <a href="javascript:void(0)" class="menu-item" onclick="showPage('combat-page')">
+        <span class="icon">⚔️</span> Typing Combat
     </a>
 </nav>
 
@@ -1786,10 +2394,120 @@ body { padding-left: 240px !important; }
     </div>
 </div>
 </div>
+<div id="combat-page" class="game-section" style="display: none;">
+    <div class="combat-main-layout">
+        <div id="online-users-list-panel" class="combat-sidebar" style="display: none;">
+            <h3 style="color: gold;">⚔️ អ្នកអនឡាញ</h3>
+            <div id="online-users-list"></div>
+        </div>
+
+        <div class="combat-arena">
+            <div id="combat-setup-panel" class="combat-card">
+                <h2 style="color: gold;">ចុះឈ្មោះចូលសមរភូមិ</h2>
+                <div class="avatar-selection">
+                    <img id="my-combat-avatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" width="80" style="border: 2px solid gold; border-radius: 50%;">
+                    <br>
+                    <input type="file" id="avatar-input" accept="image/*" onchange="previewAvatar(this)" style="display:none">
+                    <button onclick="document.getElementById('avatar-input').click()" class="btn-small">ដូររូបថត</button>
+                </div>
+                <input type="text" id="combat-nick" placeholder="បញ្ចូលឈ្មោះហៅក្រៅ..." class="kb-input">
+                <select id="combat-lang-select" class="kb-input">
+                    <option value="kh">ខ្មែរ (Unicode)</option>
+                    <option value="kh_latin">Khmer Latin</option>
+                    <option value="en">English</option>
+                    <option value="id">Indonesia</option>
+                </select>
+                <button id="btn-join-lobby" onclick="joinCombatLobby()" class="kb-btn-gold">ចូលទៅកាន់ Lobby</button>
+            </div>
+
+            <div id="combat-battle-ui" style="display:none; position: relative; padding-top: 60px;">
+                <div id="timer-wrapper" style="text-align: center; margin-bottom: 20px;">
+                    <div id="combat-timer" style="font-size: 28px; color: #ff4d4d; font-weight: bold; background: #000; padding: 8px 25px; border-radius: 50px; border: 3px solid gold; display: inline-block;">
+                        ត្រៀម...
+                    </div>
+                </div>
+
+                <div class="battle-header" style="display: flex; justify-content: space-around; align-items: center; height: 120px; position: relative;">
+                    <div class="player-stats" style="text-align: center;">
+                        <img id="p1-pic" src="" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+                        <div style="width: 100px; height: 10px; background: #333; margin-top: 5px; border-radius: 5px; overflow: hidden;">
+                            <div id="hp-p1" style="width: 100%; height: 100%; background: #00ff00; transition: 0.3s;"></div>
+                        </div>
+                        <div id="p1-name" style="color: white; font-size: 12px; margin-top: 3px;">P1</div>
+                    </div>
+
+                    <div style="font-size: 24px; color: gold; font-weight: bold;">VS</div>
+
+                    <div class="player-stats" style="text-align: center;">
+                        <img id="p2-pic" src="" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid white; object-fit: cover;">
+                        <div style="width: 100px; height: 10px; background: #333; margin-top: 5px; border-radius: 5px; overflow: hidden;">
+                            <div id="hp-p2" style="width: 100%; height: 100%; background: #00ff00; transition: 0.3s;"></div>
+                        </div>
+                        <div id="p2-name" style="color: white; font-size: 12px; margin-top: 3px;">P2</div>
+                    </div>
+                </div>
+
+                <div id="combat-text-target" class="text-target-display" style="margin: 20px auto; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px; color: #fff; text-align: center; border: 1px solid #444;"></div>
+
+                <div style="text-align: center;">
+                    <input type="text" id="combat-input" disabled placeholder="វាយអត្ថបទនៅទីនេះ..." style="width: 85%; padding: 12px; background: #1a1a1a; border: 2px solid gold; color: white; border-radius: 8px;">
+                    <br>
+                    <button onclick="surrenderGame()" style="background: #ff4d4d; color: white; border: none; padding: 8px 20px; border-radius: 5px; margin-top: 15px; cursor: pointer;">🏳️ ចុះចាញ់</button>
+                </div>
+            </div>
+
+            <div id="combat-result" style="display:none; text-align: center; padding: 20px;">
+                <h2 id="win-lose-status" style="color: gold; font-size: 24px;"></h2>
+                <button onclick="backToLobby()" style="background: gold; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 20px;">លេងម្ដងទៀត</button>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+    
+<div id="invite-popup" style="display:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; border: 3px solid gold; padding: 20px; z-index: 9999; border-radius: 10px; text-align: center; color: white;">
+    <h3 id="inviter-info"></h3>
+    <p>ចង់បបួលអ្នកបាញ់គ្នា!</p>
+    <button onclick="respondInvite(true)" style="background: green; color: white; padding: 10px;">ព្រម</button>
+    <button onclick="respondInvite(false)" style="background: red; color: white; padding: 10px;">ទេ</button>
+</div>
+    
+</div>
+
+<div id="combat-battle-ui" style="display:none;">
+    
+    <div id="timer-container" style="text-align: center; margin-bottom: 10px;">
+        <span id="combat-timer" style="font-size: 30px; color: #ff4d4d; font-weight: bold; text-shadow: 0 0 10px rgba(255,0,0,0.5);">
+            រង់ចាំ...
+        </span>
+    </div>
+
+    <div id="combat-text-target" class="text-target-display"></div>
+
+    <div style="text-align: center; margin-top: 15px;">
+        <input type="text" id="combat-input" autocomplete="off" 
+               placeholder="វាយអត្ថបទខាងលើឱ្យលឿនបំផុត..." 
+               style="width: 80%; padding: 12px; font-size: 18px; border-radius: 8px; border: 2px solid gold; background: #222; color: white;">
+    </div>
+</div>
+<div id="combat-result" style="display:none; text-align: center; padding: 20px;">
+    <h2 id="win-lose-status" style="color: gold; font-size: 24px;"></h2>
+    <br>
+    <button onclick="backToLobby()" style="background: gold; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+        លេងម្ដងទៀត (ត្រឡប់ទៅ Lobby)
+    </button>
+    <button id="btn-surrender" onclick="surrenderGame()" style="background: #ff4d4d; color: white; border: none; padding: 8px 20px; border-radius: 5px; margin-top: 15px; cursor: pointer; font-weight: bold;">
+        🏳️ ចុះចាញ់
+    </button>
+</div>
+<div id="wait-player-overlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; color: gold; text-align: center; padding-top: 20%;">
+    <h2>⌛ រង់ចាំសត្រូវចូលរួម...</h2>
+    <p>ហ្គេមនឹងចាប់ផ្តើមនៅពេលអ្នកទាំងពីរមានវត្តមាន</p>
+</div>
 
 
-</div>
-</div>
+
 
 <div id="typing-page" class="typing-container">
   <div class="scroll-pillar pillar-left"></div>
@@ -1896,80 +2614,11 @@ body { padding-left: 240px !important; }
         </div>
 
     </div>
-            
-    </div>
-    <div class="chat-container">
-    <div class="scroll-pillar pillar-left"></div>
-    <div class="scroll-pillar pillar-right"></div>
 
-    <div class="chat-title-wrapper">
-        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
-    </div>
-         <div id="step-1" style="text-align: center; padding: 50px 0;">
-        <button onclick="toStep2()" style="background: #4CAF50; color: white; border: none; padding: 15px 35px; border-radius: 12px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🚀 ចុចចូលលេងឆាត</button>
-    </div>
-    <div id="step-2" style="display: none; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-    <h3 style="text-align: center; color: #d32f2f;">🔒 ផ្ទៀងផ្ទាត់គណនី Gmail</h3>
-    
-    <button onclick="loginWithGoogle()" style="width:100%; background:#db4437; color:white; border:none; padding:15px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:15px;">
-        🔴 ចុច Login ជាមួយ Gmail ពិតប្រាកដ ទើបអាចលេងបាន​សូមចុចពីលើបូតុងក្រហមយើងនេះ
-    </button>
-
-    <div style="text-align: left; margin-bottom: 10px;">
-        <label>👤 ឈ្មោះហៅក្រៅ៖</label>
-        <input type="text" id="reg-name" placeholder="វាយឈ្មោះរបស់អ្នក..." style="width:100%; padding:12px; margin-top:5px; border:1px solid #ccc; border-radius:8px;">
-    </div>
-
-    <div style="text-align: left; margin-bottom: 10px;">
-        <label>📞 លេខទូរស័ព្ទពិតប្រាកដ៖</label>
-        <input type="tel" id="reg-phone" 
-               placeholder="ឧទាហរណ៍៖ 012345678" 
-               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-               maxlength="10"
-               style="width:100%; padding:12px; margin-top:5px; border:1px solid #ccc; border-radius:8px;">
-    </div>
-
-    <div style="text-align: left; margin-bottom: 15px;">
-        <label>📧 Gmail (ផ្ទៀងផ្ទាត់រួច)៖</label>
-        <input type="email" id="reg-email" placeholder="នឹងបង្ហាញក្រោយ Login រួចរាល់..." style="width:100%; padding:12px; margin-top:5px; border:1px solid #ddd; border-radius:8px; background: #f0f0f0;" readonly>
-    </div>
-    
-    <button onclick="getExactLocation()" id="btn-gps" style="width:100%; background:#2196F3; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold;">📍 ចុចផ្តល់ទីតាំងពិត (GPS)</button>
-    <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 8px;">*ចាំបាច់ត្រូវមានទីតាំង*</p>
-    
-    <button onclick="finalSubmit()" style="width:100%; background:#4CAF50; color:white; border:none; padding:15px; border-radius:8px; margin-top:15px; font-size: 1.1rem; font-weight:bold;">✅ យល់ព្រមចូលលេងឆាត</button>
-</div>
-        
-    <div id="step-3" style="display: none;">
-        <div id="chat-box" style="height: 350px; overflow-y: auto; background: white; padding: 10px; border-bottom: 1px solid #eee;"></div>
-
-        <div class="chat-input-area">
-            <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12" readonly style="background: #f0f0f0;">
-            <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
-            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
-            <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
-            <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
-        </div>
-
-        <div style="text-align: left; margin-top: 10px;">
-            <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
-            <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
-            <button class="btn-chat-send" style="background: #ff4d4d; margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
-        </div>
-    </div>
 </div>
 
 
 
-
-
-
-
-
-
-
-
-            
 <div class="chat-container">
     <div class="scroll-pillar pillar-left"></div>
     <div class="scroll-pillar pillar-right"></div>
@@ -2097,6 +2746,7 @@ body { padding-left: 240px !important; }
         <div style="color: #666; text-align: center; margin-top: 20px;">សូមរង់ចាំការឆ្លើយតប...</div>
     </div>
 </div>
+
 
 <style>
    
@@ -2237,13 +2887,9 @@ function loginWithFacebook() {
 }
 
     });
-    <div id="map" style="height: 300px; margin-top: 10px; border-radius: 8px;"></div>
-
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 </script>
-
-
-</div> 
-    
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -2658,7 +3304,7 @@ function switchLang(lang) {
             lbTitle: "🏆 Papan Peringkat (80+ WPM)",
             rank: "Peringkat", name: "Nama", speed: "Kecepatan", time: "Waktu",
             stTitle: "☕ Dukung Pengembang",
-            stDesc: "Dukung pengembang dengan membeli kopi jika Anda suka aplikasi ini.",
+            stDesc: "Dukung pengembang dengan membeli kopi jika Anda ***** aplikasi ini.",
             qrText: "Klik untuk QR BANK ABA",
             devName: "Nama: KEO CHANREAKSMEY",
             accNum: "No. Rekening: 006 010 618",
@@ -3208,6 +3854,7 @@ function joinRace() {
     }
     document.getElementById('btn-join').style.display = 'none';
     
+e
     raceRef.child('players').child(myId).set({
         name: playerName,
         car: selectedCar,
@@ -3278,21 +3925,21 @@ function renderTextDisplay(inputVal) {
     }
     textElement.innerHTML = html;
 }
+function startCountdownSync() {
+    let countdown = 3;
+    const timerDisplay = document.getElementById('combat-timer');
 
-function startCountdown() {
-    if (countdownActive) return; 
-    countdownActive = true;
-    raceRef.child('gameStatus').set('starting');
-    
-    let count = 5;
-    let cd = setInterval(() => {
-        document.getElementById('msg-box').innerText = `🚦 ត្រៀមខ្លួន: ${count}`;
-        count--;
-        if (count < 0) {
-            clearInterval(cd);
-            document.getElementById('msg-box').innerText = "🚀 GO!";
-            raceRef.child('gameStatus').set('playing');
+    let interval = setInterval(() => {
+        if (countdown > 0) {
+            timerDisplay.innerText = countdown;
+        } else if (countdown === 0) {
+            timerDisplay.innerText = "GO!";
+        } else {
+            clearInterval(interval);
+            // ចាប់ផ្តើមឱ្យវាយអក្សរ និងបាញ់គ្រាប់
+            startFiringLogic(); 
         }
+        countdown--;
     }, 1000);
 }
 
@@ -3462,181 +4109,530 @@ function listenForAdminReplies() {
       });
 }
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwIvTUVDq1hG0NHnNNUMc7XGBGthCYJlYJYtlmX_dc5E7n62TysgoyJ9riS-iUypOq_A/exec";
-let finalMapLink = "";
-let userLat = "";
-let userLon = "";
+let myCombatData = { id: null, name: "", avatar: "", lang: "kh", hp: 100 };
+let combatRoomId = null;
+let combatRole = null; 
 
+const combatLanguages = {
+    kh: ["សួស្តី", "កម្ពុជា", "សន្តិភាព", "រស្មី", "វាយអត្ថបទ", "រៀន", "ចំណេះដឹង", "បច្ចេកវិទ្យា", "អនាគត", "ជោគជ័យ", "ស្រលាញ់", "សាលារៀន", "គ្រូ", "សិស្ស", "មិត្តភក្តិ", "សប្បាយ", "រីករាយ", "ម្ហូប", "អង្គរវត្ត", "ខ្មែរ", "វប្បធម៌", "អរិយធម៌", "ប្រវត្តិសាស្ត្រ", "ការងារ", "ព្យាយាម", "អត់ធ្មត់", "គោលដៅ", "សុបិន", "កម្លាំង", "ចិត្ត", "ជឿជាក់", "អរគុណ", "សុំទោស", "សូមជម្រាបសួរ", "មេឃ", "ដី", "ទឹក", "ភ្លើង", "ខ្យល់", "ដើមឈើ", "ផ្កា", "សត្វ", "ភ្នំ", "សមុទ្រ", "កោះ", "ទន្លេ", "ផ្លូវ", "ផ្ទះ", "គ្រួសារ", "បងប្អូន", "ឪពុក", "ម្តាយ", "កូន", "ចៅ", "លោកតា", "លោកយាយ", "ក្នុង", "ជាតិ", "នេះ", "គ្មាន", "ចង់", "បាន", "អ្វី", "ឡើយ", "ត្រឹម", "ចិត្ត", "ស្នេហ៍", "អូន", "មក", "បង", "ទោះ", "មិន", "ល្អ", "គ្រប់", "យ៉ាង", "តែជាសំណាងបង","មានអូន", "ក្នុងបេះដូង", "គ្រប់គ្រាន់ហើយ"],
+    kh_latin: ["kal", "phearun", "nv", "vannak", "slanh", "kmeang", "jol", "jit", "der", "lg", "srat", "kor", "run", "tv", "vinh", "mor", "min", "derl", "jes", "klach", "nak", "na", "ngaii", "muy", "mean", "ke", "som", "lanh", "nh", "ter", "ort", "prom", "pi", "lob", "leler", "pek", "ban", "chea", "dg", "puk", "ng", "sit", "chkut", "name", "voan", "koy", "ouy", "sak", "bek", "jeang", "na", "ber", "vea", "tok", "nis", "klean", "bay", "has", "cher", "kbal", "nas", "lok", "hery", "thonh", "hot", "anh", "dob", "bek", "pler", "lan", "motor", "kev", "kabob", "nom", "nham", "bay", "mhob", "klean", "ey", "hmm", "puk", "hg", "rean", "kru", "lork", "kru", "nak", "ming", "pu", "kmeang", "has", "pler", "juk", "tnam", "poipet", "kmeang", "angkor", "wat", "vital", "cambodia", "khmer", "klang", "jit", "khg", "masel", "minh", "khg", "kbea", "chgay", "chganh", "cheat", "kdmv", "srul", "klang", "hea", "therk", "tmenh", "cher", "met", "av", "kor", "lyly", "chana", "noun", "neang", "ter", "neak", "jg", "niyeay", "ampi", "khang","ler", "banthem", "banteb", "mdg", "tt", "khjal", "tangos", "ster", "ter", "nv", "cheamuy", "krr", "chea", "nis", "sat", "avy", "muy", "tt", "na", "muy", "nv", "mean", "jomvinh", "doch", "derl", "sur", "nv", "chgay", "tlob", "trov", "doysa", "tleab", "pimon", "jam", "pderm", "kompong", "seavpav", "kmeang", "brozz", "krusa", "tix", "toch", "bun", "ahha", "somrab", "rksee", "ttul", "kbal", "jom", "thonh", "rhas", "kur", "niyeay", "pitherksamot", "klas", "avy", "pelklas", "knom", "tver", "beb", "oy", "peak", "vea", "veang", "kom", "tha", "oy", "nh", "min", "jes", "singkhmer", "morpi", "dak", "beab", "nis", "therb", "mean", "peak", "sorsea", "merl", "tv", "loy", "doch", "ke", "pheak", "jren", "peak", "yg", "sorsea", "klai", "klai", "doch", "chnes", "hx", "terb", "knom", "tver", "beb", "nis", "salarean", "mean", "kru", "nv", "tes", "mean", "nakmak", "bang", "paon", "trov", "jes", "slanh", "kne", "songsa", "sneaha", "kambit", "motor", "lanjis", "nakklas", "puk", "khea", "niyeay", "derm", "ke", "chea", "pi", "seas", "kmeang", "poipet", "ter", "mdg", "muy", "ngaii", "muy", "ngaii", "min", "kit", "khom", "phrong", "niyeay", "derm", "khom", "tv", "tham", "ten", "vaii", "khom", "tha", "koch", "baycha", "micheat", "breangkala", "av", "ach", "plerng", "punler"],
+    en: ["the", "great", "world", "both", "run", "by", "near", "most", "so", "people", "picture", "once", "large", "between", "most", "light", "write", "are", "go", "picture", "me", "country", "little", "keep", "read", "call", "never", "open", "that", "story", "good", "until", "write", "air", "kind", "there", "change", "far", "over", "any", "may", "three", "children", "said", "put", "is", "us", "that", "animal", "let", "was", "America", "change", "other", "always", "every", "animal", "find", "old", "picture", "made", "work", "school", "grow", "us", "ask", "life", "find", "spell", "never", "went", "she", "food", "really", "run", "almost", "own", "she", "left", "by", "question", "home", "or", "help", "second", "quickly", "just", "turn", "these", "state", "who", "so", "water", "even", "large", "eye", "below", "be", "face", "hear", "went", "at", "when", "number", "important", "sound", "who", "kecil", "into", "enough", "tell", "only", "country", "really", "turn", "white", "home", "they", "your", "because", "such", "not", "form", "how", "they", "left", "cut", "part", "sentence", "be", "between", "dream"],
+    id: ["saya", "pulang", "biasa", "itu", "telah", "sambil", "punya", "hari", "yang", "anda", "dengan", "makin", "pada", "diri", "sini", "khusus", "jalan", "bahwa", "baru", "melakukan", "harus", "mencari", "bagian", "memang", "kamu", "anda", "datang", "kali", "uang", "ingin", "tanpa", "kemudian", "saat", "sesuai", "memang", "cepat", "jadi", "luar", "ke", "sering", "masuk", "dengan", "ada", "sangat", "banyak", "kepala", "sementara", "tentang", "ketika", "jadi", "tempat", "yaitu", "menjadi", "setelah", "menurut", "hati", "bagian", "tetapi", "tanpa", "uang", "sini", "memiliki", "sekalipun", "merupakan", "kalau", "juga", "maupun", "mana", "ku", "naik", "juta", "pulang", "tiba", "tetapi", "dapat", "kini", "baik", "naik", "ke", "mengatakan", "mudah", "mudah", "sekali", "hal", "pernah", "sedang", "tak", "paling", "serta", "melalui", "kami", "baik", "memberi", "malam", "lain", "dari", "mengatakan", "dia", "juga", "kepala", "hal", "untuk", "jauh", "punya", "untuk", "anak", "kembali", "semua", "akibat", "sini", "tentang", "tengah", "selalu", "tetapi", "hari", "maka", "di", "membuat", "sambil", "pusat", "kamu", "namun", "bukan", "bisa", "malam", "tempat", "tapi", "sering", "memang", "kalau", "kecil", "luar", "siap", "mencari", "pernah", "terus", "besar", "sejak", "akan", "jelas", "yaitu", "sekitar", "mereka", "mampu", "mata", "telah", "sini", "tetapi", "sebab", "diri", "mau", "jangan", "sehingga", "seluruh", "ingin", "aku", "sering", "juga", "ada", "kamu", "uang", "kembali", "punya", "langsung", "seluruh", "naik", "bahwa", "suatu", "kecil", "dia"]
+};
+function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById('my-combat-avatar').src = e.target.result;
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function joinCombatLobby() {
+    const nickInput = document.getElementById('combat-nick');
+    const langSelect = document.getElementById('combat-lang-select');
+    const joinBtn = document.getElementById('btn-join-lobby');
 
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
+    if (!nickInput.value || nickInput.value.trim() === "") return alert("សូមបញ្ចូលឈ្មោះ!");
+
+    myCombatData.name = nickInput.value;
+    myCombatData.avatar = document.getElementById('my-combat-avatar').src;
+    myCombatData.lang = langSelect.value;
+    myCombatData.id = "user_" + Date.now();
+
     
-        const savedName = localStorage.getItem('user_name');
-        if (savedName) {
-            document.getElementById('step-1').style.display = 'none';
-            document.getElementById('step-2').style.display = 'none';
-            document.getElementById('step-3').style.display = 'block';
-            document.getElementById('chat-user-input').value = savedName;
-            listenForMessages();
-        }
-    }
-});
+    nickInput.disabled = true;
+    langSelect.disabled = true;
+    if(joinBtn) joinBtn.style.display = 'none'; 
 
-function toStep2() {
-    document.getElementById('step-1').style.display = 'none';
-    document.getElementById('step-2').style.display = 'block';
-    setTimeout(initMap, 500); 
+    const userRef = database.ref('combat_online/' + myCombatData.id);
+    userRef.set(myCombatData);
+    userRef.onDisconnect().remove();
+
+ 
+    document.getElementById('online-users-list-panel').style.display = 'block';
+    document.getElementById('combat-setup-panel').style.display = 'none';
+    
+    listenOnlineUsers();
+    listenInvites(); 
 }
 
+function listenOnlineUsers() {
+    const listDiv = document.getElementById('online-users-list');
+    if (!listDiv) return;
 
-const provider = new firebase.auth.GoogleAuthProvider();
-
-
-function loginWithGoogle() {
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            const user = result.user;
-            document.getElementById('reg-name').value = user.displayName;
-            document.getElementById('reg-email').value = user.email;
-            alert("Gmail ពិតត្រូវបានផ្ទៀងផ្ទាត់៖ " + user.email);
-        })
-        .catch((error) => {
-            alert("ការ Login បរាជ័យ! សូមព្យាយាមម្តងទៀត។");
+    database.ref('combat_online').on('value', snapshot => {
+        listDiv.innerHTML = "";
+        snapshot.forEach(child => {
+            const user = child.val();
+            if (user.id !== myCombatData.id) {
+                listDiv.innerHTML += `
+                    <div class="user-card" style="display:flex; align-items:center; gap:10px; background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid #333;">
+                        <img src="${user.avatar}" width="30" height="30" style="border-radius:50%; object-fit:cover;">
+                        <span style="color:white; flex:1; font-size:13px;">${user.name}</span>
+                        <button onclick="sendCombatInvite('${user.id}')" style="background:gold; border:none; padding:4px 8px; border-radius:4px; cursor:pointer; font-weight:bold; font-size:11px;">ហៅលេង</button>
+                    </div>`;
+            }
         });
+    });
+}function sendCombatInvite(targetId) {
+    const rId = "room_" + Date.now();
+    const selectedLang = myCombatData.lang || 'kh';
+    const words = combatLanguages[selectedLang];
+    
+   
+    let randomWords = [];
+    for(let i=0; i<15; i++) {
+        randomWords.push(words[Math.floor(Math.random() * words.length)]);
+    }
+    const fullTextForBattle = randomWords.join(" ");
+
+    database.ref('combat_rooms/' + rId).set({
+        p1_id: myCombatData.id,
+        p1_name: myCombatData.name,
+        p1_avatar: myCombatData.avatar,
+        p1_hp: 100,
+        p1_ready: true, 
+        p2_ready: false,
+        battleText: fullTextForBattle, 
+        lang: selectedLang,
+        startTime: null 
+    });
+
+    database.ref('combat_invites/' + targetId).set({
+        fromId: myCombatData.id,
+        fromName: myCombatData.name,
+        fromAvatar: myCombatData.avatar,
+        roomId: rId,
+        status: 'pending'
+    });
+
+    alert("កំពុងហៅ... សូមរង់ចាំសត្រូវព្រម!");
+    setupBattle(rId, 'p1');
+
+
+database.ref('combat_rooms/' + rId).on('value', snap => {
+    const d = snap.val();
+    if (!d) return;
+
+ 
+    document.getElementById('p1-pic').src = d.p1_avatar;
+   
+    if (myCombatData.id === d.p1_id) {
+        document.getElementById('p1-name').innerHTML = `<span style="color:gold;">${d.p1_name} (អ្នក)</span>`;
+    } else {
+        document.getElementById('p1-name').innerText = d.p1_name;
+    }
+
+    // Player 2
+    document.getElementById('p2-pic').src = d.p2_avatar;
+ 
+    if (myCombatData.id === d.p2_id) {
+        document.getElementById('p2-name').innerHTML = `<span style="color:gold;">${d.p2_name} (អ្នក)</span>`;
+    } else {
+        document.getElementById('p2-name').innerText = d.p2_name;
+    }
+
+    
+});
 }
 
-function getExactLocation() {
-    const status = document.getElementById('gps-status');
-    status.innerText = "កំពុងស្វែងរកទីតាំងរបស់អ្នក...";
-    status.style.color = "orange";
+function listenInvites() {
+    database.ref('combat_invites/' + myCombatData.id).on('value', snapshot => {
+        const invite = snapshot.val();
+        if (invite && invite.status === 'pending') {
+            const popup = document.getElementById('invite-popup');
+            const info = document.getElementById('inviter-info');
+            if (popup && info) {
+                info.innerText = invite.fromName;
+                popup.style.display = 'block';
+            }
+            window.respondInvite = (accepted) => {
+    const popup = document.getElementById('invite-popup');
+    popup.style.display = 'none';
 
-    if (!navigator.geolocation) {
-        alert("កម្មវិធីរុករករបស់អ្នកមិនគាំទ្រ GPS ទេ។");
-        return;
+    if (accepted) {
+        const roomRef = database.ref('combat_rooms/' + invite.roomId);
+        roomRef.update({
+            p2_id: myCombatData.id,
+            p2_name: myCombatData.name,
+            p2_avatar: myCombatData.avatar,
+            p2_hp: 100,
+            p2_ready: true,
+            startTime: Date.now() + 3000 
+        });
+
+        database.ref('combat_invites/' + myCombatData.id).remove();
+        setupBattle(invite.roomId, 'p2');
+    } else {
+        database.ref('combat_invites/' + myCombatData.id).remove();
     }
-
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            userLat = position.coords.latitude;
-            userLon = position.coords.longitude;
-     
-            finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
-            
-            status.innerText = "✅ ចាប់បានទីតាំងពិតប្រាកដហើយ!";
-            status.style.color = "green";
-            document.getElementById('btn-gps').style.background = "#4CAF50";
-            document.getElementById('btn-gps').innerText = "📍 ទីតាំងត្រូវបានកំណត់";
-        },
-        (error) => {
-            console.error(error);
-            alert("សូមបើក Location ឬ GPS លើទូរស័ព្ទរបស់អ្នកជាមុនសិន!");
-            status.innerText = "❌ បរាជ័យក្នុងការចាប់ទីតាំង";
-            status.style.color = "red";
-        },
-        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-    );
+};
+        }
+    });
 }
-function finalSubmit() {
-    const name = document.getElementById('reg-name').value.trim();
-    const email = document.getElementById('reg-email').value.trim();
-    const phone = document.getElementById('reg-phone').value.trim();
+let isGameStarted = false; 
 
-
-    if (!firebase.auth().currentUser) {
-        alert("❌ សូម Login ជាមួយ Gmail ជាមុនសិន!");
-        return;
-    }
-
-
-    if (!name) {
-        alert("❌ សូមបំពេញឈ្មោះរបស់អ្នក!");
-        return;
-    }
+function setupBattle(rId, role) {
+    combatRoomId = rId;
+    combatRole = role;
+    isGameStarted = false; 
 
   
-    const phonePattern = /^0[0-9]{8,9}$/;
-    if (!phone || !phonePattern.test(phone)) {
-        alert("❌ សូមបញ្ចូលលេខទូរស័ព្ទពិតប្រាកដ (ឧទាហរណ៍៖ 012345678)!");
-        return;
-    }
+    document.getElementById('combat-battle-ui').style.display = 'block';
+    document.getElementById('combat-input').disabled = true;
+    document.getElementById('combat-timer').innerText = "រង់ចាំសត្រូវ...";
 
-  
-    if (!finalMapLink) {
-        alert("❌ សូមចុចផ្តល់ទីតាំង GPS ជាមុនសិន!");
-        return;
-    }
+    const roomRef = database.ref('combat_rooms/' + rId);
+
+ 
+    roomRef.update({ [role + '_ready']: true });
 
    
-    const btn = event.target;
-    const originalText = btn.innerText;
-    btn.innerText = "⏳ កំពុងដំណើរការ...";
-    btn.disabled = true;
+    roomRef.on('value', snap => {
+        const d = snap.val();
+        if (!d) return;
 
+       
+        updateBattleUI(d);
+        
+
+        
+        if (d.p1_ready && d.p2_ready && !isGameStarted) {
+            isGameStarted = true; 
+            startCountdownSync(); 
+        }
+        
+        checkHealth(d);
+    });
+
+
+    
+
+    
+    let countdown = 3;
+    let countdownInterval = setInterval(() => {
+        if (countdown > 0) {
+            timerDisplay.innerText = countdown;
+        } else if (countdown === 0) {
+            timerDisplay.innerText = "GO!";
+        } else {
+            clearInterval(countdownInterval);
+            
+            startFiringLogic(); 
+        }
+        countdown--;
+    }, 1000);
+
+   
+    database.ref('combat_rooms/' + rId).on('value', snap => {
+        const d = snap.val();
+        if (!d) return;
+
+        document.getElementById('hp-p1').style.width = d.p1_hp + "%";
+        document.getElementById('hp-p2').style.width = d.p2_hp + "%";
+
+        if (d.p1_hp <= 0) {
+            database.ref('combat_rooms/' + rId).off();
+            endGame(d.p2_name);
+        } else if (d.p2_hp <= 0) {
+            database.ref('combat_rooms/' + rId).off();
+            endGame(d.p1_name);
+        }
+    });
+}
+ 
+let battleTimerInterval = null;
+function startFiringLogic() {
+    const timerDisplay = document.getElementById('combat-timer');
+    const input = document.getElementById('combat-input');
+    const display = document.getElementById('combat-text-target'); 
+
+    database.ref('combat_rooms/' + combatRoomId).once('value', snap => {
+        const data = snap.val();
+        if (!data) return;
+
+        const fullText = data.battleText;
+        display.innerText = fullText;    
+        
+        input.value = "";
+        input.disabled = false;
+        input.focus();
+
+       
+        const duration = 30 * 1000; 
+        const endTime = data.startTime + duration; 
+
+        if (battleTimerInterval) clearInterval(battleTimerInterval);
+        battleTimerInterval = setInterval(() => {
+            const now = Date.now();
+            const remaining = endTime - now;
+
+            if (remaining > 0) {
+                timerDisplay.innerText = Math.floor(remaining / 1000) + "s";
+            } else {
+                clearInterval(battleTimerInterval);
+                timerDisplay.innerText = "0s";
+                input.disabled = true;
+                checkTimeOutWinner();
+            }
+        }, 100);
+
+       
+        input.oninput = () => {
+            const val = input.value;
+            if (fullText.startsWith(val)) {
+                fireBullet(combatRole); 
+                input.style.color = "white";
+
+                const progress = val.length / fullText.length;
+                const opp = (combatRole === 'p1') ? 'p2' : 'p1';
+                
+                database.ref('combat_rooms/' + combatRoomId).update({ 
+                    [opp + '_hp']: Math.max(0, Math.floor(100 - (progress * 100))) 
+                });
+
+                if (val.trim() === fullText.trim()) {
+                    clearInterval(battleTimerInterval);
+                    input.disabled = true;
+                    endGame(myCombatData.name);
+                }
+            } else {
+                input.style.color = "#ff4d4d";
+                input.value = val.substring(0, val.length - 1);
+            }
+        };
+    });
+}
+function checkTimeOutWinner() {
+    database.ref('combat_rooms/' + combatRoomId).once('value', snap => {
+        const d = snap.val();
+        if (!d) return;
+
+        let winnerText = "";
+        if (d.p1_hp > d.p2_hp) {
+            winnerText = d.p1_name;
+        } else if (d.p2_hp > d.p1_hp) {
+            winnerText = d.p2_name;
+        } else {
+            winnerText = "ស្មើគ្នា!";
+        }
+        
+        endGame(winnerText); 
+    });
+}
+function endGame(winnerName) {
+    isGameStarted = false;
+    clearInterval(battleTimerInterval);
+    
+ 
+    document.getElementById('combat-battle-ui').style.display = 'none';
+    const resultPanel = document.getElementById('combat-result');
+    resultPanel.style.display = 'block';
+    
+    const statusText = document.getElementById('win-lose-status');
+    if (winnerName === "ស្មើគ្នា!") {
+        statusText.innerText = "លទ្ធផល: ស្មើគ្នា! 🤝";
+    } else {
+        statusText.innerText = "🏆 " + winnerName + " ជាអ្នកឈ្នះ!";
+    }
+    setTimeout(() => {
+        if (combatRoomId) database.ref('combat_rooms/' + combatRoomId).remove();
+    }, 5000);
+}
+function showPage(pageId) {
+    const gamePages = ['typing-page', 'race-page', 'combat-page'];
+    gamePages.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+    });
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) targetPage.style.display = 'block';
+
+    document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+    if (event && event.currentTarget) event.currentTarget.classList.add('active');
+}
+function startCombatSystem() {
+    const nick = document.getElementById('combat-nick').value;
+    
+    if (nick.trim() === "") {
+        alert("សូមបញ្ចូលឈ្មោះហៅក្រៅរបស់អ្នកជាមុនសិន!");
+        return;
+    }
+    document.getElementById('combat-setup-panel').style.display = 'none';
+    document.getElementById('combat-battle-ui').style.display = 'block';
+
+    console.log("សមរភូមិត្រូវបានចាប់ផ្តើមសម្រាប់: " + nick);
+    
+
+}
+
+
+function listenCombatUsers() {
+    db.ref('online_users').on('value', snap => {
+        const list = document.getElementById('combat-user-list');
+        list.innerHTML = '';
+        snap.forEach(u => {
+            if (u.key !== combatMyId) {
+                list.innerHTML += `
+                <div style="display:flex; align-items:center; gap:10px; background:#1a1a1a; padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid #333;">
+                    <img src="${u.val().avatar}" style="width:35px; border-radius:50%;">
+                    <div style="flex-grow:1;">
+                        <div style="color:white; font-size:13px; font-weight:bold;">${u.val().name}</div>
+                        <div style="color:gold; font-size:10px;">${u.val().lang}</div>
+                    </div>
+                    <button onclick="sendCombatInvite('${u.key}')" style="background:gold; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">ហៅ</button>
+                </div>`;
+            }
+        });
+    });
+}
+
+
+
+function setupCombatBattle(rId, role) {
+    combatRoomId = rId; combatRole = role;
+    document.getElementById('combat-battle-ui').style.display = 'block';
+
+    db.ref('rooms/' + rId).on('value', snap => {
+        const d = snap.val(); if (!d) return;
+        document.getElementById('hp-p1').style.width = d.p1_hp + "%";
+        document.getElementById('hp-p2').style.width = d.p2_hp + "%";
+        document.getElementById('name-p1').innerText = d.p1_name; document.getElementById('pic-p1').src = d.p1_avatar;
+        document.getElementById('name-p2').innerText = d.p2_name; document.getElementById('pic-p2').src = d.p2_avatar;
+
+        if (d.p1_hp <= 0 || d.p2_hp <= 0) {
+            const winner = d.p1_hp <= 0 ? d.p2_name : d.p1_name;
+            document.getElementById('combat-text-display').innerText = "🏆 អ្នកឈ្នះគឺ: " + winner;
+            document.getElementById('combat-input-field').disabled = true;
+        }
+    });
+
+    let s = 3;
+    let t = setInterval(() => {
+        document.getElementById('combat-text-display').innerText = "ត្រៀម... " + s;
+        if (s <= 0) {
+            clearInterval(t);
+            db.ref('rooms/' + rId).once('value', snap => {
+                document.getElementById('combat-text-display').innerText = combatLanguages[snap.val().lang];
+                document.getElementById('combat-input-field').disabled = false;
+                document.getElementById('combat-input-field').focus();
+            });
+        }
+        s--;
+    }, 1000);
+}
+
+
+document.getElementById('combat-input-field').addEventListener('input', e => {
+    const val = e.target.value;
+    db.ref('rooms/' + combatRoomId).once('value', snap => {
+        const d = snap.val();
+        const target = combatLanguages[d.lang];
+        if (target.startsWith(val)) {
+            const opp = combatRole === 'p1' ? 'p2' : 'p1';
+            const newHp = 100 - ((val.length / target.length) * 100);
+            db.ref('rooms/' + combatRoomId).update({ [opp + '_hp']: newHp });
+            
+        
+            const f = document.getElementById('flash-' + combatRole);
+            f.style.opacity = 1; setTimeout(() => f.style.opacity = 0, 100);
+        } else {
+            e.target.value = val.slice(0, -1);
+        }
+    });
+});
+function backToLobby() {
+    
+    document.getElementById('combat-text-target').innerText = "";
+    document.getElementById('combat-input').value = "";
+    
   
-    fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name: name,
-            email: email,
-            phone: phone,
-            location: finalMapLink
-        })
-    })
-    .then(() => {
-        localStorage.setItem('user_name', name);
-        document.getElementById('step-2').style.display = 'none';
-        document.getElementById('step-3').style.display = 'block';
-        if (typeof listenForMessages === "function") listenForMessages();
-    })
-    .catch(err => {
-        alert("មានបញ្ហាបច្ចេកទេស! សូមព្យាយាមម្ដងទៀត។");
-        console.error(err);
-    })
-    .finally(() => {
-        btn.innerText = originalText;
-        btn.disabled = false;
-    });
-}
-function listenForMessages() {
-    chatRef.limitToLast(30).on('value', (snapshot) => {
-        const chatBox = document.getElementById('chat-box');
-        chatBox.innerHTML = "";
-        snapshot.forEach((child) => {
-            const data = child.val();
-            chatBox.innerHTML += `<div style="margin-bottom:10px">
-                <span style="color:#d35400; font-weight:bold;">${data.name}:</span> 
-                <span>${data.message}</span>
-                <small style="color:#999; font-size:10px; display:block;">${data.time || ''}</small>
-            </div>`;
-        });
-        chatBox.scrollTop = chatBox.scrollHeight;
-    });
-}
+    document.getElementById('combat-battle-ui').style.display = 'none';
+    document.getElementById('combat-result').style.display = 'none';
 
-function initMap() {
-    if (document.getElementById('map')) {
-        let map = L.map('map').setView([11.5564, 104.9282], 13);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        let marker = L.marker([11.5564, 104.9282], {draggable: true}).addTo(map);
-
-        marker.on('dragend', function(event) {
-            let position = marker.getLatLng();
-            userLat = position.lat;
-            userLon = position.lng;
-            finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
-            document.getElementById('gps-status').innerText = "✅ បានរើសទីតាំងរួចរាល់!";
-            document.getElementById('gps-status').style.color = "green";
-        });
+    if (combatRoomId) {
+        database.ref('combat_rooms/' + combatRoomId).off();
     }
 }
+function fireBullet(role) {
+    const arena = document.querySelector('.battle-header'); 
+    const bullet = document.createElement('div');
+    bullet.className = 'bullet';
+    bullet.innerText = '🔥'; 
 
+    if (role === 'p1') {
+       
+        bullet.style.left = "20%";
+        bullet.style.top = "50px";
+        bullet.style.animation = "flyToRight 0.4s linear forwards";
+    } else {
+        
+        bullet.style.right = "20%";
+        bullet.style.top = "50px";
+        bullet.style.animation = "flyToLeft 0.4s linear forwards";
+    }
+
+    arena.appendChild(bullet);
+    setTimeout(() => bullet.remove(), 400);
+}
+input.oninput = () => {
+    const val = input.value;
+    if (fullText.startsWith(val)) {
+        
+        fireBullet(combatRole); 
+
+        input.style.color = "white";
+        input.style.borderColor = "#00ff00";
+
+        const progress = val.length / fullText.length;
+        const opp = (combatRole === 'p1') ? 'p2' : 'p1';
+        
+      
+        database.ref('combat_rooms/' + combatRoomId).update({ 
+            [opp + '_hp']: Math.max(0, Math.floor(100 - (progress * 100))) 
+        });
+
+        if (val.trim() === fullText.trim()) {
+            clearInterval(battleTimerInterval);
+            input.disabled = true;
+            endGame(myCombatData.name);
+        }
+    } else {
+        input.style.color = "#ff4d4d";
+        input.style.borderColor = "red";
+        input.value = val.substring(0, val.length - 1);
+    }
+};
+function surrenderGame() {
+    if(confirm("តើអ្នកច្បាស់ថាចង់បោះបង់?")) {
+        database.ref('combat_rooms/' + combatRoomId).update({ 
+            [combatRole + '_hp']: 0 
+        });
+        
+        database.ref('combat_rooms/' + combatRoomId).off();
+        backToLobby();
+    }
+}
+function updateBattleUI(d) {
+   
+    document.getElementById('p1-pic').src = d.p1_avatar;
+    document.getElementById('p1-name').innerText = (combatRole === 'p1') ? d.p1_name + " (អ្នក)" : d.p1_name;
+    document.getElementById('p1-name').style.color = (combatRole === 'p1') ? "gold" : "white";
+
+    
+    document.getElementById('p2-pic').src = d.p2_avatar;
+    document.getElementById('p2-name').innerText = (combatRole === 'p2') ? d.p2_name + " (អ្នក)" : d.p2_name;
+    document.getElementById('p2-name').style.color = (combatRole === 'p2') ? "gold" : "white";
+    
+    
+    document.getElementById('hp-p1').style.width = d.p1_hp + "%";
+    document.getElementById('hp-p2').style.width = d.p2_hp + "%";
+}
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
+
 
 
 
