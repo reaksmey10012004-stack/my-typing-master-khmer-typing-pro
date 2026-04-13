@@ -3768,147 +3768,154 @@ function prepareWords() {
     });
     quoteDisplay.scrollTop = 0;
 }
-            function showResults() {
-      clearInterval(timerInterval);
-      inputField.disabled = true;
-      
-      const finalWPM = parseInt(wpmElement.innerText);
-      const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
-      
-      document.getElementById('result-overlay').style.display = 'flex';
-      document.getElementById('result-overlay').style.display = 'flex';
-      document.getElementById('res-wpm').innerText = finalWPM;
-      document.getElementById('res-errors-final').innerText = wrongWords;
-      document.getElementById('res-acc').innerText = acc;
-      
-      if (finalWPM > 5) { 
-      setTimeout(() => {
-        let playerName = prompt("អបអរសាទរ! សូមបញ្ចូលឈ្មោះរបស់អ្នកដើម្បីដាក់ក្នុងតារាងពិន្ទុ:", "អ្នកលេង");
-        if (playerName) {
-          database.ref('leaderboard').push({
-            name: playerName,
-            wpm: finalWPM,
-            date: new Date().toLocaleDateString()
-          });
-        }
-      }, 1500);
-      }
-    }
-
     inputField.addEventListener('input', () => {
-        if (!isStarted) startTimer();
-        isStarted = true;
-        totalKeystrokes++;
-        const typedValue = inputField.value;
-        const allWords = quoteDisplay.querySelectorAll('.word');
-        const currentWordSpan = allWords[currentWordIndex];
-        if (!currentWordSpan) return;
-        const charSpans = currentWordSpan.querySelectorAll('span');
-        
-        charSpans.forEach((span, i) => {
-            if (typedValue[i] == null) span.className = '';
-            else if (typedValue[i] === span.innerText) span.className = 'char-correct';
-            else span.className = 'char-incorrect';
-        });
-    });
+    if (!isStarted) startTimer();
+    isStarted = true;
 
-    inputField.addEventListener('keydown', (e) => {
-        if (e.code === 'Space') {
-            e.preventDefault();
-            const typedValue = inputField.value.trim();
-            if (!typedValue) return;
-            const allWords = quoteDisplay.querySelectorAll('.word');
-            const currentSpan = allWords[currentWordIndex];
+    const typedValue = inputField.value;
+    const allWords = quoteDisplay.querySelectorAll('.word');
+    const currentWordSpan = allWords[currentWordIndex];
+    if (!currentWordSpan) return;
 
-            if (typedValue === wordsArray[currentWordIndex]) {
-                currentSpan.classList.add('word-finished-correct');
-                correctChars += wordsArray[currentWordIndex].length + 1;
-            } else {
-                currentSpan.classList.add('word-finished-error');
-                wrongWords++;
-                errorElement.innerText = wrongWords;
-            }
-            
-            currentSpan.classList.remove('word-current');
-            currentWordIndex++;
-            if (allWords[currentWordIndex]) {
-                allWords[currentWordIndex].classList.add('word-current');
-                const container = document.getElementById('quote-display');
-                const currentWord = allWords[currentWordIndex];
-                container.scrollTo({
-                  top: currentWord.offsetTop - 10, //
-                  behavior: 'smooth'
-                });
+    const charSpans = currentWordSpan.querySelectorAll('span');
+    
+  
+    totalKeystrokes++; 
+
+    charSpans.forEach((span, i) => {
+        if (typedValue[i] == null) {
+            span.className = '';
+        } else if (typedValue[i] === span.innerText) {
          
+            if (!span.classList.contains('char-correct')) {
+                correctChars++; 
             }
-            inputField.value = '';
-            updateWPM();
+            span.className = 'char-correct';
+        } else {
+           
+            span.className = 'char-incorrect';
         }
     });
+    
+    updateWPM(); 
+});inputField.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+        e.preventDefault();
+        const typedValue = inputField.value.trim();
+        if (!typedValue) return;
+
+        const allWords = quoteDisplay.querySelectorAll('.word');
+        const currentSpan = allWords[currentWordIndex];
+
+        if (typedValue === wordsArray[currentWordIndex]) {
+            currentSpan.classList.add('word-finished-correct');
+          
+            correctChars++; 
+        } else {
+            currentSpan.classList.add('word-finished-error');
+            wrongWords++;
+            errorElement.innerText = wrongWords;
+        }
+
+      
+        totalKeystrokes++;
+
+        currentSpan.classList.remove('word-current');
+        currentWordIndex++;
+
+        if (allWords[currentWordIndex]) {
+            allWords[currentWordIndex].classList.add('word-current');
+            const container = document.getElementById('quote-display');
+            const nextWord = allWords[currentWordIndex];
+
+        
+            if (nextWord.offsetTop > currentSpan.offsetTop) {
+                container.scrollTo({
+                    top: nextWord.offsetTop - 10,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        inputField.value = '';
+        updateWPM();
+    }
+});
+
+
+function updateLiveStats() {
+    
+    const timeSpent = 60 - timeLeft; 
+    const timePassedInMinutes = timeSpent / 60; 
+
+    let wpm = 0;
+    if (timePassedInMinutes > 0) {
+      
+        wpm = Math.round((correctChars / 5) / timePassedInMinutes);
+    }
+    
+  
+    const accuracy = totalKeystrokes > 0 
+        ? Math.min(Math.round((correctChars / totalKeystrokes) * 100), 100) 
+        : 0;
+
+  
+    wpmElement.innerText = wpm;
+    errorElement.innerText = wrongWords;
+    
+  
+}
 
     function startTimer() {
-        timerInterval = setInterval(() => {
-            if (timeLeft > 0) { timeLeft--; timerElement.innerText = timeLeft; updateWPM(); }
-            else { showResults(); }
-        }, 1000);
-    }
-
-     function updateWPM() {
-        const timePassed = (60 - timeLeft) / 60;
-        const wpm = timePassed > 0 ? Math.round((correctChars / 5) / timePassed) : 0;
-        wpmElement.innerText = wpm;
-    
-    const speedStatus = document.getElementById('speed-status'); 
-    let rankName = "";
-if (wpm <= 30) {
-    rankName = (currentLang === 'km' || currentLang === 'kh') ? "ល្បឿនកូនក្មេង" : (currentLang === 'id' ? "Kecepatan Lambat" : "Kid Speed");
-} else if (wpm <= 70) {
-    rankName = (currentLang === 'km' || currentLang === 'kh') ? "ល្បឿនមធ្យម" : (currentLang === 'id' ? "Kecepatan Normal" : "Normal Speed");
-} else {
-    rankName = (currentLang === 'km' || currentLang === 'kh') ? "ល្បឿនដូចហោះ" : (currentLang === 'id' ? "Luar Biasa" : "God Speed");
-}
-speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span>`;
-     }
-    
-    function showResults() {
-        clearInterval(timerInterval);
-        inputField.disabled = true;
-        document.getElementById('result-overlay').style.display = 'flex';
-        document.getElementById('res-wpm').innerText = wpmElement.innerText;
-        document.getElementById('res-errors-final').innerText = wrongWords;
-        const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
-        document.getElementById('res-acc').innerText = acc;
-        if (wpm >= 20) {
-          saveToLeaderboard(wpm);
-        }
-    }
-    
-    function showResults() {
-      clearInterval(timerInterval);
-      inputField.disabled = true;
-      const finalWpm = parseInt(wpmElement.innerText);
-      const acc = totalKeystrokes > 0 ? Math.round((correctChars / totalKeystrokes) * 100) : 0;
-      
-      document.getElementById('result-overlay').style.display = 'flex';
-      document.getElementById('res-wpm').innerText = finalWpm;
-      document.getElementById('res-errors-final').innerText = wrongWords;
-      document.getElementById('res-acc').innerText = acc;
-      
-      if (finalWpm >= 30) {
-      let userName = prompt("អស្ចារ្យ! ល្បឿនអ្នកលើសពី 80WPM! សូមបញ្ចូលឈ្មោះរបស់អ្នក៖");
-      if (userName) {
-        const now = new Date();
-        const timeString = now.getHours() + ":" + now.getMinutes().toString().padStart(2, '0');
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        timerElement.innerText = timeLeft;
         
-        database.ref('leaderboard').push({
-          name: userName,
-          wpm: finalWpm,
-          time: timeString,
-          timestamp: firebase.database.ServerValue.TIMESTAMP
-        });
-      }
-      }
+       
+        updateLiveStats(); 
+
+        if (timeLeft === 0) {
+            showResults();
+        }
+    }, 1000);
+}
+function showResults() {
+    clearInterval(timerInterval);
+    inputField.disabled = true;
+
+  
+    const finalWPM = parseInt(wpmElement.innerText) || 0;
+    const acc = totalKeystrokes > 0 ? Math.min(Math.round((correctChars / totalKeystrokes) * 100), 100) : 0;
+
+  
+    document.getElementById('result-overlay').style.display = 'flex';
+    document.getElementById('res-wpm').innerText = finalWPM;
+    document.getElementById('res-acc').innerText = acc;
+    document.getElementById('res-errors-final').innerText = wrongWords;
+
+   
+    const rankElement = document.getElementById('res-rank');
+    
+    if (finalWPM >= 100) {
+        rankElement.innerText = "កំពូលអ្នកវាយអក្សរ (God Speed)";
+        rankElement.style.color = "#ff4757"; 
+    } else if (finalWPM >= 80) {
+        rankElement.innerText = "ល្បឿនលឿនខ្លាំង (Legendary)";
+        rankElement.style.color = "#ffa502"; 
+    } else if (finalWPM >= 60) {
+        rankElement.innerText = "អាជីព (Professional)";
+        rankElement.style.color = "#2ed573"; 
+    } else if (finalWPM >= 40) {
+        rankElement.innerText = "ល្អបង្គួរ (Advanced)";
+        rankElement.style.color = "#1e90ff"; 
+    } else if (finalWPM >= 20) {
+        rankElement.innerText = "មធ្យម (Average)";
+        rankElement.style.color = "#f1c40f";
+    } else {
+        rankElement.innerText = "ហាត់បន្ថែម (Beginner)";
+        rankElement.style.color = "#747d8c"; 
     }
+}
+    
     function showQR() {
         document.getElementById('abaModal').style.display = 'flex';
     }
@@ -5130,7 +5137,6 @@ function updateBattleUI(d) {
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-
 
 
 
