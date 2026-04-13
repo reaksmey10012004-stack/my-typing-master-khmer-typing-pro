@@ -3238,14 +3238,7 @@ function loginWithFacebook() {
         alert("លេខសម្ងាត់ Admin មិនត្រឹមត្រូវទេ!");
       }
     }
-    function sendChatMessage() {
-      const user = document.getElementById('chat-user-input').value || "Anonymous";
-      const msg = document.getElementById('chat-msg-input').value;
-      if (msg.trim() !== "") {
-        chatRef.push({ username: user, text: msg, type: "text", time: Date.now() });
-        document.getElementById('chat-msg-input').value = "";
-      }
-    }
+    
     
     function sendChatImage(input) {
       const user = document.getElementById('chat-user-input').value || "Anonymous";
@@ -3932,6 +3925,7 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
         const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
         window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
     }
+    
     function sendChatMessage() {
    
     const userInput = document.getElementById('chat-user-input');
@@ -4030,14 +4024,6 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
         });
 
 
-        function sendChatMessage() {
-            const user = document.getElementById('chat-user-input').value || "Anonymous";
-            const msg = document.getElementById('chat-msg-input').value;
-            if (msg.trim()) {
-                chatRef.push({ username: user, text: msg, time: Date.now() });
-                document.getElementById('chat-msg-input').value = "";
-            }
-        }
 
         chatRef.limitToLast(20).on('child_added', snapshot => {
             const data = snapshot.val();
