@@ -3940,10 +3940,9 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
     if (messageText !== "") {
         chatRef.push({
             name: userInput.value || "អ្នកលេង", 
-            message: messageText,             
-            time: new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: 'numeric' }) 
+            message: messageText,            
+            time: new Date().toLocaleTimeString() 
         });
-        
         msgInput.value = ""; 
     }
 }
