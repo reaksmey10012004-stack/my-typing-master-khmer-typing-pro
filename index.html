@@ -3933,16 +3933,16 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
         window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
     }
     function sendChatMessage() {
-
-    const savedName = localStorage.getItem('user_name') || "អ្នកលេង";
+   
+    const userInput = document.getElementById('chat-user-input');
     const msgInput = document.getElementById('chat-msg-input');
     const messageText = msgInput.value.trim();
 
     if (messageText !== "") {
-
+     
         chatRef.push({
-            name: savedName, 
-            message: messageText,
+            name: userInput.value || "អ្នកលេង", 
+            message: messageText,             
             time: new Date().toLocaleTimeString('kh-KH', { hour: '2-digit', minute: '2-digit' })
         });
         
