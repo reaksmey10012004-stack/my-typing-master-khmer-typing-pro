@@ -81,7 +81,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://reaksmey10012004-stack.github.io/my-typing-master-khmer-typing-pro/og-image.jpg">
 
-    <meta property="og:image" content="https://reaksmey10012004-stack.github.io/my-typing-master-khmer-typing-pro/og-image.jpg">
+    <meta property="og:image" content="og-image.jpg">
 
     <meta property="og:url" content="https://reaksmey10012004-stack.github.io/my-typing-master-khmer-typing-pro/" />
     <meta name="twitter:description" content="ហាត់វាយអក្សរខ្មែរ និងអង់គ្លេស ដើម្បីបង្កើនល្បឿនម្រាមដៃរបស់អ្នក!">
@@ -482,15 +482,6 @@ margin: 0;
             align-items: center; 
 
         }
-
-
-
-        .btn-share { background: var(--facebook-color); color: white; border: none; padding: 10px 25px; border-radius: 20px; cursor: pointer; font-weight: bold; margin-top: 10px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
-
-        .btn-share:hover { opacity: 0.9; transform: scale(1.05); }
-
-        
-
         .lang-switcher-container {
 
           margin-bottom: 25px;
@@ -2409,6 +2400,23 @@ body { padding-left: 240px !important; }
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+.btn-share-fb {
+    background-color: #1877F2; /* ពណ៌ Facebook */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-family: "Kantumruy Pro", sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-share-fb:hover {
+    background-color: #166fe5;
+    transform: scale(1.05);
+}
+
 
     </style>
 
@@ -2848,7 +2856,10 @@ body { padding-left: 240px !important; }
 
             <button class="btn-reset" style="padding: 12px 25px; background: var(--primary-color); color: white; border-radius: 50px; border: none; cursor: pointer; font-weight: bold;" onclick="resetGame()">🔄 សាកល្បងម្ដងទៀត</button>
 
-            <button class="btn-share" onclick="shareToFacebook()">🔵 Share</button>
+           <button class="btn-share-fb" onclick="shareToFacebook()">
+   <svg style="width:18px; height:18px; vertical-align:middle; margin-right:5px;" viewBox="0 0 24 24"><path fill="white" d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C18.34 21.21 22 17.06 22 12.06C22 6.53 17.5 2.04 12 2.04Z" /></svg>
+   Share to Facebook
+</button>
 
             </div>        
 
@@ -3916,15 +3927,21 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
         prepareWords();
         inputField.focus();
     }
-
     function shareToFacebook() {
-        const wpm = document.getElementById('res-wpm').innerText;
-        const acc = document.getElementById('res-acc').innerText;
-        const shareText = `🚀 ខ្ញុំទើបតែទទួលបានល្បឿន ${wpm} WPM និងភាពត្រឹមត្រូវ ${acc}% លើ Typing Reaksmey!`;
-        const shareUrl = window.location.href;
-        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
-        window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
-    }
+ 
+    const wpm = document.getElementById('res-wpm').innerText || "0";
+    const acc = document.getElementById('res-acc').innerText || "0";
+  
+    const shareUrl = "https://reaksmey10012004-stack.github.io/my-typing-master-khmer-typing-pro/";
+    
+    const hashtag = `#TypingReaksmey_${wpm}WPM_${acc}Accuracy`;
+    
+   
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&hashtag=${encodeURIComponent(hashtag)}`;
+    
+   
+    window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
+}
     
     function sendChatMessage() {
    
@@ -5113,7 +5130,6 @@ function updateBattleUI(d) {
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-
 
 
 
