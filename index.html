@@ -2907,15 +2907,20 @@ body { padding-left: 240px !important; }
 </div>
         
     <div id="step-3" style="display: none;">
-        <div id="chat-box" style="height: 350px; overflow-y: auto; background: white; padding: 10px; border-bottom: 1px solid #eee;"></div>
+        <div id="chat-box" style="heigh
+    <div class="chat-input-area">
 
-        <div class="chat-input-area">
-            <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12" readonly style="background: #f0f0f0;">
-            <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
-            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
-            <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
-            <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
-        </div>
+        <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12">
+
+        <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
+
+        <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+
+        <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
+
+        <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
+
+    </div>
 
         <div style="text-align: left; margin-top: 10px;">
             <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
