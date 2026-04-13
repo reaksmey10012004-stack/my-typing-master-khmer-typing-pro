@@ -4560,21 +4560,28 @@ function finalSubmit() {
         btn.disabled = false;
     });
 }
+   
 function listenForMessages() {
     chatRef.limitToLast(30).on('value', (snapshot) => {
         const chatBox = document.getElementById('chat-box');
         chatBox.innerHTML = "";
+
         snapshot.forEach((child) => {
             const data = child.val();
+            
+           
             chatBox.innerHTML += `<div style="margin-bottom:10px">
-                <span style="color:#d35400; font-weight:bold;">${data.name}:</span> 
-                <span>${data.message}</span>
+                <span style="color:#d35400; font-weight:bold;">${data.name || "អ្នកលេង"}:</span> 
+                <span>${data.message || ""}</span>
                 <small style="color:#999; font-size:10px; display:block;">${data.time || ''}</small>
             </div>`;
         });
+        
+  
         chatBox.scrollTop = chatBox.scrollHeight;
     });
 }
+
 
 function initMap() {
     if (document.getElementById('map')) {
