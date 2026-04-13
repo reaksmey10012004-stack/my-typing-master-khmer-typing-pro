@@ -3932,7 +3932,7 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
         const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
         window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
     }
-function sendChatMessage() {
+    function sendChatMessage() {
     const userInput = document.getElementById('chat-user-input');
     const msgInput = document.getElementById('chat-msg-input');
     const messageText = msgInput.value.trim();
@@ -3940,9 +3940,10 @@ function sendChatMessage() {
     if (messageText !== "") {
         chatRef.push({
             name: userInput.value || "អ្នកលេង", 
-            message: messageText,            
-            time: new Date().toLocaleTimeString() 
+            message: messageText,             
+            time: new Date().toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: 'numeric' }) 
         });
+        
         msgInput.value = ""; 
     }
 }
