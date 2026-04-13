@@ -3933,16 +3933,19 @@ speedStatus.innerHTML = `<img src="icon.png" width="30"> <span>${rankName}</span
         window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
     }
     function sendChatMessage() {
-    const userInput = document.getElementById('chat-user-input');
+
+    const savedName = localStorage.getItem('user_name') || "អ្នកលេង";
     const msgInput = document.getElementById('chat-msg-input');
     const messageText = msgInput.value.trim();
 
     if (messageText !== "") {
+
         chatRef.push({
-            name: userInput.value || "អ្នកលេង", 
-            message: messageText,            
-            time: new Date().toLocaleTimeString() 
+            name: savedName, 
+            message: messageText,
+            time: new Date().toLocaleTimeString('kh-KH', { hour: '2-digit', minute: '2-digit' })
         });
+        
         msgInput.value = ""; 
     }
 }
@@ -4427,16 +4430,18 @@ let finalMapLink = "";
 let userLat = "";
 let userLon = "";
 
-
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-    
         const savedName = localStorage.getItem('user_name');
         if (savedName) {
+           
+            const userInputField = document.getElementById('chat-user-input');
+            userInputField.value = savedName; 
+            userInputField.readOnly = true; 
+            
             document.getElementById('step-1').style.display = 'none';
             document.getElementById('step-2').style.display = 'none';
             document.getElementById('step-3').style.display = 'block';
-            document.getElementById('chat-user-input').value = savedName;
             listenForMessages();
         }
     }
@@ -4559,8 +4564,7 @@ function finalSubmit() {
         btn.disabled = false;
     });
 }
-   
-function listenForMessages() {
+   function listenForMessages() {
     chatRef.limitToLast(30).on('value', (snapshot) => {
         const chatBox = document.getElementById('chat-box');
         chatBox.innerHTML = "";
@@ -4568,16 +4572,14 @@ function listenForMessages() {
         snapshot.forEach((child) => {
             const data = child.val();
             
-           
-            chatBox.innerHTML += `<div style="margin-bottom:10px">
-                <span style="color:#d35400; font-weight:bold;">${data.name || "អ្នកលេង"}:</span> 
-                <span>${data.message || ""}</span>
+
+            chatBox.innerHTML += `<div style="margin-bottom:10px; border-bottom: 1px dashed #eee; padding-bottom: 5px;">
+                <span style="color:#d35400; font-weight:bold;">${data.name}:</span> 
+                <span style="color:#333;">${data.message}</span>
                 <small style="color:#999; font-size:10px; display:block;">${data.time || ''}</small>
             </div>`;
         });
-        
-  
-        chatBox.scrollTop = chatBox.scrollHeight;
+        chatBox.scrollTop = chatBox.scrollHeight; 
     });
 }
 
@@ -5125,7 +5127,6 @@ function updateBattleUI(d) {
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-
 
 
 
