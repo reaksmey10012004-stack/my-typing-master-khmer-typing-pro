@@ -4435,7 +4435,6 @@ function listenForAdminReplies() {
 }
     
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwIvTUVDq1hG0NHnNNUMc7XGBGthCYJlYJYtlmX_dc5E7n62TysgoyJ9riS-iUypOq_A/exec";
 let finalMapLink = "";
 let userLat = "";
 let userLon = "";
@@ -4609,6 +4608,48 @@ function initMap() {
             document.getElementById('gps-status').style.color = "green";
         });
     }
+}
+
+function finalSubmit(event) {
+   
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const phone = document.getElementById('reg-phone').value.trim();
+    
+   
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwIvTUVDq1hG0NHnNNUMc7XGBGthCYJlYJYtlmX_dc5E7n62TysgoyJ9riS-iUypOq_A/exec";
+    const message = `🔔 *មានអ្នកចុះឈ្មោះថ្មី* \n\n👤 ឈ្មោះ: ${name} \n📧 អ៊ីមែល: ${email} \n📞 លេខទូរស័ព្ទ: ${phone} \n📍 ទីតាំង: ${finalMapLink}`;
+
+    
+    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: message,
+            parse_mode: "Markdown"
+        })
+    })
+    .then(res => console.log("Telegram sent!"))
+    .catch(err => console.error("Telegram error:", err));
+
+   
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: phone,
+            location: finalMapLink
+        })
+    })
+    .then(() => {
+  
+        document.getElementById('step-2').style.display = 'none';
+        document.getElementById('step-3').style.display = 'block';
+    });
 }
 
 
@@ -5137,7 +5178,6 @@ function updateBattleUI(d) {
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
 
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js"></script>
-
 
 
 
