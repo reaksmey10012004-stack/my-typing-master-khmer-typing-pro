@@ -2925,7 +2925,7 @@ body { padding-left: 240px !important; }
             <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
             <input type="password" id="admin-code" style="width: 80px; font-size: 0.7rem;">
             <button class="btn-chat-send" style="background: #ff4d4d; margin-left: 5px;" onclick="clearAllChat()">លុបសារ</button>
-            <button onclick="logout()" style="background:#e74c3c; color:white; border:none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
+                        <button onclick="logout()" style="background:#e74c3c; color:white; border:none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
     🚪 ចាកចេញ (Logout)
 </button>
         </div>
@@ -4437,7 +4437,8 @@ function listenForAdminReplies() {
       });
 }
     
- const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwwIvTUVDq1hG0NHnNNUMc7XGBGthCYJlYJYtlmX_dc5E7n62TysgoyJ9riS-iUypOq_A/exec";
+
+
 let finalMapLink = "";
 let userLat = "";
 let userLon = "";
@@ -4517,39 +4518,40 @@ function finalSubmit() {
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
+    
 
+    const TELEGRAM_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
+    const CHAT_ID = "955031659";
 
-    if (!firebase.auth().currentUser) {
-        alert("❌ សូម Login ជាមួយ Gmail ជាមុនសិន!");
-        return;
-    }
-
-
-    if (!name) {
-        alert("❌ សូមបំពេញឈ្មោះរបស់អ្នក!");
-        return;
-    }
-
-  
+    if (!firebase.auth().currentUser) { alert("❌ សូម Login ជាមុន!"); return; }
+    if (!name) { alert("❌ សូមបំពេញឈ្មោះ!"); return; }
+    
     const phonePattern = /^0[0-9]{8,9}$/;
-    if (!phone || !phonePattern.test(phone)) {
-        alert("❌ សូមបញ្ចូលលេខទូរស័ព្ទពិតប្រាកដ (ឧទាហរណ៍៖ 012345678)!");
-        return;
-    }
+    if (!phone || !phonePattern.test(phone)) { alert("❌ លេខទូរស័ព្ទមិនត្រឹមត្រូវ!"); return; }
+    if (!finalMapLink) { alert("❌ សូមផ្តល់ទីតាំង GPS!"); return; }
 
-  
-    if (!finalMapLink) {
-        alert("❌ សូមចុចផ្តល់ទីតាំង GPS ជាមុនសិន!");
-        return;
-    }
-
-   
     const btn = event.target;
     const originalText = btn.innerText;
     btn.innerText = "⏳ កំពុងដំណើរការ...";
     btn.disabled = true;
 
   
+    const message = `🔔 **មានអ្នកចុះឈ្មោះថ្មី!**\n👤 ឈ្មោះ: ${name}\n📧 អ៊ីមែល: ${email}\n📞 លេខ: ${phone}\n📍 ទីតាំង: ${finalMapLink}`;
+
+  
+    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: message,
+            parse_mode: "Markdown" 
+        })
+    })
+    .then(res => console.log("Telegram sent!"))
+    .catch(err => console.error("Telegram error:", err));
+
+    
     fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -4568,8 +4570,7 @@ function finalSubmit() {
         if (typeof listenForMessages === "function") listenForMessages();
     })
     .catch(err => {
-        alert("មានបញ្ហាបច្ចេកទេស! សូមព្យាយាមម្ដងទៀត។");
-        console.error(err);
+        alert("មានបញ្ហាបច្ចេកទេស!");
     })
     .finally(() => {
         btn.innerText = originalText;
@@ -4613,6 +4614,7 @@ function initMap() {
     }
 }
 
+
 function logout() {
  
     if (confirm("តើអ្នកពិតជាចង់ចាកចេញមែនទេ?")) {
@@ -4632,6 +4634,8 @@ function logout() {
         });
     }
 }
+
+
 
 
 
