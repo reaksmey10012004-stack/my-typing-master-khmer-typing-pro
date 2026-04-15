@@ -4552,32 +4552,40 @@ function getExactLocation() {
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
 }
-function finalSubmit(event) {
+
+const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/15Va8kR1q53g1CbH8AYog3_eTXPsQ-L7D5vJl76LDnwk/edit?pli=1&gid=0#gid=0"; 
+
+function finalSubmit(event) { 
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
     const phone = document.getElementById('reg-phone').value.trim();
-    
 
-    const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/15Va8kR1q53g1CbH8AYog3_eTXPsQ-L7D5vJl76LDnwk/edit?pli=1&gid=0#gid=0"; 
     const TELEGRAM_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
     const CHAT_ID = "955031659";
 
+    
     if (!firebase.auth().currentUser) { alert("❌ សូម Login ជាមុន!"); return; }
     if (!name) { alert("❌ សូមបំពេញឈ្មោះ!"); return; }
     
     const phonePattern = /^0[0-9]{8,9}$/;
     if (!phone || !phonePattern.test(phone)) { alert("❌ លេខទូរស័ព្ទមិនត្រឹមត្រូវ!"); return; }
-    if (!finalMapLink) { alert("❌ សូមផ្តល់ទីតាំង GPS!"); return; }
+    
+    
+    if (typeof finalMapLink === 'undefined' || !finalMapLink) { 
+        alert("❌ សូមផ្តល់ទីតាំង GPS ជាមុនសិន!"); 
+        return; 
+    }
 
-    const btn = event.target;
+    
+    const btn = event ? event.target : document.querySelector("button[onclick='finalSubmit()']");
     const originalText = btn.innerText;
     btn.innerText = "⏳ កំពុងដំណើរការ...";
     btn.disabled = true;
 
     const message = `🔔 **មានអ្នកចុះឈ្មោះថ្មី!**\n👤 ឈ្មោះ: ${name}\n📧 អ៊ីមែល: ${email}\n📞 លេខ: ${phone}\n📍 ទីតាំង: ${finalMapLink}`;
 
-
-    fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
+  
+    const telegramPromise = fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -4585,12 +4593,10 @@ function finalSubmit(event) {
             text: message,
             parse_mode: "Markdown" 
         })
-    })
-    .then(res => console.log("Telegram sent!"))
-    .catch(err => console.error("Telegram error:", err));
+    });
 
-
-    fetch(SCRIPT_URL, {
+    
+    const sheetPromise = fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors', 
         headers: { 'Content-Type': 'application/json' },
@@ -4600,7 +4606,10 @@ function finalSubmit(event) {
             phone: phone,
             location: finalMapLink
         })
-    })
+    });
+
+
+    Promise.all([telegramPromise, sheetPromise])
     .then(() => {
         localStorage.setItem('user_name', name);
         document.getElementById('step-2').style.display = 'none';
@@ -4608,14 +4617,17 @@ function finalSubmit(event) {
         if (typeof listenForMessages === "function") listenForMessages();
     })
     .catch(err => {
-        console.error(err);
-        alert("មានបញ្ហាបច្ចេកទេស!");
+        console.error("Error:", err);
+        alert("មានបញ្ហាបច្ចេកទេស! សូមព្យាយាមម្តងទៀត។");
     })
     .finally(() => {
         btn.innerText = originalText;
         btn.disabled = false;
     });
 }
+
+
+
    function listenForMessages() {
     chatRef.limitToLast(30).on('value', (snapshot) => {
         const chatBox = document.getElementById('chat-box');
