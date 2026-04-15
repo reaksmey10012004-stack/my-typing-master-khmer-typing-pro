@@ -2907,19 +2907,21 @@ body { padding-left: 240px !important; }
     <button onclick="getExactLocation()" id="btn-gps" style="width:100%; background:#2196F3; color:white; border:none; padding:12px; border-radius:8px; cursor:pointer; font-weight:bold;">📍 ចុចផ្តល់ទីតាំងពិត (GPS)</button>
     <p id="gps-status" style="font-size: 0.8rem; color: red; text-align: center; margin-top: 8px;">*ចាំបាច់ត្រូវមានទីតាំង*</p>
     
-    <button onclick="finalSubmit()" style="width:100%; background:#4CAF50; color:white; border:none; padding:15px; border-radius:8px; margin-top:15px; font-size: 1.1rem; font-weight:bold;">✅ យល់ព្រមចូលលេងឆាត</button>
+    <button onclick="finalSubmit(event)" style="width:100%; background:#4CAF50; color:white; border:none; padding:15px; border-radius:8px; margin-top:15px; font-size: 1.1rem; font-weight:bold;">✅ យល់ព្រមចូលលេងឆាត</button>
 </div>
         
     <div id="step-3" style="display: none;">
         <div id="chat-box" style="height: 350px; overflow-y: auto; background: white; padding: 10px; border-bottom: 1px solid #eee;"></div>
 
         <div class="chat-input-area">
-            <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12" readonly style="background: #f0f0f0;">
-            <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
-            <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
-            <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
-            <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
-        </div>
+    <input type="text" id="chat-user-input" placeholder="ឈ្មោះ..." maxlength="12" readonly style="background: #e9e9e9; cursor: not-allowed; font-weight: bold; color: #555;">
+    
+    <label for="img-upload" style="font-size: 1.5rem; cursor: pointer;">🖼️</label>
+    <input type="file" id="img-upload" accept="image/*" style="display:none" onchange="sendChatImage(this)">
+    
+    <input type="text" id="chat-msg-input" placeholder="ផ្ញើសារ..." maxlength="150" onkeypress="if(event.key==='Enter') sendChatMessage()">
+    <button class="btn-chat-send" onclick="sendChatMessage()">ផ្ញើ</button>
+</div>
 
         <div style="text-align: left; margin-top: 10px;">
             <span style="font-size: 0.8rem; color: gray;">Admin Code:</span>
@@ -4553,8 +4555,6 @@ function getExactLocation() {
     );
 }
 
-const SCRIPT_URL = "https://docs.google.com/spreadsheets/d/15Va8kR1q53g1CbH8AYog3_eTXPsQ-L7D5vJl76LDnwk/edit?pli=1&gid=0#gid=0"; 
-
 function finalSubmit(event) { 
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
@@ -4563,13 +4563,12 @@ function finalSubmit(event) {
     const TELEGRAM_TOKEN = "8416578282:AAGic7-AEUoB2dcJ6ElMoX9RFucs34j2lWU";
     const CHAT_ID = "955031659";
 
-    
+  
     if (!firebase.auth().currentUser) { alert("❌ សូម Login ជាមុន!"); return; }
     if (!name) { alert("❌ សូមបំពេញឈ្មោះ!"); return; }
     
     const phonePattern = /^0[0-9]{8,9}$/;
     if (!phone || !phonePattern.test(phone)) { alert("❌ លេខទូរស័ព្ទមិនត្រឹមត្រូវ!"); return; }
-    
     
     if (typeof finalMapLink === 'undefined' || !finalMapLink) { 
         alert("❌ សូមផ្តល់ទីតាំង GPS ជាមុនសិន!"); 
@@ -4577,14 +4576,20 @@ function finalSubmit(event) {
     }
 
     
-    const btn = event ? event.target : document.querySelector("button[onclick='finalSubmit()']");
+    const btn = event ? event.target : document.querySelector("button[onclick='finalSubmit(event)']");
     const originalText = btn.innerText;
     btn.innerText = "⏳ កំពុងដំណើរការ...";
     btn.disabled = true;
 
+  
+    localStorage.setItem('user_name', name);
+    const chatInputName = document.getElementById('chat-user-input');
+    chatInputName.value = name;
+    chatInputName.readOnly = true; 
+
     const message = `🔔 **មានអ្នកចុះឈ្មោះថ្មី!**\n👤 ឈ្មោះ: ${name}\n📧 អ៊ីមែល: ${email}\n📞 លេខ: ${phone}\n📍 ទីតាំង: ${finalMapLink}`;
 
-  
+
     const telegramPromise = fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -4595,7 +4600,6 @@ function finalSubmit(event) {
         })
     });
 
-    
     const sheetPromise = fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors', 
@@ -4608,24 +4612,22 @@ function finalSubmit(event) {
         })
     });
 
-
     Promise.all([telegramPromise, sheetPromise])
     .then(() => {
-        localStorage.setItem('user_name', name);
+     
         document.getElementById('step-2').style.display = 'none';
         document.getElementById('step-3').style.display = 'block';
         if (typeof listenForMessages === "function") listenForMessages();
     })
     .catch(err => {
         console.error("Error:", err);
-        alert("មានបញ្ហាបច្ចេកទេស! សូមព្យាយាមម្តងទៀត។");
+        alert("មានបញ្ហាបច្ចេកទេស! សូមឆែកមើល SCRIPT_URL របស់អ្នក។");
     })
     .finally(() => {
         btn.innerText = originalText;
         btn.disabled = false;
     });
 }
-
 
 
    function listenForMessages() {
