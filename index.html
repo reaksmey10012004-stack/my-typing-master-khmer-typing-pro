@@ -3108,11 +3108,6 @@ body { padding-left: 240px !important; }
 
 <script>
   
-
-  const bannedEmails = [
-  "stafftigasatu@prdgroups.com",
-  "lembagatoto.kh@kg588.com"
-];
   
 
 
@@ -4579,18 +4574,6 @@ function getExactLocation() {
     );
 }
 
-function finalSubmit(event) {
-  
-  const emailInput = document.getElementById("reg-email").value.trim().toLowerCase();
-
-  
-  if (bannedEmails.includes(emailInput)) {
-    alert("គណនី Gmail របស់អ្នកត្រូវបានហាមឃាត់ (Block) មិនឲ្យចូលលេងឆាតនេះទេ!");
-    return; 
-  }
-
-}
-
 function finalSubmit(event) { 
     const name = document.getElementById('reg-name').value.trim();
     const email = document.getElementById('reg-email').value.trim();
@@ -5247,17 +5230,6 @@ function updateBattleUI(d) {
     document.getElementById('hp-p2').style.width = d.p2_hp + "%";
 }
 
-
-function sendChatMessage() {
-  const emailInput = document.getElementById("reg-email").value.trim().toLowerCase();
-
-  if (bannedEmails.includes(emailInput)) {
-    alert("អ្នកមិនអាចផ្ញើសារបានទេ ដោយសារ Gmail នេះត្រូវ Block! ដោយសារតែអ្នកលេងមិនគោរពច្បាប់ ត្រូវបានណែនាំ។");
-    return;
-  }
-
-
-}
 </script>
 </body>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
