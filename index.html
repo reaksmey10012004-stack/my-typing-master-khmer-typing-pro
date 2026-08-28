@@ -3107,11 +3107,7 @@ body { padding-left: 240px !important; }
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
 
 <script>
-
-const bannedEmails = [
-  "stafftigasatu@prdgroups.com",
-  "hacker@gmail.com"
-];
+  
   
 
 
@@ -4015,30 +4011,23 @@ if (finalWPM >= 60) {
    
     window.open(fbUrl, 'facebook-share-dialog', 'width=626,height=436');
 }
+    
     function sendChatMessage() {
- 
-  const emailElem = document.getElementById("reg-email");
-  const emailInput = emailElem ? emailElem.value.trim().toLowerCase() : "";
+   
+    const userInput = document.getElementById('chat-user-input');
+    const msgInput = document.getElementById('chat-msg-input');
+    const messageText = msgInput.value.trim();
 
-  if (emailInput !== "" && bannedEmails.includes(emailInput)) {
-    alert("អ្នកមិនអាចផ្ញើសារបានទេ ដោយសារ Gmail នេះត្រូវ Block!");
-    return; 
-  }
-
-  
-  const userInput = document.getElementById('chat-user-input');
-  const msgInput = document.getElementById('chat-msg-input');
-  const messageText = msgInput.value.trim();
-
-  if (messageText !== "") {
-    chatRef.push({
-      name: userInput.value || "អ្នកលេង",
-      message: messageText,
-      time: new Date().toLocaleTimeString('kh-KH', { hour: '2-digit', minute: '2-digit' })
-    });
-
-    msgInput.value = "";
-  }
+    if (messageText !== "") {
+     
+        chatRef.push({
+            name: userInput.value || "អ្នកលេង", 
+            message: messageText,             
+            time: new Date().toLocaleTimeString('kh-KH', { hour: '2-digit', minute: '2-digit' })
+        });
+        
+        msgInput.value = ""; 
+    }
 }
 
     chatRef.limitToLast(15).on('value', (snap) => {
@@ -4583,19 +4572,6 @@ function getExactLocation() {
         },
         { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
     );
-}
-
-function finalSubmit(event) {
- 
-  const emailElem = document.getElementById("reg-email");
-  const emailInput = emailElem ? emailElem.value.trim().toLowerCase() : "";
-
- 
-  if (emailInput !== "" && bannedEmails.includes(emailInput)) {
-    alert("គណនី Gmail របស់អ្នកត្រូវបានហាមឃាត់ (Block) មិនឲ្យចូលលេងឆាតនេះទេ!ដោយសារតែអ្នកលេងមិនគោរពច្បាប់ វាត្រូវបានណែនាំ។");
-    return; 
-  }
-
 }
 
 function finalSubmit(event) { 
