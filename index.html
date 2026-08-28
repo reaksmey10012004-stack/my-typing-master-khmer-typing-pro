@@ -3108,10 +3108,7 @@ body { padding-left: 240px !important; }
 
 <script>
   
-  const bannedEmails = [
-  "staffgita588@gmail.com",
-  "reaksmey10012004@gmail.com"
-];
+  
 
 
 function loginWithEmail() {
@@ -3140,23 +3137,6 @@ function loginWithEmail() {
 
 }
 
-    function loginWithEmail() {
-    const email = document.querySelector('#loginForm input[type="email"]').value;
-    const password = document.querySelector('#loginForm input[type="password"]').value;
-
-    if(!email || !password) return alert("សូមបំពេញ Email និង Password");
-
-    if (bannedEmails.includes(email.toLowerCase())) {
-        return alert("⛔ គណនី Gmail របស់អ្នកត្រូវបានហាមឃាត់ (Block) មិនឲ្យប្រើប្រាស់ក្នុងប្រព័ន្ធនេះទេ!");
-    }
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(() => {
-            alert("ចូលប្រើប្រាស់ជោគជ័យ!");
-            closeModal('loginModal');
-        })
-        .catch((error) => alert("កំហុស៖ " + error.message));
-}
 
 
 function registerWithEmail() {
@@ -4096,32 +4076,6 @@ if (finalWPM >= 60) {
         document.getElementById('tab-login').classList.toggle('active', type === 'login');
         document.getElementById('tab-register').classList.toggle('active', type === 'register');
     }
-
-    function loginWithGoogle() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  
-  firebase.auth().signInWithPopup(provider)
-    .then((result) => {
-      const userEmail = result.user.email.toLowerCase();
-
-   
-      if (bannedEmails.includes(userEmail)) {
-        alert("⛔ គណនី Gmail របស់អ្នកត្រូវបានហាមឃាត់ (Block) មិនឲ្យប្រើប្រាស់ក្នុងប្រព័ន្ធនេះទេ!");
-        firebase.auth().signOut(); 
-        return;
-      }
-
-      const regEmailInput = document.getElementById("reg-email");
-      if (regEmailInput) {
-        regEmailInput.value = result.user.email;
-      }
-      
-      alert("សួស្តី " + result.user.displayName + "! Login ជោគជ័យ។");
-    })
-    .catch((error) => {
-      alert("Google Login Error: " + error.message);
-    });
-}
 
     function loginWithGoogle() {
         const provider = new firebase.auth.GoogleAuthProvider();
