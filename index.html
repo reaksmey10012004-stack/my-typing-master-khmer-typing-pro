@@ -2436,6 +2436,50 @@ body { padding-left: 240px !important; }
     50% { transform: translateY(-60%) scale(1.05); } 
     100% { transform: translateY(-50%) scale(1); }
 }
+        .chat-title-wrapper {
+    width: 100%;
+    overflow: hidden; 
+    white-space: nowrap;
+    background-color: #1a1a1a; 
+    padding: 10px 0;
+}
+
+.bouncing-text {
+    display: inline-block;
+    font-family: 'Kantumruy Pro', 'Hanuman', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    
+   
+    padding-left: 100%;
+    animation: marquee 15s linear infinite, color-change 3s ease-in-out infinite alternate;
+    
+    
+    background: linear-gradient(90deg, #ff007f, #00f0ff, #ffeb3b, #ff007f);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
+}
+
+
+@keyframes marquee {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-100%, 0);
+    }
+}
+
+@keyframes color-change {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
+}
 
     </style>
 
